@@ -559,6 +559,89 @@ th {
   color: var(--cinza-700);
 }
 
+/* ---------- Grid dos 12 módulos (cards visuais da formação) ---------- */
+.modulos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 1.4rem;
+  margin: 1.5rem 0;
+}
+.modulo-card {
+  border: 1px solid var(--cinza-200);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--branco);
+  box-shadow: var(--sombra);
+  display: flex;
+  flex-direction: column;
+}
+.modulo-thumb {
+  position: relative;
+  line-height: 0;
+}
+.modulo-thumb img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  display: block;
+}
+.modulo-num {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+  background: var(--azul-900);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 800;
+  padding: 4px 9px;
+  border-radius: 8px;
+  line-height: 1;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+.modulo-coment {
+  margin: 0;
+  padding: 0.9rem 1rem 1.1rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--cinza-700);
+}
+.modulo-coment strong {
+  color: var(--azul-900);
+}
+
+/* ---------- Imagens flutuantes (retrato, selo) ---------- */
+.float-img {
+  float: right;
+  margin: 0 0 1rem 1.5rem;
+  border-radius: var(--radius);
+  height: auto;
+}
+.izabella-foto {
+  width: 280px;
+  max-width: 42%;
+}
+.selo-mec {
+  width: 130px;
+  max-width: 32%;
+  border-radius: 0;
+}
+@media (max-width: 560px) {
+  .float-img {
+    float: none;
+    display: block;
+    margin: 1rem auto;
+  }
+  .izabella-foto {
+    width: 60%;
+    max-width: 220px;
+  }
+  .selo-mec {
+    width: 120px;
+  }
+}
+
 /* ---------- Grid de posts / cards ---------- */
 .card-grid {
   display: grid;

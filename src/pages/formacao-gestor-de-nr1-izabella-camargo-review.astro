@@ -37,18 +37,18 @@ const toc = [
 ];
 
 const modulos = [
-  { t: 'Produtividade Sustentável', d: 'Abre a formação conectando desempenho e saúde mental — mostra por que produtividade "a qualquer custo" é o gatilho de boa parte dos riscos psicossociais que a NR-1 agora exige mapear.' },
-  { t: 'Aspectos Jurídicos da NR-1', d: 'O módulo que sozinho justifica boa parte do curso. Cobre a Portaria 1.419/2024, a 765/2025, responsabilidade da empresa, nexo causal e o que muda na prática trabalhista. É aqui que o gestor entende o "porquê legal" de tudo.' },
-  { t: 'Comunicação Assertiva', d: 'Ferramenta de campo: como conduzir conversas difíceis, dar feedback e mediar conflitos — competências centrais de quem vai atuar com fatores psicossociais dentro das empresas.' },
-  { t: 'GRO na Prática', d: 'Gerenciamento de Riscos Ocupacionais aplicado. Como o risco psicossocial entra no GRO e no inventário de riscos, sem ficar só na teoria da norma.' },
-  { t: 'Custos Evitados (FAP, RAT, SAT, CAT)', d: 'O módulo que dá munição comercial ao consultor: como traduzir saúde mental em dinheiro (redução de FAP, menos CAT, menos afastamento) — o argumento que abre a porta do RH e da diretoria.' },
-  { t: 'Riscos Psicossociais', d: 'O núcleo técnico. Identificação, avaliação e classificação dos fatores de risco psicossocial (FRPRT) que passaram a ser obrigatórios no PGR.' },
-  { t: 'Saúde Mental na Prática', d: 'Sai do diagnóstico e vai para a intervenção: como estruturar ações reais de saúde mental que sustentam uma auditoria e um plano de ação.' },
-  { t: 'EPIs da Saúde Mental', d: 'Conceito autoral da Izabella — a metáfora que virou marca dela. Ferramentas individuais e coletivas de proteção psicológica. É diferenciação de posicionamento para o consultor.' },
-  { t: 'Pensamento Sistêmico', d: 'Enxergar a organização como sistema — por que problemas de saúde mental raramente são "da pessoa" e quase sempre do desenho do trabalho. Base para diagnósticos que convencem lideranças.' },
-  { t: 'Endividamento e Saúde Financeira', d: 'Fator psicossocial frequentemente ignorado. Reconhece o estresse financeiro do trabalhador como risco real — abordagem que poucos concorrentes tocam.' },
-  { t: 'Cultura Organizacional', d: 'Como cultura vira (ou destrói) um programa de saúde mental. Prático para quem vai implantar mudança e não só entregar um relatório.' },
-  { t: 'Segurança Psicológica', d: 'Fecha a formação no conceito que sustenta tudo: ambientes onde as pessoas falam sem medo. É o "estado final" que o gestor de NR1 busca construir.' },
+  { t: 'Produtividade Sustentável', img: 'modulo-01-produtividade-sustentavel', alt: 'Módulo Produtividade Sustentável e fundamentos legais do trabalho, com Izabella Camargo — Formação Gestor de NR1', d: 'Abre a formação conectando desempenho e saúde mental — mostra por que produtividade "a qualquer custo" é o gatilho de boa parte dos riscos psicossociais que a NR-1 agora exige mapear.' },
+  { t: 'Aspectos Jurídicos da NR-1', img: 'modulo-02-aspectos-juridicos', alt: 'Módulo Aspectos jurídicos da nova NR1, com Fabiano Zavanella — Formação Gestor de NR1', d: 'O módulo que sozinho justifica boa parte do curso. Cobre a Portaria 1.419/2024, a 765/2025, responsabilidade da empresa, nexo causal e o que muda na prática trabalhista. É aqui que o gestor entende o "porquê legal" de tudo.' },
+  { t: 'Comunicação Assertiva', img: 'modulo-03-comunicacao-assertiva', alt: 'Módulo Comunicação assertiva e vendas de soluções em NR-1, com Izabella Camargo e Dr. Luiz Xavier — Formação Gestor de NR1', d: 'Ferramenta de campo: como conduzir conversas difíceis, dar feedback e mediar conflitos — competências centrais de quem vai atuar com fatores psicossociais dentro das empresas.' },
+  { t: 'GRO na Prática', img: 'modulo-04-gro-na-pratica', alt: 'Módulo GRO na prática, PGR e PCMSO, com Lailson Lima — Formação Gestor de NR1', d: 'Gerenciamento de Riscos Ocupacionais aplicado. Como o risco psicossocial entra no GRO e no inventário de riscos, sem ficar só na teoria da norma.' },
+  { t: 'Custos Evitados (FAP, RAT, SAT, CAT)', img: 'modulo-05-custos-evitados', alt: 'Módulo Custos evitados com afastamentos previdenciários e impacto reputacional, com Claudeci da Silva — Formação Gestor de NR1', d: 'O módulo que dá munição comercial ao consultor: como traduzir saúde mental em dinheiro (redução de FAP, menos CAT, menos afastamento) — o argumento que abre a porta do RH e da diretoria.' },
+  { t: 'Riscos Psicossociais', img: 'modulo-06-riscos-psicossociais', alt: 'Módulo Riscos Psicossociais e a relação com todos os tipos de assédio, com Luciana Baruki — Formação Gestor de NR1', d: 'O núcleo técnico. Identificação, avaliação e classificação dos fatores de risco psicossocial (FRPRT) que passaram a ser obrigatórios no PGR.' },
+  { t: 'Saúde Mental na Prática', img: 'modulo-07-saude-mental-na-pratica', alt: 'Módulo Saúde mental na prática: reconhecimento, prevenção e manejo inicial, com André Fusco — Formação Gestor de NR1', d: 'Sai do diagnóstico e vai para a intervenção: como estruturar ações reais de saúde mental que sustentam uma auditoria e um plano de ação.' },
+  { t: 'EPIs da Saúde Mental', img: 'modulo-08-epis-da-saude-mental', alt: 'Módulo EPIs da Saúde Mental e planos de ação organizacionais, com Izabella Camargo — Formação Gestor de NR1', d: 'Conceito autoral da Izabella — a metáfora que virou marca dela. Ferramentas individuais e coletivas de proteção psicológica. É diferenciação de posicionamento para o consultor.' },
+  { t: 'Pensamento Sistêmico', img: 'modulo-09-pensamento-sistemico', alt: 'Módulo Pensamento sistêmico para a gestão dos riscos psicossociais, com Irene Reis — Formação Gestor de NR1', d: 'Enxergar a organização como sistema — por que problemas de saúde mental raramente são "da pessoa" e quase sempre do desenho do trabalho. Base para diagnósticos que convencem lideranças.' },
+  { t: 'Endividamento e Saúde Financeira', img: 'modulo-10-endividamento', alt: 'Módulo O impacto do endividamento na produtividade do trabalhador, com Thiago Godoy — Formação Gestor de NR1', d: 'Fator psicossocial frequentemente ignorado. Reconhece o estresse financeiro do trabalhador como risco real — abordagem que poucos concorrentes tocam.' },
+  { t: 'Cultura Organizacional', img: 'modulo-11-cultura-organizacional', alt: 'Módulo Cultura organizacional: a forma correta de criar ou atualizar, com Veruska Galvão — Formação Gestor de NR1', d: 'Como cultura vira (ou destrói) um programa de saúde mental. Prático para quem vai implantar mudança e não só entregar um relatório.' },
+  { t: 'Segurança Psicológica', img: 'modulo-12-seguranca-psicologica', alt: 'Módulo Segurança psicológica para líderes e equipes performarem melhor, com Diana Soares — Formação Gestor de NR1', d: 'Fecha a formação no conceito que sustenta tudo: ambientes onde as pessoas falam sem medo. É o "estado final" que o gestor de NR1 busca construir.' },
 ];
 
 const faqItems: FaqItem[] = [
@@ -192,6 +192,14 @@ const schemas = [
     </p>
 
     <h2 id="quem-e">Quem é Izabella Camargo (e por que isso importa)</h2>
+    <img
+      class="float-img izabella-foto"
+      src="/images/modulos/izabella-camargo.webp"
+      alt="Izabella Camargo, criadora da Formação Gestor de NR1 e especialista em saúde mental no trabalho"
+      width="680"
+      height="680"
+      loading="lazy"
+    />
     <p>
       Numa área que tangencia direito, saúde e segurança do trabalho, a
       credibilidade de quem ensina pesa. E aqui a autora tem um currículo
@@ -220,14 +228,29 @@ const schemas = [
       intenção de formar alguém que <strong>atue</strong>, não apenas que "conheça"
       a norma. Nossa leitura de cada um:
     </p>
-    <div class="module-list">
+    <div class="modulos-grid">
       {modulos.map((m, i) => (
-        <div class="module-item">
-          <h3><span class="num">{String(i + 1).padStart(2, '0')}</span>{m.t}</h3>
-          <p>{m.d}</p>
+        <div class="modulo-card">
+          <div class="modulo-thumb">
+            <span class="modulo-num">{String(i + 1).padStart(2, '0')}</span>
+            <img
+              src={`/images/modulos/${m.img}.webp`}
+              alt={m.alt}
+              width="640"
+              height="850"
+              loading="lazy"
+            />
+          </div>
+          <p class="modulo-coment"><strong>{m.t}:</strong> {m.d}</p>
         </div>
       ))}
     </div>
+    <p class="muted">
+      <small>
+        Imagens dos módulos: reprodução da página oficial da Formação Gestor de
+        NR1, exibidas aqui no contexto desta análise independente.
+      </small>
+    </p>
     <p>
       <strong>Nossa avaliação da grade:</strong> o grande acerto é o equilíbrio
       entre <em>jurídico</em> (o que a lei exige), <em>técnico</em> (como mapear e
@@ -257,6 +280,14 @@ const schemas = [
     </p>
 
     <h2 id="certificado">Certificado MEC: o que significa na prática</h2>
+    <img
+      class="float-img selo-mec"
+      src="/images/modulos/selo-reconhecido-mec.webp"
+      alt="Selo Reconhecido pelo MEC exibido na página da Formação Gestor de NR1"
+      width="280"
+      height="280"
+      loading="lazy"
+    />
     <p>
       O certificado é emitido como <strong>curso de extensão universitária pela
       Faculdade Focus</strong>, instituição credenciada ao MEC, e é liberado após

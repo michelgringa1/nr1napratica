@@ -16,3 +16,6 @@ npm-debug.log*
 # os
 .DS_Store
 Thumbs.db
+
+# imagens-fonte pesadas da página de vendas (originais); usar as otimizadas em public/images/modulos/
+imagens/
