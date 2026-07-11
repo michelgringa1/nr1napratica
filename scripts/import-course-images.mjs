@@ -38,6 +38,11 @@ const jobs = [
   [2, 'izabella-hero', 1600, 82],
 ];
 
+// Arquivos com nome próprio (não seguem o padrão imgi_N_): [origem, saída, largura, qualidade]
+const namedJobs = [
+  ['product.webp', 'formacao-gestor-de-nr1-capa', 640, 82],
+];
+
 let ok = 0;
 for (const [idx, name, width, quality] of jobs) {
   const src = findByIndex(idx);
@@ -51,4 +56,15 @@ for (const [idx, name, width, quality] of jobs) {
     .toFile(join(outDir, `${name}.webp`));
   ok++;
 }
-console.log(`✓ ${ok}/${jobs.length} imagens otimizadas em public/images/modulos/`);
+for (const [src, name, width, quality] of namedJobs) {
+  if (!files.includes(src)) {
+    console.warn(`⚠️  origem ${src} não encontrada — pulando ${name}`);
+    continue;
+  }
+  await sharp(join(srcDir, src))
+    .resize({ width, withoutEnlargement: true })
+    .webp({ quality })
+    .toFile(join(outDir, `${name}.webp`));
+  ok++;
+}
+console.log(`✓ ${ok}/${jobs.length + namedJobs.length} imagens otimizadas em public/images/modulos/`);

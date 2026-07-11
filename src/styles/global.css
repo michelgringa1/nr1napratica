@@ -750,6 +750,13 @@ th {
   border: none;
   padding: 0;
 }
+.hub-card-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 1.1rem;
+}
 
 /* ---------- Utilidades ---------- */
 .text-center {
