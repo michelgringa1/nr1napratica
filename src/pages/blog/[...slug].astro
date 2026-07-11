@@ -1,7 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
 import CTA from '../../components/CTA.astro';
-import AffiliateDisclosure from '../../components/AffiliateDisclosure.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import RelatedLinks from '../../components/RelatedLinks.astro';
 import FAQ from '../../components/FAQ.astro';
@@ -58,8 +57,6 @@ const schemas = [
       <span>Publicado em {fmt(d.pubDate)}</span>
       {d.updatedDate && <span class="updated-badge">Atualizado em {fmt(d.updatedDate)}</span>}
     </div>
-
-    <AffiliateDisclosure />
 
     <div class="post-content">
       <Content />

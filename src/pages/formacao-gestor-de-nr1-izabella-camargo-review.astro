@@ -1,6 +1,5 @@
 ---
 import Base from '../layouts/Base.astro';
-import AffiliateDisclosure from '../components/AffiliateDisclosure.astro';
 import VeredictBox from '../components/VeredictBox.astro';
 import CTA from '../components/CTA.astro';
 import TOC from '../components/TOC.astro';
@@ -127,8 +126,6 @@ const schemas = [
       <span class="updated-badge">Atualizado em {SITE.updatedLabel}</span>
       <span>Por <a href="/sobre/">{SITE.name}</a> · Portal independente</span>
     </div>
-
-    <AffiliateDisclosure />
 
     <TOC items={toc} />
 

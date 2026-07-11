@@ -215,6 +215,24 @@ hr {
   color: var(--cinza-500);
 }
 
+/* ---------- Aviso de afiliado discreto (abaixo do rodapé) ---------- */
+.affiliate-microcopy {
+  background: var(--branco);
+  border-top: 1px solid var(--cinza-200);
+  color: var(--cinza-500);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  text-align: center;
+  padding: 12px 0;
+}
+.affiliate-microcopy a {
+  color: var(--cinza-500);
+  text-decoration: underline;
+}
+.affiliate-microcopy a:hover {
+  color: var(--azul-700);
+}
+
 /* ---------- Hero / cabeçalho de página ---------- */
 .page-hero {
   background: linear-gradient(160deg, var(--azul-900), var(--azul-700));
@@ -320,20 +338,6 @@ hr {
 }
 .btn-secondary:hover {
   background: var(--azul-50);
-}
-
-/* ---------- Aviso de afiliado ---------- */
-.affiliate-disclosure {
-  background: var(--amarelo-aviso);
-  border: 1px solid var(--amarelo-borda);
-  border-radius: var(--radius);
-  padding: 0.8rem 1rem;
-  font-size: 0.88rem;
-  color: #6b5518;
-  margin: 1.2rem 0;
-}
-.affiliate-disclosure strong {
-  color: #6b5518;
 }
 
 /* ---------- Veredito ---------- */
