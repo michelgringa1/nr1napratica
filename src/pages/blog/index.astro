@@ -33,7 +33,7 @@ const schemas = [breadcrumbSchema([['Início', '/'], ['Blog', '/blog/']])];
       <div class="card-grid" style="margin-top:2rem;">
         {posts.map((post) => (
           <div class="post-card">
-            <span class="tag">{post.data.tag} · {post.data.funnel}</span>
+            <span class="tag">{post.data.tag}</span>
             <h3><a href={`/blog/${post.id}/`}>{post.data.title}</a></h3>
             <p>{post.data.description}</p>
             <div style="display:flex;justify-content:space-between;align-items:center;margin-top:0.6rem;">
