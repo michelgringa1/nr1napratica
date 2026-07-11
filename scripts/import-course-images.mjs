@@ -31,9 +31,11 @@ const jobs = [
   [13, 'modulo-10-endividamento', 640, 74],
   [14, 'modulo-11-cultura-organizacional', 640, 74],
   [15, 'modulo-12-seguranca-psicologica', 640, 74],
-  // selo e retrato
+  // selo e retratos
   [16, 'selo-reconhecido-mec', 280, 82],
   [26, 'izabella-camargo', 680, 80],
+  // hero panorâmica (Izabella à direita, fundo escuro à esquerda) — fundo da hero do review
+  [2, 'izabella-hero', 1600, 82],
 ];
 
 let ok = 0;

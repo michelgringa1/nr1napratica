@@ -256,6 +256,40 @@ hr {
   margin-bottom: 0.4em;
 }
 
+/* ---------- Hero com imagem de fundo (texto à esquerda) ---------- */
+.page-hero--img {
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(15, 37, 64, 0.96) 0%,
+      rgba(15, 37, 64, 0.9) 38%,
+      rgba(15, 37, 64, 0.55) 62%,
+      rgba(15, 37, 64, 0.2) 100%
+    ),
+    var(--hero-bg);
+  background-size: cover;
+  background-position: right center;
+  background-repeat: no-repeat;
+}
+.page-hero--img .hero-text {
+  max-width: 600px;
+}
+.page-hero--img .kicker {
+  color: #8fb8e6;
+}
+@media (max-width: 720px) {
+  .page-hero--img {
+    background-image:
+      linear-gradient(
+        90deg,
+        rgba(15, 37, 64, 0.96) 0%,
+        rgba(15, 37, 64, 0.88) 60%,
+        rgba(15, 37, 64, 0.78) 100%
+      ),
+      var(--hero-bg);
+  }
+}
+
 /* ---------- Article ---------- */
 .article {
   padding-block: 2.5rem 3rem;
