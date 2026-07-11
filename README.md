@@ -49,17 +49,29 @@ PNGs já vão versionados em `public/`).
 - [ ] Preencher `AUTHOR.sameAs` em `src/data/site.ts` com perfis reais (LinkedIn/Instagram) para reforçar E-E-A-T.
 - [ ] Trocar o e-mail em `src/pages/contato.astro`.
 
-## Deploy na Hostinger (resumo)
+## Deploy (GitHub Actions → branch `deploy` → Hostinger)
 
-1. `npm run build` → gera `dist/`.
-2. Suba **o conteúdo de `dist/`** (incluindo o `.htaccess`, que é oculto) para
-   `public_html/` via Gerenciador de Arquivos ou FTP.
-3. hPanel → SSL → Let's Encrypt + "Forçar HTTPS".
-4. Teste `https://nr1napratica.online/vai/formacao` → deve redirecionar com o
-   `ref=B106168547F` intacto e registrar o cookie de afiliado na Hotmart.
-5. Google Search Console → enviar `sitemap-index.xml` e pedir indexação das 3
-   páginas principais.
+A Hostinger compartilhada **não roda `npm run build`**. Por isso o deploy é
+automatizado assim:
 
-> Alternativa com Git/GitHub Actions: buildar no CI e publicar a `dist/` numa
-> branch de deploy apontada pelo Git da Hostinger (a hospedagem compartilhada não
-> roda `npm run build` no servidor).
+1. Você dá `git push` na branch **`main`** (código-fonte).
+2. O GitHub Action (`.github/workflows/deploy.yml`) builda e publica **só o site
+   pronto** (conteúdo de `dist/`, com `.htaccess`) na branch **`deploy`**.
+3. A Hostinger serve a branch **`deploy`** em `public_html`.
+
+### Configuração única na Hostinger (hPanel)
+
+1. **Avançado → GIT:** repositório `https://github.com/michelgringa1/nr1napratica.git`,
+   branch **`deploy`** (NÃO `main`), diretório `public_html`.
+2. Ative **Auto-Deployment** e copie o **webhook** gerado → cole em GitHub →
+   repo → Settings → Webhooks (assim a Hostinger puxa sozinha a cada build).
+   (Sem webhook, é só clicar "Deploy" no hPanel após cada Action.)
+3. **SSL:** hPanel → SSL → Let's Encrypt + "Forçar HTTPS".
+4. **Teste:** `https://nr1napratica.online/vai/formacao` deve redirecionar com o
+   `ref=B106168547F` intacto (confirme o hotlink na área de afiliado da Hotmart).
+5. **Search Console:** enviar `sitemap-index.xml` e pedir indexação das páginas
+   principais.
+
+> Fluxo de trabalho no dia a dia: editar → `git push` na `main` → o resto é
+> automático. Regenerar imagens (`node scripts/make-*.mjs`) só se mudar textos dos
+> gráficos.
