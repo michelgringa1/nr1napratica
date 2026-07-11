@@ -1,0 +1,45 @@
+name: Build e publicar (deploy)
+
+# A Hostinger compartilhada não roda "npm run build". Então este workflow builda
+# o site a cada push na main e publica SOMENTE o conteúdo de dist/ (o site pronto,
+# com .htaccess) na branch "deploy". Aponte o Git da Hostinger para a branch "deploy".
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Publicar dist/ na branch deploy
+        run: |
+          cd dist
+          touch .nojekyll
+          git init -q
+          git config user.name "deploy-bot"
+          git config user.email "deploy@nr1napratica.online"
+          git add -A
+          git commit -q -m "deploy: ${GITHUB_SHA}"
+          git push -f "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
