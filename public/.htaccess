@@ -4,10 +4,10 @@
 # =========================================================
 
 # ---- Redirect de afiliado (link cloaking) ----
-# /vai/formacao -> link real com o ref intacto.
+# /vai/formacao -> link de afiliado da Hotmart (hotm.io/nr1napratica).
 # 302 temporário evita que o Google memorize o destino externo como canônico.
-Redirect 302 /vai/formacao https://lp.camargoizabella.com.br/formacao-gestor-de-nr1?ref=B106168547F
-Redirect 302 /vai/formacao/ https://lp.camargoizabella.com.br/formacao-gestor-de-nr1?ref=B106168547F
+Redirect 302 /vai/formacao https://hotm.io/nr1napratica
+Redirect 302 /vai/formacao/ https://hotm.io/nr1napratica
 
 # ---- Força HTTPS + www -> não-www ----
 <IfModule mod_rewrite.c>

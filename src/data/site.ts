@@ -11,8 +11,7 @@ export const SITE = {
   // Rota interna de cloaking do link de afiliado (301 no .htaccess).
   affiliatePath: '/vai/formacao/',
   // Link real (fica SÓ no .htaccess, nunca no HTML das páginas).
-  affiliateTarget:
-    'https://lp.camargoizabella.com.br/formacao-gestor-de-nr1?ref=B106168547F',
+  affiliateTarget: 'https://hotm.io/nr1napratica',
   // Data de atualização exibida ("Atualizado em ...") — atualize a cada revisão.
   updatedLabel: 'Julho/2026',
   updatedISO: '2026-07-10',
