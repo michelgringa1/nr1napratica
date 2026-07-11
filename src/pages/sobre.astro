@@ -1,0 +1,64 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE, AUTHOR } from '../data/site';
+import { breadcrumbSchema, personSchema } from '../data/schema';
+
+const title = 'Sobre o portal e o autor';
+const description =
+  'Quem está por trás do NR1 na Prática: um portal independente sobre NR-1, riscos psicossociais e a carreira de Gestor de NR1.';
+const schemas = [
+  personSchema(),
+  breadcrumbSchema([['Início', '/'], ['Sobre', '/sobre/']]),
+];
+---
+<Base title={title} description={description} schemas={schemas}>
+  <div class="page-hero">
+    <div class="container">
+      <p class="kicker">Sobre</p>
+      <h1>Sobre o {SITE.name}</h1>
+    </div>
+  </div>
+
+  <article class="container article">
+    <h2>Nossa proposta</h2>
+    <p>
+      O <strong>{SITE.name}</strong> é um <strong>portal independente</strong>
+      dedicado a acompanhar e explicar as mudanças da <strong>NR-1</strong>, o
+      novo protagonismo dos <strong>riscos psicossociais</strong> e a
+      <strong> carreira de Gestor de NR1</strong> que nasceu dessa exigência.
+    </p>
+    <p>
+      Não temos vínculo oficial com a Izabella Camargo, com a Hotmart ou com
+      qualquer instituição citada. Nosso objetivo é oferecer informação clara, com
+      fontes oficiais (MTE, gov.br), e análises honestas — com prós, contras e
+      transparência sobre eventuais links de afiliado.
+      <a href="/aviso-de-afiliado/">Entenda como isso funciona.</a>
+    </p>
+
+    <h2>Quem escreve</h2>
+    <div class="module-item" style="border-left-color:var(--azul-600);">
+      <h3 style="margin-top:0;">{AUTHOR.penName}</h3>
+      <p style="color:var(--cinza-700);">{AUTHOR.role}</p>
+      <p style="margin-top:0.6em;">{AUTHOR.bio}</p>
+    </div>
+    <p>
+      <small class="muted">
+        Nota: nossa equipe editorial revisa periodicamente os conteúdos para
+        manter datas, valores e informações normativas atualizados.
+      </small>
+    </p>
+
+    <h2>Compromisso editorial</h2>
+    <ul>
+      <li><strong>Fontes primárias:</strong> citamos as portarias oficiais (MTE 1.419/2024, 765/2025) e dados de gov.br.</li>
+      <li><strong>Transparência:</strong> todo conteúdo com link de afiliado exibe aviso visível.</li>
+      <li><strong>Honestidade:</strong> nossas análises apontam limitações e contras, não só qualidades.</li>
+      <li><strong>Atualização:</strong> conteúdos sensíveis a datas e preços são revisados com frequência.</li>
+    </ul>
+
+    <p>
+      Sugestões, correções ou dúvidas? Fale com a gente pela
+      <a href="/contato/">página de contato</a>.
+    </p>
+  </article>
+</Base>

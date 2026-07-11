@@ -1,0 +1,22 @@
+---
+import { SITE } from '../data/site';
+export interface Props {
+  text?: string;
+  sub?: string;
+}
+const {
+  text = 'Ver oferta oficial da Formação →',
+  sub = 'Você é levado à página oficial da Izabella Camargo',
+} = Astro.props;
+---
+<div class="cta-wrap">
+  <a
+    class="btn-cta"
+    href={SITE.affiliatePath}
+    rel="sponsored nofollow"
+    target="_blank"
+  >
+    {text}
+    <span class="btn-sub">{sub}</span>
+  </a>
+</div>

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /vai/
+
+Sitemap: https://nr1napratica.online/sitemap-index.xml

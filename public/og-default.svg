@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="NR1 na Prática">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f2540"/>
+      <stop offset="1" stop-color="#1b4b8a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <text x="80" y="150" font-family="Segoe UI, Arial, sans-serif" font-size="30" font-weight="700" letter-spacing="4" fill="#3b82c4">PORTAL INDEPENDENTE</text>
+  <text x="80" y="300" font-family="Segoe UI, Arial, sans-serif" font-size="88" font-weight="800" fill="#ffffff">NR-1 em 2026</text>
+  <text x="80" y="390" font-family="Segoe UI, Arial, sans-serif" font-size="44" font-weight="600" fill="#d7e5f5">Riscos psicossociais, prazos e carreira</text>
+  <text x="80" y="560" font-family="Segoe UI, Arial, sans-serif" font-size="36" font-weight="700" fill="#ffffff">nr1napratica.online</text>
+</svg>

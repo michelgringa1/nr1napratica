@@ -1,0 +1,80 @@
+---
+import Base from '../../layouts/Base.astro';
+import CTA from '../../components/CTA.astro';
+import AffiliateDisclosure from '../../components/AffiliateDisclosure.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import RelatedLinks from '../../components/RelatedLinks.astro';
+import FAQ from '../../components/FAQ.astro';
+import { getCollection, render } from 'astro:content';
+import { AUTHOR } from '../../data/site';
+import { articleSchema, breadcrumbSchema, faqSchema } from '../../data/schema';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const d = post.data;
+const path = `/blog/${post.id}/`;
+
+const fmt = (dt: Date) =>
+  dt.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+
+const schemas = [
+  articleSchema({
+    headline: d.title,
+    description: d.description,
+    url: path,
+    datePublished: d.pubDate.toISOString().slice(0, 10),
+    dateModified: (d.updatedDate ?? d.pubDate).toISOString().slice(0, 10),
+  }),
+  breadcrumbSchema([['Início', '/'], ['Blog', '/blog/'], [d.title, path]]),
+  ...(d.faq && d.faq.length ? [faqSchema(d.faq)] : []),
+];
+---
+<Base
+  title={d.seoTitle ?? d.title}
+  description={d.description}
+  schemas={schemas}
+  ogType="article"
+>
+  <div class="page-hero">
+    <div class="container">
+      <p class="kicker">{d.tag} · {d.funnel}</p>
+      <h1>{d.title}</h1>
+    </div>
+  </div>
+
+  <article class="container article">
+    <Breadcrumbs crumbs={[['Início', '/'], ['Blog', '/blog/'], [d.title, path]]} />
+
+    <div class="article-meta">
+      <span>Por <a href="/sobre/">{AUTHOR.penName}</a></span>
+      <span>Publicado em {fmt(d.pubDate)}</span>
+      {d.updatedDate && <span class="updated-badge">Atualizado em {fmt(d.updatedDate)}</span>}
+    </div>
+
+    <AffiliateDisclosure />
+
+    <div class="post-content">
+      <Content />
+    </div>
+
+    {d.faq && d.faq.length > 0 && <FAQ items={d.faq} />}
+
+    <RelatedLinks
+      links={[
+        { href: '/nr-1-atualizada-2026/', label: 'Guia da NR-1 atualizada em 2026' },
+        { href: '/formacao-gestor-de-nr1-izabella-camargo-review/', label: 'Review da Formação Gestor de NR1', note: 'vale a pena?' },
+        { href: '/riscos-psicossociais-exemplos/', label: '15 exemplos de riscos psicossociais para o PGR' },
+      ]}
+    />
+
+    <CTA />
+  </article>
+</Base>

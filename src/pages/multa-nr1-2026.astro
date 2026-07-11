@@ -1,0 +1,229 @@
+---
+import Base from '../layouts/Base.astro';
+import TOC from '../components/TOC.astro';
+import FAQ from '../components/FAQ.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { SITE } from '../data/site';
+import {
+  articleSchema,
+  faqSchema,
+  breadcrumbSchema,
+  type FaqItem,
+} from '../data/schema';
+
+const title = 'Multa da NR-1 em 2026: Valores e Como Funciona [Guia]';
+const description =
+  'Quanto custa descumprir a NR-1 em 2026: valores das multas (NR-28), como o cálculo é graduado, reincidência, interdição e como evitar. Fiscalização punitiva desde 26/05/2026.';
+const path = '/multa-nr1-2026/';
+
+const toc = [
+  { id: 'quando', label: 'Desde quando a multa vale' },
+  { id: 'valores', label: 'Valores das multas (NR-28)' },
+  { id: 'calculo', label: 'Como o cálculo funciona' },
+  { id: 'exemplos', label: 'Exemplos de valores' },
+  { id: 'alem', label: 'Além da multa: outras consequências' },
+  { id: 'evitar', label: 'Como evitar a multa' },
+  { id: 'faq', label: 'Perguntas frequentes' },
+];
+
+const faqItems: FaqItem[] = [
+  {
+    q: 'Qual o valor da multa da NR-1 em 2026?',
+    a: '<p>As multas seguem a NR-28 e são graduadas por gravidade, indo de cerca de <strong>R$ 670 (infração leve) a R$ 67 mil (gravíssima) por trabalhador exposto</strong>. Como o valor é multiplicado pelo número de trabalhadores expostos, o total pode ultrapassar centenas de milhares de reais em empresas maiores.</p>',
+  },
+  {
+    q: 'A multa por não ter riscos psicossociais no PGR é fixa?',
+    a: '<p>Não. Ela depende da <strong>gravidade da infração</strong>, do <strong>número de trabalhadores expostos</strong> e do <strong>histórico</strong> da empresa (reincidência dobra o valor). Não existe um número único — por isso duas empresas podem receber valores muito diferentes pela mesma falha.</p>',
+  },
+  {
+    q: 'As multas da NR-1 estão suspensas?',
+    a: '<p>Temporariamente, sim. Em junho/2026 o <strong>STF suspendeu por 90 dias</strong> a aplicação de multas ligadas aos itens de risco psicossocial (a FIESP obteve liminar no mesmo sentido para suas representadas). <strong>Mas atenção:</strong> a <strong>obrigação de gerir os riscos continua valendo</strong> — o que está pausado é apenas a punição administrativa, que deve voltar ao fim do prazo. É a janela ideal para se adequar sem pressa.</p>',
+  },
+  {
+    q: 'MEI e pequenas empresas também podem ser multadas?',
+    a: '<p>Empresas com <strong>empregados CLT</strong> têm a obrigação, incluindo pequenas e médias (com regras de PGR simplificadas conforme o grau de risco). O MEI sem empregados não tem PGR; ao contratar, passa a ter obrigações e fica sujeito à fiscalização.</p>',
+  },
+  {
+    q: 'Como evitar a multa da NR-1?',
+    a: '<p>Mapeando formalmente os <a href="/riscos-psicossociais-exemplos/">fatores de risco psicossocial</a> no <a href="/gro-e-pgr-o-que-e/">PGR</a>, com plano de ação, monitoramento e evidências. O ponto central é ter o processo documentado — não basta "cuidar do bem-estar" informalmente.</p>',
+  },
+];
+
+const schemas = [
+  articleSchema({
+    headline: 'Multa da NR-1 em 2026: valores, cálculo e como funciona a fiscalização',
+    description,
+    url: path,
+    datePublished: '2026-06-10',
+    dateModified: SITE.updatedISO,
+    keywords: [
+      'multa nr-1',
+      'multa nr-1 riscos psicossociais',
+      'fiscalização nr-1 2026',
+      'nr-28 valores',
+      'nr-1 suspensa stf',
+    ],
+  }),
+  faqSchema(faqItems),
+  breadcrumbSchema([['Início', '/'], ['Multa da NR-1 em 2026', path]]),
+];
+---
+<Base title={title} description={description} schemas={schemas} ogType="article">
+  <div class="page-hero">
+    <div class="container">
+      <p class="kicker">Guia · Atualizado em {SITE.updatedLabel}</p>
+      <h1>Multa da NR-1 em 2026: valores, cálculo e como funciona a fiscalização</h1>
+      <p>
+        Veja quanto custa descumprir a NR-1, como o valor é calculado, o que a
+        suspensão de 90 dias do STF muda na prática — e o que fazer para nunca ser
+        autuado.
+      </p>
+    </div>
+  </div>
+
+  <article class="container article">
+    <Breadcrumbs crumbs={[['Início', '/'], ['Multa da NR-1 em 2026', path]]} />
+    <div class="article-meta">
+      <span class="updated-badge">Atualizado em {SITE.updatedLabel}</span>
+      <span>Conteúdo informativo · não é consultoria jurídica</span>
+    </div>
+
+    <div class="fact-box" id="quando">
+      <h2 class="mt-0">Em resumo</h2>
+      <ul>
+        <li><strong>Atualização (jun/2026):</strong> o STF suspendeu por <strong>90 dias</strong> a aplicação de multas ligadas aos itens de risco psicossocial. A <strong>obrigação de gerir continua</strong>; a punição deve voltar ao fim do prazo.</li>
+        <li>Quando aplicáveis, as multas seguem a <strong>NR-28</strong>, graduadas por gravidade: de <strong>~R$ 670 a ~R$ 67 mil por trabalhador exposto</strong>.</li>
+        <li>O valor é <strong>multiplicado pelo nº de trabalhadores</strong> e <strong>dobra na reincidência</strong>.</li>
+        <li>Ações trabalhistas por <strong>dano moral</strong> (com nexo causal) não dependem dessa multa administrativa e seguem valendo.</li>
+      </ul>
+    </div>
+
+    <TOC items={toc} />
+
+    <h2 id="valores">Valores das multas (NR-28)</h2>
+    <p>
+      As penalidades por descumprimento das Normas Regulamentadoras são definidas
+      pela <strong>NR-28</strong>, que classifica a infração em quatro níveis de
+      gravidade. Os valores são reajustados periodicamente; a faixa de referência
+      recente é:
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Gravidade</th><th>Valor por trabalhador exposto (referência)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Leve</strong></td><td>R$ 670,38 a R$ 1.341,05</td></tr>
+          <tr><td><strong>Média</strong></td><td>R$ 1.341,06 a R$ 2.681,57</td></tr>
+          <tr><td><strong>Grave</strong></td><td>R$ 2.681,58 a R$ 6.703,95</td></tr>
+          <tr><td><strong>Gravíssima</strong></td><td>R$ 6.703,96 a R$ 67.039,57</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      <small>
+        Valores de referência sujeitos a atualização oficial. Confirme os montantes
+        vigentes na NR-28 e nas tabelas do Ministério do Trabalho e Emprego na data
+        da consulta.
+      </small>
+    </p>
+
+    <h2 id="calculo">Como o cálculo funciona</h2>
+    <p>
+      A multa <strong>não é um valor fixo</strong>. Ela resulta da combinação de
+      três variáveis:
+    </p>
+    <p style="text-align:center;font-size:1.05rem;">
+      <strong>Multa = valor-base (gravidade) × nº de trabalhadores expostos × fator de reincidência</strong>
+    </p>
+    <ul>
+      <li><strong>Gravidade:</strong> define a faixa de valor-base (leve a gravíssima).</li>
+      <li><strong>Trabalhadores expostos:</strong> quanto maior a empresa/área afetada, maior o total.</li>
+      <li><strong>Reincidência:</strong> primeira autuação usa fator 1; reincidência dobra (fator 2) e infrações múltiplas podem elevar ainda mais.</li>
+    </ul>
+    <p>
+      Ou seja: a mesma falha custa muito mais em uma empresa grande e reincidente
+      do que em uma pequena de primeira autuação.
+    </p>
+
+    <h2 id="exemplos">Exemplos de valores</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Cenário</th><th>Conta</th><th>Total aproximado</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Empresa pequena (15 expostos), infração grave, 1ª vez</td>
+            <td>R$ 2.681,58 × 15 × 1</td>
+            <td><strong>~R$ 40 mil</strong></td>
+          </tr>
+          <tr>
+            <td>Empresa média (150 expostos), gravíssima, reincidente</td>
+            <td>R$ 6.703,96 × 150 × 2</td>
+            <td><strong>~R$ 2 milhões</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      <small>
+        Exemplos ilustrativos para demonstrar a lógica do cálculo — não representam
+        valores autuados reais, que dependem do enquadramento do auditor-fiscal.
+      </small>
+    </p>
+
+    <h2 id="alem">Além da multa: outras consequências</h2>
+    <p>O risco financeiro vai além da autuação administrativa:</p>
+    <ul>
+      <li><strong>Interdição e embargo</strong> — em situações graves, paralisação da atividade.</li>
+      <li><strong>Ministério Público do Trabalho (MPT)</strong> — Termos de Ajustamento de Conduta (TAC) com multas diárias por descumprimento.</li>
+      <li><strong>Ações trabalhistas</strong> — a ausência de gestão do risco reforça o <strong>nexo causal</strong> em pedidos de indenização por dano moral (que podem chegar a valores expressivos).</li>
+      <li><strong>Restrições comerciais</strong> — dificuldade em contratos e processos de <em>due diligence</em> com grandes clientes.</li>
+    </ul>
+
+    <h2 id="evitar">Como evitar a multa</h2>
+    <p>
+      A boa notícia: a conformidade é acessível e o processo é conhecido. Em
+      resumo:
+    </p>
+    <ol>
+      <li><strong>Mapear</strong> os <a href="/riscos-psicossociais-exemplos/">fatores de risco psicossocial</a> presentes na empresa.</li>
+      <li><strong>Incluir no PGR</strong> com classificação de severidade e probabilidade (entenda o <a href="/gro-e-pgr-o-que-e/">GRO e o PGR</a>).</li>
+      <li><strong>Criar um plano de ação</strong> com medidas, responsáveis e prazos.</li>
+      <li><strong>Monitorar e documentar</strong> — a evidência do processo é o que protege a empresa.</li>
+    </ol>
+    <div class="fact-box">
+      <p style="margin:0;">
+        📌 O ponto que mais gera autuação é a <strong>informalidade</strong>:
+        empresas que "cuidam do bem-estar" mas não têm o risco
+        <strong> documentado no PGR</strong>. Fiscalização cobra registro, não
+        intenção.
+      </p>
+    </div>
+
+    <FAQ items={faqItems} />
+
+    <hr />
+    <p>
+      <strong>Para se aprofundar:</strong> veja o
+      <a href="/nr-1-atualizada-2026/">guia completo da NR-1 em 2026</a>, os
+      <a href="/riscos-psicossociais-exemplos/">exemplos de riscos psicossociais</a>
+      e como se tornar o profissional que faz essa adequação — o
+      <a href="/formacao-gestor-de-nr1-izabella-camargo-review/">Gestor de NR1</a>.
+    </p>
+    <div class="cta-wrap">
+      <a class="btn-secondary" href="/formacao-gestor-de-nr1-izabella-camargo-review/">
+        Ver como atuar profissionalmente com NR-1 →
+      </a>
+    </div>
+
+    <p class="muted">
+      <small>
+        Conteúdo informativo baseado na NR-1 e na NR-28; não substitui consultoria
+        jurídica ou de segurança do trabalho. Valores sujeitos a atualização
+        oficial. Última revisão: {SITE.updatedLabel}.
+      </small>
+    </p>
+  </article>
+</Base>

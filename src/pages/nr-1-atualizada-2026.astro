@@ -1,0 +1,347 @@
+---
+import Base from '../layouts/Base.astro';
+import CTA from '../components/CTA.astro';
+import TOC from '../components/TOC.astro';
+import FAQ from '../components/FAQ.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { SITE } from '../data/site';
+import {
+  articleSchema,
+  faqSchema,
+  breadcrumbSchema,
+  type FaqItem,
+} from '../data/schema';
+
+const title = 'NR-1 Atualizada 2026: Riscos Psicossociais, Prazos e Multas [Guia]';
+const description =
+  'Guia completo da NR-1 em 2026: o que mudou com a Portaria 1.419/2024, fiscalização punitiva desde 26/05/2026, multas, PGR, riscos psicossociais e como atuar na área.';
+const path = '/nr-1-atualizada-2026/';
+
+const toc = [
+  { id: 'resumo', label: 'Resumo: os fatos em 30 segundos' },
+  { id: 'o-que-e-nr1', label: 'O que é a NR-1' },
+  { id: 'o-que-mudou', label: 'O que mudou: riscos psicossociais' },
+  { id: 'linha-do-tempo', label: 'Linha do tempo da mudança' },
+  { id: 'dados', label: 'Os números do problema' },
+  { id: 'o-que-fazer', label: 'O que a empresa precisa fazer' },
+  { id: 'multas', label: 'Multas e consequências' },
+  { id: 'carreira', label: 'A oportunidade: o Gestor de NR1' },
+  { id: 'faq', label: 'Perguntas frequentes' },
+  { id: 'conclusao', label: 'Conclusão' },
+];
+
+const faqItems: FaqItem[] = [
+  {
+    q: 'A NR-1 sobre riscos psicossociais foi suspensa ou adiada?',
+    a: '<p>A <strong>obrigação não foi suspensa</strong> — ela está em vigor desde 26/05/2026. O que mudou é que, em junho/2026, decisões da Justiça (liminar da FIESP) e do <strong>STF</strong> suspenderam <strong>temporariamente (90 dias) a aplicação de multas</strong> ligadas a esses itens. Ou seja, as empresas <strong>continuam obrigadas a gerir os riscos psicossociais</strong>; apenas a punição está pausada por ora — a janela ideal para se adequar antes de a fiscalização punitiva voltar.</p>',
+  },
+  {
+    q: 'A NR-1 vale para MEI e pequenas empresas?',
+    a: '<p>A obrigação de gerenciar riscos ocupacionais vale para <strong>toda empresa com empregados CLT</strong>. Microempresas e pequenas empresas de menor grau de risco têm regras simplificadas de PGR, mas <strong>não estão isentas</strong> de avaliar riscos psicossociais quando eles existem. O MEI sem empregados não tem PGR; ao contratar, passa a ter obrigações.</p>',
+  },
+  {
+    q: 'Qual é a multa por não cumprir a NR-1?',
+    a: '<p>As multas seguem a NR-28 e variam conforme o item infringido e o porte, indo de aproximadamente <strong>R$ 2.396 a R$ 6.708 por item</strong>, podendo ser <strong>majoradas em caso de reincidência</strong> e somadas quando há múltiplas irregularidades. Além da multa administrativa, há risco de ações trabalhistas com nexo causal.</p>',
+  },
+  {
+    q: 'O que são riscos psicossociais no trabalho?',
+    a: '<p>São fatores ligados à organização do trabalho que podem afetar a saúde mental — como <strong>assédio moral, sobrecarga, metas inalcançáveis, jornadas excessivas, falta de autonomia, violência e conflitos</strong>. Com a NR-1 atualizada, passaram a ter o mesmo status dos riscos físicos, químicos e biológicos no inventário de riscos.</p>',
+  },
+  {
+    q: 'Quem pode ser Gestor de NR1?',
+    a: '<p>A norma <strong>não exige um diploma ou registro específico</strong> para o gerenciamento de riscos psicossociais. Na prática, atuam profissionais de RH, segurança do trabalho, saúde ocupacional, psicologia organizacional e consultores — desde que tenham <strong>conhecimento técnico</strong> da norma, do PGR e do GRO. Por isso cresceu a procura por formações específicas.</p>',
+  },
+];
+
+const schemas = [
+  articleSchema({
+    headline: 'NR-1 Atualizada em 2026: guia completo dos riscos psicossociais, prazos e multas',
+    description,
+    url: path,
+    datePublished: '2026-06-01',
+    dateModified: SITE.updatedISO,
+    keywords: [
+      'nr-1 atualizada 2026',
+      'nr1 riscos psicossociais',
+      'portaria 1.419/2024',
+      'portaria 765/2025',
+      'fiscalização nr-1 2026',
+      'nr1 saúde mental',
+    ],
+  }),
+  faqSchema(faqItems),
+  breadcrumbSchema([
+    ['Início', '/'],
+    ['NR-1 Atualizada 2026', path],
+  ]),
+];
+---
+<Base title={title} description={description} schemas={schemas} ogType="article">
+  <div class="page-hero">
+    <div class="container">
+      <p class="kicker">Guia completo · Atualizado em {SITE.updatedLabel}</p>
+      <h1>
+        NR-1 Atualizada em 2026: o guia completo dos riscos psicossociais, prazos
+        e o que sua empresa (ou carreira) precisa saber
+      </h1>
+      <p>
+        A fiscalização já é punitiva. Toda empresa CLT precisa se adequar — e um
+        novo mercado de profissionais nasceu com essa exigência. Entenda tudo
+        abaixo, com fontes oficiais.
+      </p>
+    </div>
+  </div>
+
+  <article class="container article">
+    <Breadcrumbs crumbs={[['Início', '/'], ['NR-1 Atualizada 2026', path]]} />
+    <div class="article-meta">
+      <span class="updated-badge">Atualizado em {SITE.updatedLabel}</span>
+      <span>Por <a href="/sobre/">{SITE.name}</a> · Conteúdo informativo, não é consultoria jurídica</span>
+    </div>
+
+    <div class="fact-box" id="resumo">
+      <h2 class="mt-0">Resumo: os fatos em 30 segundos</h2>
+      <ul>
+        <li><strong>Obrigação em vigor desde 26/05/2026</strong> (fim da fase educativa da Portaria 765/2025): riscos psicossociais são <strong>obrigatórios no PGR</strong> (Portaria MTE 1.419/2024).</li>
+        <li><strong>Atualização importante:</strong> em junho/2026 o STF suspendeu por <strong>90 dias</strong> a aplicação de <em>multas</em> ligadas a esses itens. A <strong>obrigação de gerir os riscos continua</strong> — só a punição está temporariamente suspensa.</li>
+        <li>Vale para <strong>todas as empresas com empregados CLT</strong> — sem exceção por porte.</li>
+        <li>Multas (quando aplicáveis) seguem a NR-28: de <strong>~R$ 670 a ~R$ 67 mil por trabalhador exposto</strong>, majoráveis na reincidência.</li>
+        <li>Resultado: uma <strong>janela ideal para se adequar sem a pressão da multa</strong> — e uma demanda crescente por profissionais que saibam fazer isso.</li>
+      </ul>
+    </div>
+
+    <TOC items={toc} />
+
+    <h2 id="o-que-e-nr1">O que é a NR-1</h2>
+    <p>
+      A <strong>NR-1 (Norma Regulamentadora nº 1)</strong> é a norma "mãe" da
+      segurança e saúde no trabalho (SST) no Brasil. É ela que estabelece as
+      <strong> disposições gerais</strong> e o <strong>gerenciamento de riscos
+      ocupacionais</strong> que todas as demais NRs detalham. Se as outras normas
+      cuidam de temas específicos (ruído, altura, eletricidade), a NR-1 define a
+      lógica geral: como a empresa deve identificar, avaliar e controlar os riscos
+      a que seus trabalhadores estão expostos.
+    </p>
+    <p>Dois conceitos centrais aparecem o tempo todo — vale fixá-los:</p>
+    <ul>
+      <li><strong>GRO (Gerenciamento de Riscos Ocupacionais):</strong> o processo contínuo de identificar perigos, avaliar riscos e definir medidas de controle. É o "sistema".</li>
+      <li><strong>PGR (Programa de Gerenciamento de Riscos):</strong> o documento que materializa o GRO. Contém o <strong>inventário de riscos</strong> e o <strong>plano de ação</strong>. É a "prova" de que a empresa está gerenciando.</li>
+    </ul>
+    <p>
+      Se esses termos ainda geram dúvida, temos um guia dedicado:
+      <a href="/gro-e-pgr-o-que-e/">GRO e PGR: o que são e qual a diferença</a>.
+    </p>
+    <p>
+      A grande virada de 2024–2026 foi <strong>o que precisa entrar nesse
+      inventário</strong>.
+    </p>
+
+    <h2 id="o-que-mudou">O que mudou: o capítulo dos riscos psicossociais</h2>
+    <p>
+      Historicamente, o PGR concentrava riscos <strong>físicos</strong> (ruído,
+      calor), <strong>químicos</strong> (poeiras, vapores), <strong>biológicos</strong>
+      (vírus, bactérias), <strong>ergonômicos</strong> e <strong>de acidentes</strong>.
+      A atualização promovida pela <strong>Portaria MTE 1.419/2024</strong> trouxe
+      para o mesmo patamar os <strong>fatores de risco psicossocial relacionados
+      ao trabalho (FRPRT)</strong>.
+    </p>
+    <p>Na prática, passam a ser objeto de mapeamento obrigatório coisas como:</p>
+    <ul>
+      <li><strong>Assédio moral e sexual</strong> e outras formas de violência no trabalho;</li>
+      <li><strong>Sobrecarga</strong> e jornadas excessivas;</li>
+      <li><strong>Metas inalcançáveis</strong> e pressão desproporcional por resultados;</li>
+      <li><strong>Falta de autonomia</strong> e de clareza sobre o próprio papel;</li>
+      <li>Conflitos, relações abusivas e ambientes tóxicos;</li>
+      <li>Fatores que levam a <strong>burnout, ansiedade e depressão</strong>.</li>
+    </ul>
+    <p>
+      Em outras palavras: a saúde mental deixou de ser um "benefício de bem-estar"
+      opcional e passou a ser uma <strong>obrigação legal de gestão de risco</strong>,
+      no mesmo nível de um EPI para ruído. Veja
+      <a href="/riscos-psicossociais-exemplos/">15 exemplos práticos de fatores de
+      risco psicossocial</a> que precisam entrar no PGR.
+    </p>
+
+    <h2 id="linha-do-tempo">Linha do tempo da mudança</h2>
+    <p>
+      <img
+        src="/images/linha-do-tempo-nr1-riscos-psicossociais.png"
+        alt="Linha do tempo da NR-1 e riscos psicossociais: Portaria 1.419/2024, Portaria 765/2025, obrigação em vigor em 26/05/2026 e suspensão das multas pelo STF em junho de 2026"
+        width="1200"
+        height="520"
+        loading="lazy"
+        style="width:100%;height:auto;border-radius:var(--radius);border:1px solid var(--cinza-200);"
+      />
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Quando</th><th>O que aconteceu</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Ago/2024</strong></td>
+            <td>Publicação da <strong>Portaria MTE 1.419/2024</strong>, incluindo os riscos psicossociais na NR-1.</td>
+          </tr>
+          <tr>
+            <td><strong>Mai/2025</strong></td>
+            <td><strong>Portaria 765/2025</strong> adia a exigência e cria uma <strong>fase educativa</strong> (orientação, sem multa imediata).</td>
+          </tr>
+          <tr>
+            <td><strong>Até 25/05/2026</strong></td>
+            <td>Período educativo: fiscalização orienta e capacita, prepara as empresas.</td>
+          </tr>
+          <tr>
+            <td><strong>26/05/2026</strong></td>
+            <td><strong>Entra em vigor a obrigação</strong> e o fim da fase educativa — a exigência passa a valer para todas as empresas CLT.</td>
+          </tr>
+          <tr>
+            <td><strong>15/06/2026</strong></td>
+            <td>Liminar obtida pela <strong>FIESP</strong> suspende <em>multas</em> para empresas por ela representadas — mantendo a obrigação de gerir os riscos.</td>
+          </tr>
+          <tr>
+            <td><strong>25/06/2026</strong></td>
+            <td>Decisão cautelar do <strong>STF suspende por 90 dias</strong> a aplicação de multas ligadas a itens dos riscos psicossociais, em âmbito nacional.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      O ponto que mais gera confusão hoje: a <strong>obrigação de gerir os riscos
+      psicossociais está em vigor</strong> — o que ficou temporariamente suspenso,
+      por decisão do STF de junho/2026, é a <strong>aplicação de multas</strong>
+      (por 90 dias), não a exigência em si. Na prática, isso cria uma
+      <strong> janela rara</strong>: dá para estruturar a adequação com calma,
+      antes de a punição voltar. Empresas — e profissionais — que se anteciparem
+      largam na frente.
+    </p>
+
+    <h2 id="dados">Os números do problema</h2>
+    <p>
+      A mudança não é burocrática — ela responde a uma crise mensurável de saúde
+      mental no trabalho:
+    </p>
+    <ul>
+      <li>Os <strong>afastamentos por transtornos mentais cresceram cerca de 67%</strong> entre 2023 e 2024, segundo dados previdenciários.</li>
+      <li>Foram <strong>mais de 440 mil trabalhadores afastados em 2024</strong> por condições como ansiedade, depressão e burnout.</li>
+      <li>Transtornos mentais estão entre as <strong>principais causas de afastamento</strong> de longa duração no país.</li>
+    </ul>
+    <p>
+      <small>
+        Fontes: dados da Previdência Social / Ministério do Trabalho e Emprego
+        (gov.br). Recomendamos consultar as estatísticas oficiais mais recentes,
+        pois os números são atualizados periodicamente.
+      </small>
+    </p>
+    <blockquote>
+      É esse cenário — custo humano e financeiro dos afastamentos — que explica
+      por que o Estado decidiu tratar o risco psicossocial com o mesmo rigor de um
+      risco físico.
+    </blockquote>
+
+    <h2 id="o-que-fazer">O que a empresa precisa fazer, na prática</h2>
+    <p>Adequar-se à NR-1 quanto aos riscos psicossociais envolve, em resumo:</p>
+    <ol>
+      <li><strong>Mapear os FRPRT</strong> — identificar os fatores de risco psicossocial presentes na organização (por área, função, liderança).</li>
+      <li><strong>Incluir no inventário de riscos do PGR</strong> — documentar formalmente, com avaliação de probabilidade e severidade.</li>
+      <li><strong>Elaborar um plano de ação</strong> — medidas concretas para eliminar ou reduzir cada risco, com responsáveis e prazos.</li>
+      <li><strong>Monitorar e revisar</strong> — o GRO é contínuo; não é um documento que se faz uma vez e arquiva.</li>
+      <li><strong>Capacitar lideranças</strong> — boa parte do risco psicossocial nasce (ou se resolve) na gestão direta.</li>
+      <li><strong>Envolver a CIPA e a saúde ocupacional</strong> — integrar o tema aos canais já existentes.</li>
+    </ol>
+    <p>
+      Repare que quase nada disso é "automático". Cada etapa exige alguém que
+      saiba <strong>como</strong> fazer — e é justamente essa competência que o
+      mercado passou a disputar.
+    </p>
+
+    <h2 id="multas">Multas e consequências</h2>
+    <p>
+      As penalidades por descumprimento seguem a <strong>NR-28</strong>, com
+      valores graduados por gravidade que vão de cerca de
+      <strong> R$ 670 a R$ 67 mil por trabalhador exposto</strong>, multiplicados
+      pelo número de expostos e <strong>dobrados em caso de reincidência</strong>.
+      Detalhamos o cálculo, exemplos e como evitar no guia
+      <a href="/multa-nr1-2026/">Multa da NR-1 em 2026</a>.
+    </p>
+    <p>Mas a multa administrativa é só parte do risco. Some-se a isso:</p>
+    <ul>
+      <li>O <strong>Ministério Público do Trabalho (MPT)</strong> já vinha atuando sobre o tema mesmo antes do prazo final.</li>
+      <li>Em <strong>ações trabalhistas</strong>, a ausência de gestão do risco psicossocial pode reforçar o <strong>nexo causal</strong> entre o adoecimento do trabalhador e o ambiente — elevando indenizações.</li>
+      <li>Dano reputacional e dificuldade em processos de <strong>due diligence</strong> e contratos com grandes clientes.</li>
+    </ul>
+
+    <h2 id="carreira">A oportunidade de carreira: o Gestor de NR1</h2>
+    <p>
+      Aqui está a consequência de mercado de tudo o que foi dito acima. Se
+      <strong> toda empresa com CLT precisa se adequar</strong>, e a adequação
+      exige competência técnica que a maioria das empresas <strong>não tem
+      internamente</strong>, o resultado é matemático: uma
+      <strong> demanda explosiva por profissionais e consultores</strong> capazes
+      de fazer esse trabalho.
+    </p>
+    <p>
+      E há um detalhe que amplia a oportunidade: como vimos, a norma
+      <strong> não exige um diploma específico</strong> para atuar com riscos
+      psicossociais — exige <strong>conhecimento técnico</strong>. Isso abre a
+      porta para profissionais de RH, SST, segurança do trabalho, psicologia e até
+      pessoas em transição de carreira, desde que se qualifiquem de verdade no
+      tema.
+    </p>
+    <div class="fact-box">
+      <p style="margin:0;">
+        📈 <strong>Por que agora:</strong> a janela mais valiosa de qualquer novo
+        mercado é o começo — quando a demanda já existe (fiscalização valendo) mas
+        a oferta de profissionais qualificados ainda é pequena. É exatamente o
+        momento da NR-1 psicossocial em 2026.
+      </p>
+    </div>
+    <p>
+      Foi pensando nessa função — o "Gestor de NR1" — que analisamos a fundo a
+      formação mais completa que encontramos para essa carreira. Se você quer
+      transformar essa exigência legal em profissão ou em serviço de consultoria,
+      vale a leitura:
+    </p>
+    <p>
+      👉 <strong>
+        <a href="/formacao-gestor-de-nr1-izabella-camargo-review/">
+          Leia nossa análise completa da Formação Gestor de NR1 (Izabella Camargo)
+        </a>
+      </strong> — os 12 módulos, o certificado, o preço e para quem realmente
+      vale a pena.
+    </p>
+
+    <FAQ items={faqItems} />
+
+    <h2 id="conclusao">Conclusão</h2>
+    <p>
+      A NR-1 de 2026 marca uma virada estrutural: a saúde mental no trabalho
+      deixou de ser discurso e virou obrigação legal fiscalizável. Para as
+      empresas, é hora de agir — mapear, documentar no PGR e criar planos de ação
+      reais. Para os profissionais, é uma das maiores oportunidades de carreira
+      abertas na área de gestão de pessoas e segurança do trabalho nos últimos
+      anos.
+    </p>
+    <p>
+      De qualquer lado que você olhe — como empresa que precisa se adequar ou como
+      profissional que quer atuar — o primeiro passo é o mesmo:
+      <strong> entender a norma a fundo e dominar a prática</strong>.
+    </p>
+
+    <div class="cta-wrap">
+      <a class="btn-secondary" href="/formacao-gestor-de-nr1-izabella-camargo-review/">
+        Ver o review da formação mais completa →
+      </a>
+    </div>
+    <CTA text="Conhecer a Formação Gestor de NR1 →" />
+
+    <p class="muted">
+      <small>
+        Este conteúdo é informativo e não substitui consultoria jurídica,
+        contábil ou de segurança do trabalho. Sempre consulte as fontes oficiais
+        (MTE / gov.br) e um profissional habilitado. Página atualizada
+        periodicamente — última revisão: {SITE.updatedLabel}.
+      </small>
+    </p>
+  </article>
+</Base>

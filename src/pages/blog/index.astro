@@ -1,0 +1,48 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { SITE } from '../../data/site';
+import { breadcrumbSchema } from '../../data/schema';
+
+const title = 'Blog — NR-1, Riscos Psicossociais e Carreira';
+const description =
+  'Artigos sobre a carreira de Gestor de NR1, riscos psicossociais, fiscalização e como atuar na área de SST em 2026.';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+
+const schemas = [breadcrumbSchema([['Início', '/'], ['Blog', '/blog/']])];
+---
+<Base title={`${title} | ${SITE.name}`} description={description} schemas={schemas}>
+  <div class="page-hero">
+    <div class="container container-wide">
+      <p class="kicker">Blog</p>
+      <h1>Carreira, riscos psicossociais e NR-1 na prática</h1>
+      <p>Artigos para quem quer entender a norma e atuar profissionalmente na área.</p>
+    </div>
+  </div>
+
+  <div class="container container-wide">
+    {posts.length === 0 ? (
+      <p class="muted" style="padding:2rem 0;">Em breve, novos artigos.</p>
+    ) : (
+      <div class="card-grid" style="margin-top:2rem;">
+        {posts.map((post) => (
+          <div class="post-card">
+            <span class="tag">{post.data.tag} · {post.data.funnel}</span>
+            <h3><a href={`/blog/${post.id}/`}>{post.data.title}</a></h3>
+            <p>{post.data.description}</p>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:0.6rem;">
+              <small class="muted">{fmt(post.data.pubDate)}</small>
+              <a class="read" href={`/blog/${post.id}/`}>Ler →</a>
+            </div>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+</Base>

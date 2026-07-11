@@ -1,0 +1,409 @@
+---
+import Base from '../layouts/Base.astro';
+import AffiliateDisclosure from '../components/AffiliateDisclosure.astro';
+import VeredictBox from '../components/VeredictBox.astro';
+import CTA from '../components/CTA.astro';
+import TOC from '../components/TOC.astro';
+import FAQ from '../components/FAQ.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { SITE } from '../data/site';
+import {
+  articleSchema,
+  faqSchema,
+  breadcrumbSchema,
+  itemListSchema,
+  ENTITIES,
+  type FaqItem,
+} from '../data/schema';
+
+const title = 'Formação Gestor de NR1 (Izabella Camargo) Vale a Pena? [2026]';
+const description =
+  'Análise completa da Formação Gestor de NR1 da Izabella Camargo: os 12 módulos, certificado MEC, preço, garantia e para quem vale (ou não) a pena em 2026.';
+const path = '/formacao-gestor-de-nr1-izabella-camargo-review/';
+
+const toc = [
+  { id: 'veredito', label: 'Veredito rápido' },
+  { id: 'o-que-e', label: 'O que é a Formação Gestor de NR1' },
+  { id: 'quem-e', label: 'Quem é Izabella Camargo' },
+  { id: 'modulos', label: 'Os 12 módulos, um a um' },
+  { id: 'professores', label: 'Corpo docente' },
+  { id: 'certificado', label: 'Certificado MEC' },
+  { id: 'preco', label: 'Preço e condições' },
+  { id: 'reputacao', label: 'Reclame Aqui e reputação' },
+  { id: 'pros-contras', label: 'Prós e contras' },
+  { id: 'para-quem', label: 'Para quem vale (e para quem não vale)' },
+  { id: 'alternativas', label: 'Alternativas no mercado' },
+  { id: 'faq', label: 'Perguntas frequentes' },
+  { id: 'veredito-final', label: 'Veredito final' },
+];
+
+const modulos = [
+  { t: 'Produtividade Sustentável', d: 'Abre a formação conectando desempenho e saúde mental — mostra por que produtividade "a qualquer custo" é o gatilho de boa parte dos riscos psicossociais que a NR-1 agora exige mapear.' },
+  { t: 'Aspectos Jurídicos da NR-1', d: 'O módulo que sozinho justifica boa parte do curso. Cobre a Portaria 1.419/2024, a 765/2025, responsabilidade da empresa, nexo causal e o que muda na prática trabalhista. É aqui que o gestor entende o "porquê legal" de tudo.' },
+  { t: 'Comunicação Assertiva', d: 'Ferramenta de campo: como conduzir conversas difíceis, dar feedback e mediar conflitos — competências centrais de quem vai atuar com fatores psicossociais dentro das empresas.' },
+  { t: 'GRO na Prática', d: 'Gerenciamento de Riscos Ocupacionais aplicado. Como o risco psicossocial entra no GRO e no inventário de riscos, sem ficar só na teoria da norma.' },
+  { t: 'Custos Evitados (FAP, RAT, SAT, CAT)', d: 'O módulo que dá munição comercial ao consultor: como traduzir saúde mental em dinheiro (redução de FAP, menos CAT, menos afastamento) — o argumento que abre a porta do RH e da diretoria.' },
+  { t: 'Riscos Psicossociais', d: 'O núcleo técnico. Identificação, avaliação e classificação dos fatores de risco psicossocial (FRPRT) que passaram a ser obrigatórios no PGR.' },
+  { t: 'Saúde Mental na Prática', d: 'Sai do diagnóstico e vai para a intervenção: como estruturar ações reais de saúde mental que sustentam uma auditoria e um plano de ação.' },
+  { t: 'EPIs da Saúde Mental', d: 'Conceito autoral da Izabella — a metáfora que virou marca dela. Ferramentas individuais e coletivas de proteção psicológica. É diferenciação de posicionamento para o consultor.' },
+  { t: 'Pensamento Sistêmico', d: 'Enxergar a organização como sistema — por que problemas de saúde mental raramente são "da pessoa" e quase sempre do desenho do trabalho. Base para diagnósticos que convencem lideranças.' },
+  { t: 'Endividamento e Saúde Financeira', d: 'Fator psicossocial frequentemente ignorado. Reconhece o estresse financeiro do trabalhador como risco real — abordagem que poucos concorrentes tocam.' },
+  { t: 'Cultura Organizacional', d: 'Como cultura vira (ou destrói) um programa de saúde mental. Prático para quem vai implantar mudança e não só entregar um relatório.' },
+  { t: 'Segurança Psicológica', d: 'Fecha a formação no conceito que sustenta tudo: ambientes onde as pessoas falam sem medo. É o "estado final" que o gestor de NR1 busca construir.' },
+];
+
+const faqItems: FaqItem[] = [
+  {
+    q: 'Preciso de formação específica (diploma) para atuar com NR-1?',
+    a: '<p>Não. A NR-1 não exige um diploma ou registro em conselho específico para quem atua com o gerenciamento de riscos psicossociais. O que o mercado cobra é <strong>conhecimento técnico comprovado</strong> — entender a norma, o PGR, o GRO e saber mapear os fatores de risco. É exatamente essa lacuna que uma formação estruturada preenche.</p>',
+  },
+  {
+    q: 'O certificado da Formação Gestor de NR1 é reconhecido pelo MEC?',
+    a: '<p>Sim. Segundo a página oficial, o certificado é emitido como <strong>curso de extensão universitária pela Faculdade Focus</strong>, instituição credenciada ao MEC, e é liberado após a conclusão de 75% do conteúdo. Vale reforçar que "reconhecido pelo MEC" aqui significa extensão universitária — não é graduação nem pós-graduação. <em>(Confirme as condições vigentes na página oficial antes de decidir.)</em></p>',
+  },
+  {
+    q: 'Quanto custa a Formação Gestor de NR1?',
+    a: '<p>No momento desta análise, o valor divulgado era de <strong>R$ 2.497 à vista</strong> (de R$ 3.497) ou <strong>12x de R$ 250,70</strong>. Preço, bônus e condições mudam a cada turma — <strong>confira sempre o valor atual na página oficial</strong>.</p>',
+  },
+  {
+    q: 'A Formação Gestor de NR1 tem garantia?',
+    a: '<p>Sim. A compra é feita pela Hotmart e conta com a <strong>garantia legal de 7 dias</strong>: se você não gostar, pode pedir reembolso integral dentro desse prazo, direto pela plataforma.</p>',
+  },
+  {
+    q: 'Por quanto tempo tenho acesso ao curso?',
+    a: '<p>O acesso divulgado é de <strong>1 ano</strong> (com 2 anos para os primeiros inscritos, conforme a campanha vigente). Como esse tipo de condição muda por turma, confirme na página oficial.</p>',
+  },
+  {
+    q: 'A compra é segura?',
+    a: '<p>Sim. O pagamento é processado pela <strong>Hotmart</strong>, uma das maiores plataformas de produtos digitais da América Latina, com ambiente seguro, emissão de garantia e suporte a reembolso dentro do prazo legal.</p>',
+  },
+];
+
+const schemas = [
+  articleSchema({
+    headline: 'Formação Gestor de NR1 da Izabella Camargo: análise completa e sincera [2026]',
+    description,
+    url: path,
+    datePublished: '2026-07-10',
+    dateModified: SITE.updatedISO,
+    about: ENTITIES.formacao,
+    mentions: [ENTITIES.izabella, ENTITIES.nr1, ENTITIES.gestorNr1, ENTITIES.riscosPsicossociais],
+    keywords: [
+      'formação gestor de nr1',
+      'formação gestor de nr1 vale a pena',
+      'curso izabella camargo nr1',
+      'formação gestor de nr1 é bom',
+      'gestor de nr1 certificado',
+    ],
+  }),
+  itemListSchema(
+    'Os 12 módulos da Formação Gestor de NR1',
+    modulos.map((m) => m.t)
+  ),
+  faqSchema(faqItems),
+  breadcrumbSchema([
+    ['Início', '/'],
+    ['Review da Formação Gestor de NR1', path],
+  ]),
+];
+---
+<Base title={title} description={description} schemas={schemas} ogType="article">
+  <div class="page-hero">
+    <div class="container">
+      <p class="kicker">Análise independente · Atualizado em {SITE.updatedLabel}</p>
+      <h1>Formação Gestor de NR1 da Izabella Camargo: análise completa e sincera [2026]</h1>
+      <p>
+        Com a fiscalização punitiva da NR-1 já em vigor, virou uma das formações
+        mais procuradas da área de SST. Ela cumpre o que promete? Analisamos os
+        12 módulos, o corpo docente, o certificado, o preço e para quem realmente
+        vale a pena.
+      </p>
+    </div>
+  </div>
+
+  <article class="container article">
+    <Breadcrumbs crumbs={[['Início', '/'], ['Review da Formação Gestor de NR1', path]]} />
+    <div class="article-meta">
+      <span class="updated-badge">Atualizado em {SITE.updatedLabel}</span>
+      <span>Por <a href="/sobre/">{SITE.name}</a> · Portal independente</span>
+    </div>
+
+    <AffiliateDisclosure />
+
+    <TOC items={toc} />
+
+    <h2 id="veredito">Veredito rápido</h2>
+    <p class="lead">
+      Se você quer atuar com riscos psicossociais e NR-1 e busca uma formação
+      ampla, com corpo docente qualificado e certificado de extensão universitária,
+      a Formação Gestor de NR1 é hoje uma das opções mais completas do mercado
+      brasileiro. Não é a mais barata, e exige dedicação — mas entrega profundidade
+      que os concorrentes de "professor único" não alcançam.
+    </p>
+
+    <VeredictBox
+      score="8.7"
+      forWhom={[
+        'Quer migrar ou se posicionar como consultor(a) de NR-1 e riscos psicossociais',
+        'Trabalha com RH, SST, segurança do trabalho ou saúde ocupacional e precisa dominar a nova exigência',
+        'Valoriza corpo docente variado (jurídico, psiquiatria, engenharia, INSS) e certificado com lastro universitário',
+        'Quer argumento comercial (custos evitados, FAP/RAT) para vender o serviço',
+      ]}
+      notForWhom={[
+        'Procura um curso barato e superficial só para "tirar uma dúvida"',
+        'Não tem tempo para se dedicar a 12 módulos ao longo dos meses de acesso',
+        'Busca uma graduação ou pós-graduação formal (isto é extensão, não diploma superior)',
+      ]}
+      price="R$ 2.497 à vista ou 12x R$ 250,70 (conferir na página oficial)"
+      guarantee="7 dias (Hotmart)"
+      access="1 ano (2 anos para os primeiros inscritos)"
+    />
+
+    <p>
+      <small>
+        ⚠️ <strong>Nota de transparência sobre dados:</strong> preço, bônus,
+        prazo de acesso e condições são divulgados pela página oficial e
+        <strong> mudam a cada abertura de turma</strong>. Os valores acima
+        refletem a campanha observada na elaboração desta análise —
+        <strong>confirme sempre na oferta oficial</strong> antes de decidir.
+      </small>
+    </p>
+
+    <h2 id="o-que-e">O que é a Formação Gestor de NR1</h2>
+    <p>
+      A <strong>Formação Gestor de NR1</strong> é um curso online criado pela
+      jornalista e especialista em saúde mental no trabalho Izabella Camargo,
+      voltado para formar profissionais capazes de implementar as exigências da
+      NR-1 dentro das empresas — em especial o <strong>gerenciamento de riscos
+      psicossociais</strong>, que se tornou obrigatório no PGR.
+    </p>
+    <p>
+      O timing não é coincidência. Desde <strong>26 de maio de 2026</strong>, a
+      fiscalização da NR-1 sobre riscos psicossociais deixou de ser apenas
+      orientativa e passou a ser <strong>punitiva</strong> — com base na Portaria
+      MTE 1.419/2024 e na Portaria 765/2025. Na prática, isso significa que
+      <strong> toda empresa com funcionários CLT</strong>, independentemente do
+      porte, precisa mapear fatores como assédio, sobrecarga, metas inalcançáveis
+      e burnout, e incluí-los no seu inventário de riscos. O resultado é uma
+      demanda repentina e enorme por profissionais que saibam fazer isso — e é
+      esse profissional que a formação se propõe a criar: o "Gestor de NR1".
+    </p>
+    <p>
+      Para entender o contexto completo da norma e por que essa demanda explodiu,
+      vale ler nosso
+      <a href="/nr-1-atualizada-2026/">guia da NR-1 atualizada em 2026</a>.
+    </p>
+
+    <h2 id="quem-e">Quem é Izabella Camargo (e por que isso importa)</h2>
+    <p>
+      Numa área que tangencia direito, saúde e segurança do trabalho, a
+      credibilidade de quem ensina pesa. E aqui a autora tem um currículo
+      relevante:
+    </p>
+    <ul>
+      <li><strong>Jornalista</strong> com passagem pela TV Globo, onde se tornou conhecida ao expor publicamente seu próprio caso de <strong>burnout</strong> — o que a levou a se especializar em saúde mental no trabalho.</li>
+      <li>Criadora do conceito dos <strong>"EPIs da Saúde Mental"</strong>, hoje uma marca própria de abordagem.</li>
+      <li><strong>LinkedIn Top Voice</strong> e palestrante <strong>TEDx</strong> (5 edições).</li>
+      <li>Autora do livro <em>"Dá um Tempo!"</em>.</li>
+      <li>Premiada como <strong>maior influenciadora de RH do Brasil</strong> pelo prêmio iBest (2023, 2024 e 2025).</li>
+    </ul>
+    <p>
+      Ou seja: não é uma "expert" improvisada surfando na onda da norma. É alguém
+      com autoridade construída no tema de saúde mental corporativa <em>antes</em>
+      da NR-1 virar assunto obrigatório. Isso não garante que o curso seja bom por
+      si só — mas dá lastro ao conteúdo e reduz o risco de "produto oportunista".
+    </p>
+
+    <CTA text="Conhecer a Formação na página oficial →" />
+
+    <h2 id="modulos">Os 12 módulos, analisados um a um</h2>
+    <p>
+      Aqui está o que quase nenhum concorrente faz: olhar módulo por módulo. A
+      grade cobre desde a base jurídica até intervenção prática, o que revela a
+      intenção de formar alguém que <strong>atue</strong>, não apenas que "conheça"
+      a norma. Nossa leitura de cada um:
+    </p>
+    <div class="module-list">
+      {modulos.map((m, i) => (
+        <div class="module-item">
+          <h3><span class="num">{String(i + 1).padStart(2, '0')}</span>{m.t}</h3>
+          <p>{m.d}</p>
+        </div>
+      ))}
+    </div>
+    <p>
+      <strong>Nossa avaliação da grade:</strong> o grande acerto é o equilíbrio
+      entre <em>jurídico</em> (o que a lei exige), <em>técnico</em> (como mapear e
+      classificar o risco no PGR/GRO) e <em>comercial</em> (custos evitados,
+      cultura, comunicação) — os três pés que faltam em cursos que só explicam a
+      norma. O módulo de <strong>Custos Evitados</strong> é, na nossa visão, o mais
+      subestimado: é o que transforma o aluno de "quem entende a NR-1" em "quem
+      consegue vender o serviço".
+    </p>
+
+    <h2 id="professores">Corpo docente</h2>
+    <p>
+      Um dos diferenciais mais concretos frente aos concorrentes: em vez de um
+      instrutor único, a formação reúne <strong>mais de 10 professores</strong>
+      de áreas complementares — incluindo <strong>advogados trabalhistas</strong>
+      (com formação em instituições como USP e PUC), <strong>engenheiro de
+      segurança do trabalho</strong>, <strong>psiquiatra</strong> e
+      <strong> técnico do INSS</strong>, entre outros.
+    </p>
+    <p>
+      Por que isso importa: riscos psicossociais são, por natureza, um tema
+      multidisciplinar. Um curso apoiado só na visão de RH deixa buracos no
+      jurídico; um curso só jurídico não ensina intervenção. A diversidade do
+      corpo docente é coerente com a complexidade real do trabalho do gestor de
+      NR1 — e é uma vantagem difícil de replicar para os cursos genéricos que
+      disputam as mesmas buscas.
+    </p>
+
+    <h2 id="certificado">Certificado MEC: o que significa na prática</h2>
+    <p>
+      O certificado é emitido como <strong>curso de extensão universitária pela
+      Faculdade Focus</strong>, instituição credenciada ao MEC, e é liberado após
+      a conclusão de <strong>75% do conteúdo</strong>.
+    </p>
+    <h3>O certificado é "reconhecido pelo MEC"?</h3>
+    <p>
+      Sim, no sentido de que a instituição emissora é credenciada e o certificado
+      é de <strong>extensão universitária</strong>. Mas é importante calibrar a
+      expectativa: extensão universitária <strong>não é graduação nem
+      pós-graduação</strong>. Para a atuação com NR-1 isso é suficiente — a norma
+      não exige diploma específico — e o certificado agrega credibilidade ao seu
+      portfólio de consultor. Só não o confunda com um título de nível superior.
+    </p>
+
+    <h2 id="preco">Preço, condições e bônus</h2>
+    <p>
+      Na campanha observada nesta análise, o investimento era de
+      <strong> R$ 3.497 por R$ 2.497 à vista</strong>, ou
+      <strong> 12x de R$ 250,70</strong>. Outras condições divulgadas:
+    </p>
+    <ul>
+      <li><strong>Garantia de 7 dias</strong> pela Hotmart (reembolso integral no prazo legal).</li>
+      <li><strong>Acesso de 1 ano</strong> — com 2 anos para os primeiros inscritos.</li>
+      <li><strong>Bônus por ordem de inscrição</strong> (ex.: vantagens extras para os primeiros 500 / 400 / 300 inscritos, conforme a campanha).</li>
+    </ul>
+    <div class="fact-box">
+      <p style="margin:0;">
+        💡 <strong>É caro?</strong> Para um curso de conteúdo, R$ 2.497 não é
+        barato. Mas o cálculo relevante é o de retorno: um único contrato de
+        consultoria de riscos psicossociais para uma empresa média costuma
+        superar, com folga, o valor da formação. O curso se paga no primeiro
+        cliente — <em>se</em> você realmente for atuar. Se a ideia é só "saber do
+        assunto", existem materiais gratuitos mais adequados ao seu objetivo.
+      </p>
+    </div>
+
+    <CTA text="Ver preço e condições atuais →" sub="Valores mudam a cada turma — confira o oficial" />
+
+    <h2 id="reputacao">Reclame Aqui e reputação</h2>
+    <p>
+      Na verificação feita para esta análise, <strong>não encontramos reclamações
+      relevantes ou recorrentes</strong> sobre a Formação Gestor de NR1 — apenas
+      questões pontuais de acesso à plataforma, que aparecem resolvidas. Somado à
+      autoridade pública da autora e ao uso da Hotmart (com garantia e reembolso),
+      o quadro de reputação é positivo.
+    </p>
+    <p>
+      <small>
+        Reputação é dado vivo: recomendamos <strong>consultar o Reclame Aqui e
+        avaliações recentes na data da sua decisão</strong>. Mantemos esta seção
+        sob revisão periódica.
+      </small>
+    </p>
+
+    <h2 id="pros-contras">Prós e contras (sem enrolação)</h2>
+    <div class="proscons">
+      <div class="card pros">
+        <h4>👍 Prós</h4>
+        <ul>
+          <li>Grade completa: jurídico + técnico + comercial</li>
+          <li>Corpo docente multidisciplinar (10+ professores)</li>
+          <li>Certificado de extensão universitária (Faculdade Focus/MEC)</li>
+          <li>Autora com autoridade real no tema</li>
+          <li>Módulo de custos evitados = argumento de venda</li>
+          <li>Garantia de 7 dias e compra via Hotmart</li>
+          <li>Timing perfeito com a fiscalização já valendo</li>
+        </ul>
+      </div>
+      <div class="card cons">
+        <h4>👎 Contras</h4>
+        <ul>
+          <li>Preço não é baixo (R$ 2.497)</li>
+          <li>Acesso limitado a 1 ano (2 para os primeiros)</li>
+          <li>Exige dedicação — não é curso "de um fim de semana"</li>
+          <li>É extensão, não graduação/pós</li>
+          <li>Condições e bônus mudam por turma</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 id="para-quem">Para quem vale a pena — e para quem não vale</h2>
+    <h3>Vale muito a pena se você…</h3>
+    <ul>
+      <li>Quer <strong>atuar profissionalmente</strong> com NR-1 e riscos psicossociais (consultor, analista de SST, RH, segurança do trabalho).</li>
+      <li>Precisa de uma base que sustente <strong>vender e entregar</strong> o serviço, não só entender a teoria.</li>
+      <li>Valoriza certificado com lastro universitário e corpo docente sério.</li>
+    </ul>
+    <h3>Provavelmente não vale se você…</h3>
+    <ul>
+      <li>Só quer <strong>tirar uma curiosidade</strong> sobre a norma (use conteúdo gratuito — comece pelo nosso <a href="/nr-1-atualizada-2026/">guia da NR-1</a>).</li>
+      <li>Não tem tempo para se dedicar aos 12 módulos.</li>
+      <li>Espera um diploma de nível superior (não é o caso).</li>
+    </ul>
+    <p>
+      Ainda em dúvida sobre a decisão de carreira? Veja os dois lados:
+      <a href="/carreira-gestor-de-nr1-com-proposito/">o propósito por trás dessa
+      profissão</a> e <a href="/por-que-se-tornar-gestor-de-nr1-agora/">por que 2026
+      é o momento de entrar nesse mercado</a>.
+    </p>
+
+    <h2 id="alternativas">Alternativas no mercado</h2>
+    <p>
+      Para uma análise honesta, é justo citar outras opções — e onde elas ficam
+      frente à Formação:
+    </p>
+    <ul>
+      <li><strong>Cursos de NR-1 do Inbraep e similares:</strong> costumam ser mais baratos e focados na parte técnica/normativa. Boa porta de entrada, mas geralmente sem a camada comercial (venda do serviço) e sem a profundidade em saúde mental.</li>
+      <li><strong>Instituto Ethos / programas de cultura e ética:</strong> excelentes para visão organizacional ampla, porém não são desenhados para formar o operador técnico da NR-1.</li>
+      <li><strong>Escola de Pessoas e formações de RH:</strong> fortes no lado humano e de gestão, mas costumam tocar a NR-1 de forma tangencial, sem o mergulho jurídico-técnico que a norma agora exige.</li>
+    </ul>
+    <p>
+      <strong>Nossa conclusão comparativa:</strong> se o seu objetivo é apenas
+      cumprir a norma internamente numa empresa, uma formação técnica mais enxuta
+      pode bastar. Mas se você quer <strong>atuar como consultor(a) e viver
+      disso</strong>, a Formação Gestor de NR1 é, entre as opções analisadas, a
+      mais completa de ponta a ponta.
+    </p>
+
+    <FAQ items={faqItems} />
+
+    <h2 id="veredito-final">Veredito final</h2>
+    <p>
+      A Formação Gestor de NR1 chega no momento certo, com a estrutura certa. O
+      conjunto — grade multidisciplinar, corpo docente qualificado, certificado
+      de extensão universitária e a autoridade de Izabella Camargo — entrega mais
+      do que os concorrentes que disputam as mesmas buscas com conteúdo raso.
+    </p>
+    <p>
+      Não é um curso para todo mundo: tem preço de investimento sério e exige
+      dedicação. Mas para quem quer <strong>transformar a nova exigência da NR-1
+      em carreira ou em serviço de consultoria</strong>, é uma das apostas mais
+      sólidas disponíveis hoje. Nossa nota: <strong>8.7/10</strong>.
+    </p>
+
+    <CTA text="Ver a oferta oficial da Formação Gestor de NR1 →" />
+
+    <p class="muted">
+      <small>
+        Lembrete final de transparência: este é um conteúdo independente e pode
+        conter links de afiliado. Nossa análise busca ser honesta justamente
+        porque a confiança do leitor é o que sustenta o portal. Confira sempre as
+        condições vigentes na página oficial antes de comprar.
+      </small>
+    </p>
+  </article>
+</Base>

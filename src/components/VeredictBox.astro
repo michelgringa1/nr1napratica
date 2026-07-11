@@ -1,0 +1,55 @@
+---
+import CTA from './CTA.astro';
+export interface Props {
+  score: string;         // ex.: '8.7'
+  scoreLabel?: string;   // ex.: 'de 10'
+  title?: string;
+  forWhom: string[];
+  notForWhom: string[];
+  price: string;
+  guarantee: string;
+  access: string;
+}
+const {
+  score,
+  scoreLabel = 'de 10',
+  title = 'Veredito rápido',
+  forWhom,
+  notForWhom,
+  price,
+  guarantee,
+  access,
+} = Astro.props;
+---
+<div class="veredict">
+  <div class="veredict-head">
+    <div class="veredict-score">
+      <span class="num">{score}</span>
+      <span class="lbl">{scoreLabel}</span>
+    </div>
+    <h2>{title}</h2>
+  </div>
+
+  <div class="veredict-grid">
+    <div class="col">
+      <h4>✅ Vale a pena se você…</h4>
+      <ul>
+        {forWhom.map((x) => <li>{x}</li>)}
+      </ul>
+    </div>
+    <div class="col">
+      <h4>⚠️ Talvez não seja para você se…</h4>
+      <ul>
+        {notForWhom.map((x) => <li>{x}</li>)}
+      </ul>
+    </div>
+  </div>
+
+  <div class="veredict-meta">
+    <span><strong>Preço:</strong> {price}</span>
+    <span><strong>Garantia:</strong> {guarantee}</span>
+    <span><strong>Acesso:</strong> {access}</span>
+  </div>
+
+  <CTA />
+</div>

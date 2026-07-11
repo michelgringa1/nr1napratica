@@ -1,0 +1,243 @@
+---
+import Base from '../layouts/Base.astro';
+import CTA from '../components/CTA.astro';
+import TOC from '../components/TOC.astro';
+import FAQ from '../components/FAQ.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { SITE } from '../data/site';
+import {
+  articleSchema,
+  faqSchema,
+  breadcrumbSchema,
+  itemListSchema,
+  howToSchema,
+  ENTITIES,
+  type FaqItem,
+} from '../data/schema';
+
+const title = 'Riscos Psicossociais no Trabalho: 15 Exemplos [NR-1 2026]';
+const description =
+  'O que são riscos psicossociais no trabalho e 15 exemplos práticos de fatores (FRPRT) que sua empresa precisa mapear no PGR conforme a NR-1 em 2026.';
+const path = '/riscos-psicossociais-exemplos/';
+
+const toc = [
+  { id: 'o-que-sao', label: 'O que são riscos psicossociais' },
+  { id: 'categorias', label: 'As categorias oficiais (FRPRT)' },
+  { id: 'exemplos', label: '15 exemplos práticos para o PGR' },
+  { id: 'no-pgr', label: 'Como entram no PGR' },
+  { id: 'nao-e', label: 'O que NÃO é risco psicossocial' },
+  { id: 'faq', label: 'Perguntas frequentes' },
+];
+
+const exemplos = [
+  ['Sobrecarga de trabalho', 'Volume de tarefas acima da capacidade, com prazos irreais e acúmulo de funções.'],
+  ['Metas inalcançáveis', 'Objetivos abusivos ou constantemente elevados, gerando pressão desproporcional.'],
+  ['Ritmo de trabalho excessivo', 'Cadência imposta por sistemas, esteiras ou metas que não permite pausas adequadas.'],
+  ['Jornada excessiva e horas extras', 'Extrapolação habitual da jornada, plantões e indisponibilidade de descanso real.'],
+  ['Assédio moral', 'Condutas repetidas que humilham, isolam ou desqualificam o trabalhador.'],
+  ['Assédio sexual', 'Investidas, constrangimentos ou chantagens de natureza sexual no ambiente de trabalho.'],
+  ['Falta de autonomia', 'Controle rígido, microgerenciamento e ausência de participação nas decisões do próprio trabalho.'],
+  ['Ambiguidade e conflito de papéis', 'Falta de clareza sobre o que se espera do trabalhador ou ordens contraditórias.'],
+  ['Falta de apoio da liderança', 'Gestores ausentes, feedback inexistente ou hostilidade da chefia.'],
+  ['Relações interpessoais deterioradas', 'Conflitos frequentes, clima tóxico e falta de cooperação entre colegas.'],
+  ['Insegurança no emprego', 'Ameaça constante de demissão, instabilidade e mudanças imprevisíveis.'],
+  ['Exigências emocionais elevadas', 'Contato constante com sofrimento, clientes agressivos ou situações de forte carga emocional.'],
+  ['Violência no trabalho', 'Agressões físicas ou verbais, internas ou de terceiros (clientes, usuários).'],
+  ['Conflito trabalho–vida pessoal', 'Cobrança fora do horário, mensagens e demandas que invadem o tempo de descanso.'],
+  ['Trabalho monótono ou sem sentido', 'Atividades repetitivas, sem reconhecimento e sem percepção de propósito.'],
+];
+
+const faqItems: FaqItem[] = [
+  {
+    q: 'O que são fatores de risco psicossocial relacionados ao trabalho (FRPRT)?',
+    a: '<p>São aspectos da <strong>organização e das relações de trabalho</strong> capazes de causar danos à saúde mental — como sobrecarga, assédio, metas abusivas, falta de autonomia e insegurança no emprego. Com a atualização da NR-1 (Portaria MTE 1.419/2024), passaram a ser de mapeamento obrigatório no PGR.</p>',
+  },
+  {
+    q: 'Quantos fatores de risco psicossocial existem?',
+    a: '<p>Não há um número fixo. O guia do MTE organiza os fatores em <strong>grandes categorias</strong> (demandas do trabalho, organização e conteúdo, relações interpessoais, reconhecimento e insegurança, interface trabalho–vida). Dentro delas, os exemplos concretos variam conforme a realidade de cada empresa — por isso o mapeamento é sempre personalizado.</p>',
+  },
+  {
+    q: 'Estresse é considerado risco psicossocial?',
+    a: '<p>O estresse é a <strong>consequência</strong>, não o fator em si. O que se mapeia são as <strong>causas</strong> organizacionais que geram estresse crônico — sobrecarga, ritmo excessivo, assédio. Controlar o fator reduz o estresse e o risco de adoecimento (ansiedade, depressão, burnout).</p>',
+  },
+  {
+    q: 'Como identificar riscos psicossociais na empresa?',
+    a: '<p>Geralmente com uma combinação de <strong>questionários validados</strong> (como COPSOQ ou HSE), entrevistas, análise de indicadores (absenteísmo, rotatividade, afastamentos) e observação do trabalho. O resultado precisa ser classificado por severidade e probabilidade e registrado no <a href="/gro-e-pgr-o-que-e/">PGR</a>.</p>',
+  },
+];
+
+const schemas = [
+  articleSchema({
+    headline: 'Riscos psicossociais no trabalho: o que são e 15 exemplos práticos para o PGR',
+    description,
+    url: path,
+    datePublished: '2026-06-15',
+    dateModified: SITE.updatedISO,
+    about: ENTITIES.riscosPsicossociais,
+    keywords: [
+      'riscos psicossociais',
+      'fatores de risco psicossocial',
+      'FRPRT',
+      'exemplos riscos psicossociais',
+      'riscos psicossociais no PGR',
+    ],
+  }),
+  itemListSchema(
+    '15 exemplos de fatores de risco psicossocial para o PGR',
+    exemplos.map((e) => e[0])
+  ),
+  howToSchema(
+    'Como mapear riscos psicossociais no PGR conforme a NR-1',
+    [
+      ['Preparação', 'Definir responsáveis e organizar os grupos homogêneos de exposição (GHE).'],
+      ['Identificação e avaliação', 'Aplicar questionários validados (COPSOQ, HSE), entrevistas e análise de indicadores.'],
+      ['Plano de ação', 'Definir medidas com prazos, responsáveis e metas.'],
+      ['Monitoramento', 'Revisar indicadores de forma contínua (ciclo PDCA).'],
+      ['Documentação', 'Registrar todo o processo no PGR.'],
+    ],
+    'Passo a passo para identificar, avaliar e registrar os fatores de risco psicossocial no Programa de Gerenciamento de Riscos.'
+  ),
+  faqSchema(faqItems),
+  breadcrumbSchema([['Início', '/'], ['Riscos psicossociais: exemplos', path]]),
+];
+---
+<Base title={title} description={description} schemas={schemas} ogType="article">
+  <div class="page-hero">
+    <div class="container">
+      <p class="kicker">Guia · Atualizado em {SITE.updatedLabel}</p>
+      <h1>Riscos psicossociais no trabalho: o que são e 15 exemplos práticos para o PGR</h1>
+      <p>
+        Com a NR-1, esses fatores viraram obrigação legal. Veja o que são, as
+        categorias oficiais do MTE e uma lista prática do que sua empresa precisa
+        mapear.
+      </p>
+    </div>
+  </div>
+
+  <article class="container article">
+    <Breadcrumbs crumbs={[['Início', '/'], ['Riscos psicossociais: exemplos', path]]} />
+    <div class="article-meta">
+      <span class="updated-badge">Atualizado em {SITE.updatedLabel}</span>
+      <span>Conteúdo informativo · fontes oficiais (MTE)</span>
+    </div>
+
+    <TOC items={toc} />
+
+    <h2 id="o-que-sao">O que são riscos psicossociais no trabalho</h2>
+    <p>
+      <strong>Riscos psicossociais</strong> são fatores ligados à
+      <strong> forma como o trabalho é organizado</strong> e às
+      <strong> relações no ambiente profissional</strong> que podem afetar a
+      saúde mental e física dos trabalhadores. Diferente de um risco físico (ruído)
+      ou químico (poeira), o risco psicossocial nasce da gestão: metas, jornada,
+      liderança, cultura, segurança do emprego.
+    </p>
+    <p>
+      Desde a atualização promovida pela <strong>Portaria MTE 1.419/2024</strong>,
+      esses fatores — chamados oficialmente de <strong>Fatores de Riscos
+      Psicossociais Relacionados ao Trabalho (FRPRT)</strong> — passaram a ter o
+      mesmo status dos riscos físicos, químicos, biológicos e ergonômicos: precisam
+      ser identificados, avaliados e gerenciados no
+      <a href="/gro-e-pgr-o-que-e/">PGR</a>. A fiscalização punitiva começou em
+      <strong>26 de maio de 2026</strong>. Entenda o contexto completo no nosso
+      <a href="/nr-1-atualizada-2026/">guia da NR-1 atualizada em 2026</a>.
+    </p>
+
+    <h2 id="categorias">As categorias oficiais (FRPRT)</h2>
+    <p>
+      O guia de orientação do MTE agrupa os fatores em grandes categorias. Na
+      prática, as mais citadas são:
+    </p>
+    <ul>
+      <li><strong>Demandas do trabalho</strong> — sobrecarga, ritmo, metas, jornada.</li>
+      <li><strong>Organização e conteúdo</strong> — autonomia, clareza de papéis, monotonia.</li>
+      <li><strong>Relações interpessoais</strong> — apoio da liderança, assédio, conflitos, violência.</li>
+      <li><strong>Reconhecimento e segurança</strong> — justiça, valorização, insegurança no emprego.</li>
+      <li><strong>Interface trabalho–vida</strong> — conflito entre demandas profissionais e pessoais.</li>
+    </ul>
+
+    <h2 id="exemplos">15 exemplos práticos para o PGR</h2>
+    <p>
+      Aqui está o que, na prática, precisa entrar no radar do mapeamento. Cada
+      exemplo abaixo é um fator concreto que pode ser avaliado e classificado:
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th style="width:34%;">Fator de risco</th><th>O que é</th></tr>
+        </thead>
+        <tbody>
+          {exemplos.map(([f, d]) => (
+            <tr><td><strong>{f}</strong></td><td>{d}</td></tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <div class="fact-box">
+      <p style="margin:0;">
+        💡 <strong>Importante:</strong> a lista não é uma "receita fechada". Cada
+        empresa precisa avaliar <em>quais</em> desses fatores existem, em
+        <em> qual</em> área e com <em>qual</em> intensidade — e isso exige método,
+        não achismo.
+      </p>
+    </div>
+
+    <h2 id="no-pgr">Como esses fatores entram no PGR</h2>
+    <p>
+      Não basta listar "boas intenções". Cada fator identificado precisa entrar no
+      <strong> inventário de riscos</strong> do PGR com uma
+      <strong> classificação</strong>, cruzando dois eixos:
+    </p>
+    <ul>
+      <li><strong>Severidade</strong> — o quão grave é o dano potencial à saúde.</li>
+      <li><strong>Probabilidade</strong> — a chance de aquele dano se concretizar.</li>
+    </ul>
+    <p>O caminho típico de mapeamento segue cinco passos:</p>
+    <ol>
+      <li><strong>Preparação</strong> — definir responsáveis e grupos homogêneos de exposição (GHE).</li>
+      <li><strong>Identificação e avaliação</strong> — questionários validados (COPSOQ, HSE), entrevistas e indicadores.</li>
+      <li><strong>Plano de ação</strong> — medidas com prazos, responsáveis e metas.</li>
+      <li><strong>Monitoramento</strong> — ciclo contínuo (PDCA), revisando indicadores.</li>
+      <li><strong>Documentação</strong> — registro de tudo no PGR.</li>
+    </ol>
+    <p>
+      É exatamente esse método que define o trabalho do profissional que o mercado
+      passou a buscar — o <strong>Gestor de NR1</strong>. Se você quer atuar com
+      isso, veja
+      <a href="/formacao-gestor-de-nr1-izabella-camargo-review/">nossa análise da
+      formação mais completa para essa função</a>.
+    </p>
+
+    <h2 id="nao-e">O que NÃO é risco psicossocial</h2>
+    <p>
+      Para calibrar: um dia estressante isolado, uma cobrança pontual e legítima ou
+      uma dificuldade pessoal externa <strong>não</strong> são, por si só, riscos
+      psicossociais do trabalho. O que a NR-1 exige mapear são
+      <strong> condições organizacionais recorrentes</strong> capazes de adoecer —
+      não emoções individuais avulsas.
+    </p>
+
+    <FAQ items={faqItems} />
+
+    <hr />
+    <p>
+      <strong>Próximos passos:</strong> entenda a norma completa no
+      <a href="/nr-1-atualizada-2026/">guia da NR-1 2026</a>, veja
+      <a href="/multa-nr1-2026/">as multas por descumprimento</a> e como funciona o
+      <a href="/gro-e-pgr-o-que-e/">GRO e o PGR</a>.
+    </p>
+    <div class="cta-wrap">
+      <a class="btn-secondary" href="/formacao-gestor-de-nr1-izabella-camargo-review/">
+        Quer atuar com isso? Veja o review da formação →
+      </a>
+    </div>
+
+    <p class="muted">
+      <small>
+        Conteúdo informativo, baseado na NR-1 e no material de orientação do MTE;
+        não substitui consultoria técnica ou jurídica. Última revisão:
+        {SITE.updatedLabel}.
+      </small>
+    </p>
+  </article>
+</Base>

@@ -1,0 +1,158 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { SITE } from '../data/site';
+import { organizationSchema, websiteSchema } from '../data/schema';
+
+const title = `${SITE.name} — NR-1, Riscos Psicossociais e Carreira de Gestor de NR1`;
+const description = SITE.tagline + '. Guias, análises e dados oficiais sobre a NR-1 em 2026.';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const schemas = [organizationSchema(), websiteSchema()];
+---
+<Base title={title} description={description} schemas={schemas}>
+  <div class="page-hero">
+    <div class="container container-wide">
+      <p class="kicker">Portal independente sobre NR-1</p>
+      <h1>Tudo sobre a NR-1, os riscos psicossociais e a nova carreira de Gestor de NR1</h1>
+      <p>
+        A fiscalização punitiva da NR-1 começou em 26/05/2026. Aqui você entende
+        a norma com fontes oficiais — e descobre como transformar essa mudança em
+        carreira ou consultoria.
+      </p>
+    </div>
+  </div>
+
+  <div class="container container-wide">
+    <section class="hub-feature">
+      <div class="hub-card primary">
+        <p class="kicker" style="color:#8fb8e6;">Comece por aqui · Guia</p>
+        <h2>NR-1 Atualizada em 2026</h2>
+        <p>
+          O que mudou com a Portaria 1.419/2024, a linha do tempo até a
+          fiscalização punitiva, multas, o que a empresa precisa fazer e a
+          oportunidade de carreira que nasceu disso tudo.
+        </p>
+        <p>
+          <a class="btn-cta" style="background:#1a7f4b;" href="/nr-1-atualizada-2026/">
+            Ler o guia completo →
+          </a>
+        </p>
+      </div>
+      <div class="hub-card">
+        <p class="kicker" style="color:var(--azul-600);">Análise · Review</p>
+        <h2 style="border:none;padding:0;">Formação Gestor de NR1 vale a pena?</h2>
+        <p>
+          Análise independente e sincera da Formação Gestor de NR1 da Izabella
+          Camargo: os 12 módulos, o corpo docente, o certificado MEC, o preço e
+          para quem realmente compensa em 2026.
+        </p>
+        <p>
+          <a class="btn-secondary" href="/formacao-gestor-de-nr1-izabella-camargo-review/">
+            Ler o review completo →
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Como este portal ajuda você</h2>
+      <div class="card-grid">
+        <div class="post-card">
+          <span class="tag">Para empresas</span>
+          <h3>Entenda a obrigação</h3>
+          <p>
+            O que a NR-1 exige no PGR, os prazos, as multas da NR-28 e o passo a
+            passo prático de adequação aos riscos psicossociais.
+          </p>
+          <a class="read" href="/nr-1-atualizada-2026/">Ver o guia →</a>
+        </div>
+        <div class="post-card">
+          <span class="tag">Para profissionais</span>
+          <h3>Construa a carreira</h3>
+          <p>
+            Como atuar com NR-1 sem diploma específico, quanto ganha um consultor
+            e qual formação escolher para começar com o pé direito.
+          </p>
+          <a class="read" href="/blog/">Ver artigos de carreira →</a>
+        </div>
+        <div class="post-card">
+          <span class="tag">Independência</span>
+          <h3>Análises honestas</h3>
+          <p>
+            Somos um portal independente, com aviso de afiliado transparente.
+            Nossas análises citam prós, contras e fontes oficiais.
+          </p>
+          <a class="read" href="/aviso-de-afiliado/">Como funciona →</a>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Guias essenciais da NR-1</h2>
+      <div class="card-grid">
+        <div class="post-card">
+          <span class="tag">Riscos psicossociais</span>
+          <h3><a href="/riscos-psicossociais-exemplos/">15 exemplos para o PGR</a></h3>
+          <p>O que são os fatores de risco psicossocial e a lista prática do que sua empresa precisa mapear.</p>
+          <a class="read" href="/riscos-psicossociais-exemplos/">Ler guia →</a>
+        </div>
+        <div class="post-card">
+          <span class="tag">Fiscalização</span>
+          <h3><a href="/multa-nr1-2026/">Multa da NR-1 em 2026</a></h3>
+          <p>Valores, como o cálculo funciona, reincidência e o que fazer para evitar a autuação.</p>
+          <a class="read" href="/multa-nr1-2026/">Ler guia →</a>
+        </div>
+        <div class="post-card">
+          <span class="tag">Conceitos</span>
+          <h3><a href="/gro-e-pgr-o-que-e/">GRO e PGR: o que é</a></h3>
+          <p>As duas siglas que mais confundem na NR-1, explicadas com exemplos e uma tabela comparativa.</p>
+          <a class="read" href="/gro-e-pgr-o-que-e/">Ler guia →</a>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Quer atuar com NR-1 e saúde mental no trabalho?</h2>
+      <div class="card-grid">
+        <div class="post-card">
+          <span class="tag">Propósito</span>
+          <h3><a href="/carreira-gestor-de-nr1-com-proposito/">Uma carreira com propósito</a></h3>
+          <p>Cuidar de gente virou profissão. Entenda a virada de carreira que a NR-1 abriu para quem quer significado e mercado.</p>
+          <a class="read" href="/carreira-gestor-de-nr1-com-proposito/">Ver caminho →</a>
+        </div>
+        <div class="post-card">
+          <span class="tag">Oportunidade</span>
+          <h3><a href="/por-que-se-tornar-gestor-de-nr1-agora/">Por que começar agora</a></h3>
+          <p>Demanda obrigatória, poucos profissionais preparados e a janela dos 90 dias. Por que 2026 é o ano de entrar.</p>
+          <a class="read" href="/por-que-se-tornar-gestor-de-nr1-agora/">Ver oportunidade →</a>
+        </div>
+        <div class="post-card">
+          <span class="tag">Análise</span>
+          <h3><a href="/formacao-gestor-de-nr1-izabella-camargo-review/">A formação, sem filtro</a></h3>
+          <p>Review independente da Formação Gestor de NR1 da Izabella Camargo: módulos, certificado, preço e prós e contras.</p>
+          <a class="read" href="/formacao-gestor-de-nr1-izabella-camargo-review/">Ler review →</a>
+        </div>
+      </div>
+    </section>
+
+    {posts.length > 0 && (
+      <section>
+        <h2>Do blog</h2>
+        <div class="card-grid">
+          {posts.map((post) => (
+            <div class="post-card">
+              <span class="tag">{post.data.tag}</span>
+              <h3><a href={`/blog/${post.id}/`}>{post.data.title}</a></h3>
+              <p>{post.data.description}</p>
+              <a class="read" href={`/blog/${post.id}/`}>Ler artigo →</a>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+  </div>
+</Base>

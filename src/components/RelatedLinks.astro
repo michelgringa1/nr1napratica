@@ -1,0 +1,48 @@
+---
+export interface Props {
+  title?: string;
+  links: { href: string; label: string; note?: string }[];
+}
+const { title = 'Leia também', links } = Astro.props;
+---
+<aside class="related" aria-label={title}>
+  <strong>{title}</strong>
+  <ul>
+    {links.map((l) => (
+      <li>
+        <a href={l.href}>{l.label}</a>
+        {l.note && <span class="related-note"> — {l.note}</span>}
+      </li>
+    ))}
+  </ul>
+</aside>
+
+<style>
+  .related {
+    display: block;
+    background: var(--azul-50);
+    border: 1px solid var(--cinza-200);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.3rem;
+    margin: 2rem 0;
+  }
+  .related strong {
+    display: block;
+    margin-bottom: 0.5em;
+    color: var(--azul-900);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-size: 0.85rem;
+  }
+  .related ul {
+    margin: 0;
+    padding-left: 1.2em;
+  }
+  .related li {
+    margin-bottom: 0.35em;
+  }
+  .related-note {
+    color: var(--cinza-500);
+    font-size: 0.92rem;
+  }
+</style>

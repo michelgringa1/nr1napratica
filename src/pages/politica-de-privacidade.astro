@@ -1,0 +1,82 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../data/site';
+import { breadcrumbSchema } from '../data/schema';
+
+const title = 'Política de Privacidade';
+const description = `Política de privacidade do ${SITE.name}: como tratamos dados, cookies e analytics, em conformidade com a LGPD.`;
+const schemas = [breadcrumbSchema([['Início', '/'], ['Política de privacidade', '/politica-de-privacidade/']])];
+---
+<Base title={title} description={description} schemas={schemas} noindex={true}>
+  <div class="page-hero">
+    <div class="container">
+      <p class="kicker">Legal</p>
+      <h1>Política de Privacidade</h1>
+    </div>
+  </div>
+
+  <article class="container article">
+    <p><small class="muted">Última atualização: {SITE.updatedLabel}</small></p>
+
+    <p>
+      Esta Política de Privacidade descreve como o <strong>{SITE.name}</strong>
+      (<a href={SITE.url + '/'}>{SITE.domain}</a>) trata as informações dos
+      visitantes, em conformidade com a <strong>Lei Geral de Proteção de Dados
+      (LGPD — Lei nº 13.709/2018)</strong>.
+    </p>
+
+    <h2>1. Dados que coletamos</h2>
+    <p>
+      Este site é majoritariamente informativo e <strong>não exige cadastro</strong>.
+      Podemos coletar, de forma automática e agregada:
+    </p>
+    <ul>
+      <li><strong>Dados de navegação</strong> (páginas visitadas, tempo de permanência, dispositivo, origem do acesso), por meio de ferramentas de analytics.</li>
+      <li><strong>Dados fornecidos voluntariamente</strong>, caso você nos envie um e-mail de contato.</li>
+    </ul>
+
+    <h2>2. Cookies e ferramentas de terceiros</h2>
+    <p>
+      Utilizamos cookies e tecnologias similares para entender o uso do site e
+      melhorar a experiência. Podemos usar serviços como <strong>Google
+      Analytics</strong> e <strong>Google Tag Manager</strong>. Ao clicar em links
+      de afiliado, o produtor e sua plataforma (ex.: Hotmart) podem registrar
+      cookies próprios, sujeitos às políticas dessas empresas.
+    </p>
+    <p>Você pode desativar cookies nas configurações do seu navegador.</p>
+
+    <h2>3. Como usamos os dados</h2>
+    <ul>
+      <li>Medir e melhorar o desempenho e o conteúdo do site;</li>
+      <li>Responder a mensagens enviadas por você;</li>
+      <li>Cumprir obrigações legais.</li>
+    </ul>
+    <p>Não vendemos nem alugamos seus dados pessoais.</p>
+
+    <h2>4. Compartilhamento</h2>
+    <p>
+      Podemos compartilhar dados agregados e anônimos com provedores de analytics.
+      Não compartilhamos dados pessoais identificáveis, exceto por obrigação legal.
+    </p>
+
+    <h2>5. Seus direitos (LGPD)</h2>
+    <p>
+      Você tem direito a confirmar a existência de tratamento, acessar, corrigir,
+      anonimizar ou eliminar seus dados, entre outros previstos na LGPD. Para
+      exercê-los, entre em contato pela <a href="/contato/">página de contato</a>.
+    </p>
+
+    <h2>6. Alterações</h2>
+    <p>
+      Esta política pode ser atualizada periodicamente. A data no topo indica a
+      última revisão.
+    </p>
+
+    <p>
+      <small class="muted">
+        Este texto é um modelo informativo e não substitui a orientação de um
+        profissional jurídico para adequação completa à LGPD.
+      </small>
+    </p>
+  </article>
+</Base>

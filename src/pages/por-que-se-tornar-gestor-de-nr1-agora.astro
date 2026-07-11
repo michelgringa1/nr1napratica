@@ -1,0 +1,160 @@
+---
+import Base from '../layouts/Base.astro';
+import CTA from '../components/CTA.astro';
+import AffiliateDisclosure from '../components/AffiliateDisclosure.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import FAQ from '../components/FAQ.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+import { SITE } from '../data/site';
+import {
+  articleSchema,
+  faqSchema,
+  breadcrumbSchema,
+  ENTITIES,
+  type FaqItem,
+} from '../data/schema';
+
+const title = 'Por que se tornar Gestor de NR1 agora (2026)';
+const description =
+  'A demanda por gestores de NR-1 explodiu com a nova lei — e a oferta de profissionais preparados ainda é pequena. Veja por que 2026 é o momento de entrar nesse mercado.';
+const path = '/por-que-se-tornar-gestor-de-nr1-agora/';
+
+const faqItems: FaqItem[] = [
+  {
+    q: 'Com as multas suspensas pelo STF, ainda vale a pena entrar nessa área?',
+    a: '<p>Sim — e talvez seja o melhor momento. A suspensão é <strong>temporária (90 dias)</strong> e vale só para as multas; a <strong>obrigação de gerir os riscos continua</strong>. As empresas sabem que a punição volta e estão se preparando agora. Quem se qualifica nessa janela atende essa demanda antecipada.</p>',
+  },
+  {
+    q: 'O mercado não vai ficar saturado rápido?',
+    a: '<p>A obrigação atinge <strong>toda empresa com CLT</strong> no Brasil — são milhões. A oferta de profissionais realmente preparados ainda é pequena. Saturação, se vier, é de longo prazo; a vantagem é de quem entra cedo e bem preparado.</p>',
+  },
+  {
+    q: 'Quanto preciso investir para começar?',
+    a: '<p>Você começa de graça, estudando pela nossa <a href="/nr-1-atualizada-2026/">base sobre a NR-1</a>. Para atuar profissionalmente, uma <a href="/formacao-gestor-de-nr1-izabella-camargo-review/">formação estruturada</a> costuma se pagar já no primeiro contrato de consultoria.</p>',
+  },
+];
+
+const schemas = [
+  articleSchema({
+    headline: 'Por que 2026 é o melhor ano para se tornar Gestor de NR1',
+    description,
+    url: path,
+    datePublished: '2026-07-09',
+    dateModified: SITE.updatedISO,
+    about: ENTITIES.gestorNr1,
+    mentions: [ENTITIES.nr1, ENTITIES.formacao, ENTITIES.izabella, ENTITIES.riscosPsicossociais],
+    keywords: [
+      'por que ser gestor de nr1',
+      'oportunidade nr1 2026',
+      'vale a pena ser consultor de nr1',
+      'mercado nr1 riscos psicossociais',
+    ],
+  }),
+  faqSchema(faqItems),
+  breadcrumbSchema([['Início', '/'], ['Por que se tornar Gestor de NR1 agora', path]]),
+];
+---
+<Base title={title} description={description} schemas={schemas} ogType="article">
+  <div class="page-hero">
+    <div class="container">
+      <p class="kicker">Oportunidade · Atualizado em {SITE.updatedLabel}</p>
+      <h1>Por que 2026 é o melhor ano para se tornar Gestor de NR1</h1>
+      <p>
+        Uma lei nova, milhões de empresas obrigadas a se adequar e poucos
+        profissionais preparados. Essa combinação tem nome: janela de oportunidade.
+      </p>
+    </div>
+  </div>
+
+  <article class="container article">
+    <Breadcrumbs crumbs={[['Início', '/'], ['Por que se tornar Gestor de NR1 agora', path]]} />
+    <div class="article-meta">
+      <span class="updated-badge">Atualizado em {SITE.updatedLabel}</span>
+      <span>Por <a href="/sobre/">{SITE.name}</a> · Portal independente</span>
+    </div>
+
+    <AffiliateDisclosure />
+
+    <div class="fact-box">
+      <p style="margin:0;">
+        <strong>Resposta rápida:</strong> a NR-1 obrigou <strong>toda empresa com
+        CLT</strong> a gerir os riscos psicossociais. A demanda por quem sabe fazer
+        isso explodiu, mas a oferta de profissionais preparados ainda é pequena — e
+        a norma <strong>não exige diploma específico</strong>. Por isso, 2026 é um
+        raro momento de entrar cedo em um mercado obrigatório.
+      </p>
+    </div>
+
+    <h2>1. A demanda é gigante — e obrigatória</h2>
+    <p>
+      A maioria dos mercados depende de convencer o cliente de que ele precisa do
+      serviço. Aqui não: a <a href="/nr-1-atualizada-2026/">lei já obriga</a>. Toda
+      empresa com funcionários CLT precisa mapear os
+      <a href="/riscos-psicossociais-exemplos/">riscos psicossociais</a> no PGR.
+      Isso não é um nicho — é o Brasil inteiro das relações formais de trabalho.
+    </p>
+    <p>
+      Some a isso o pano de fundo: os afastamentos por transtornos mentais
+      dispararam nos últimos anos. A dor é real, e a resposta legal chegou. Quem
+      resolve esse problema tem trabalho garantido por muito tempo.
+    </p>
+
+    <h2>2. A janela dos "90 dias" trabalha a seu favor</h2>
+    <p>
+      Em junho de 2026, o STF <a href="/multa-nr1-2026/">suspendeu por 90 dias</a>
+      a aplicação das multas ligadas aos riscos psicossociais. Muita gente leu isso
+      como "deu tempo, pode relaxar". É o oposto:
+    </p>
+    <ul>
+      <li>A <strong>obrigação de gerir continua</strong> — só a punição está pausada.</li>
+      <li>As empresas ganharam fôlego para <strong>se adequar sem correria</strong> — e é agora que elas procuram quem saiba fazer.</li>
+      <li>Quando a punição voltar, quem <strong>não</strong> se preparou vai correr atrás desesperado. Você quer estar do lado de quem já está pronto.</li>
+    </ul>
+
+    <h2>3. Três mitos que travam quem poderia entrar</h2>
+    <p><strong>Mito 1: "Preciso ser psicólogo."</strong> Não. A área é multidisciplinar e a norma não exige um diploma específico — exige <a href="/blog/como-atuar-com-nr1-sem-diploma/">conhecimento técnico</a>.</p>
+    <p><strong>Mito 2: "Já deve estar saturado."</strong> Com milhões de empresas obrigadas e poucos profissionais preparados, estamos no começo, não no fim.</p>
+    <p><strong>Mito 3: "É caro demais para começar."</strong> Um único contrato de consultoria costuma superar o valor de uma boa formação. O investimento se paga no primeiro cliente.</p>
+
+    <h2>4. A matemática que fecha</h2>
+    <p>
+      Pense como consultor: você não vende para uma empresa, vende para
+      <strong> muitas</strong>. Cada projeto soma diagnóstico, estruturação do PGR,
+      treinamento de lideranças e <strong>acompanhamento recorrente</strong>. É por
+      isso que <a href="/blog/quanto-ganha-consultor-nr1/">o cálculo do consultor de
+      NR-1</a> fecha bem — desde que você saiba entregar com qualidade.
+    </p>
+
+    <div class="fact-box">
+      <p style="margin:0;">
+        ⏱️ <strong>Timing importa mais do que talento aqui.</strong> A melhor hora
+        de entrar num mercado obrigatório é no início — quando a demanda já existe e
+        os concorrentes ainda são poucos. Esse início é agora.
+      </p>
+    </div>
+
+    <h2>5. Como sair da intenção para a ação</h2>
+    <ol>
+      <li><strong>Entenda a norma</strong> — comece pelo <a href="/nr-1-atualizada-2026/">guia gratuito da NR-1</a>.</li>
+      <li><strong>Qualifique-se de verdade</strong> — junte jurídico, técnico e a abordagem humana da saúde mental.</li>
+      <li><strong>Comece a atuar</strong> — muitas vezes a primeira empresa é aquela onde você já trabalha.</li>
+    </ol>
+    <p>
+      Para o passo 2, analisamos a fundo a formação mais completa do mercado — com a
+      autoridade de <strong>Izabella Camargo</strong>, referência em saúde mental no
+      trabalho. Vale a leitura antes de decidir:
+    </p>
+
+    <CTA text="Ver a Formação Gestor de NR1 (oferta oficial) →" />
+
+    <FAQ items={faqItems} />
+
+    <RelatedLinks
+      links={[
+        { href: '/formacao-gestor-de-nr1-izabella-camargo-review/', label: 'Review completo da Formação Gestor de NR1' },
+        { href: '/carreira-gestor-de-nr1-com-proposito/', label: 'A carreira de Gestor de NR1 (o lado do propósito)' },
+        { href: '/multa-nr1-2026/', label: 'Multa da NR-1 e a suspensão de 90 dias do STF' },
+      ]}
+    />
+  </article>
+</Base>

@@ -1,0 +1,57 @@
+---
+export interface Props {
+  // Pares [label, href]. O último item é a página atual (sem link).
+  crumbs: [string, string][];
+}
+const { crumbs } = Astro.props;
+---
+<nav class="breadcrumbs" aria-label="Trilha de navegação">
+  <ol>
+    {crumbs.map(([label, href], i) => (
+      <li>
+        {i < crumbs.length - 1 ? (
+          <a href={href}>{label}</a>
+        ) : (
+          <span aria-current="page">{label}</span>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<style>
+  .breadcrumbs {
+    font-size: 0.85rem;
+    margin: 0 0 1rem;
+  }
+  .breadcrumbs ol {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 8px;
+    padding: 0;
+    margin: 0;
+  }
+  .breadcrumbs li {
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+  }
+  .breadcrumbs li:not(:last-child)::after {
+    content: "›";
+    margin-left: 8px;
+    color: var(--cinza-500);
+  }
+  .breadcrumbs a {
+    color: var(--cinza-500);
+    text-decoration: none;
+  }
+  .breadcrumbs a:hover {
+    color: var(--azul-700);
+    text-decoration: underline;
+  }
+  .breadcrumbs span[aria-current] {
+    color: var(--cinza-700);
+    font-weight: 600;
+  }
+</style>

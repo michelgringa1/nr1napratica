@@ -1,0 +1,66 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../data/site';
+import { breadcrumbSchema } from '../data/schema';
+
+const title = 'Aviso de afiliado';
+const description =
+  'Como funciona a monetização por afiliação no NR1 na Prática, um portal independente. Transparência total sobre links e comissões.';
+const schemas = [breadcrumbSchema([['Início', '/'], ['Aviso de afiliado', '/aviso-de-afiliado/']])];
+---
+<Base title={title} description={description} schemas={schemas}>
+  <div class="page-hero">
+    <div class="container">
+      <p class="kicker">Transparência</p>
+      <h1>Aviso de afiliado</h1>
+    </div>
+  </div>
+
+  <article class="container article">
+    <p class="lead">
+      Acreditamos que confiança se constrói com transparência. Por isso,
+      explicamos aqui, sem rodeios, como o {SITE.name} se sustenta.
+    </p>
+
+    <h2>Somos um portal independente</h2>
+    <p>
+      O {SITE.name} <strong>não tem vínculo oficial</strong> com a Izabella
+      Camargo, com a Hotmart, com a Faculdade Focus ou com qualquer outra
+      instituição, produto ou pessoa citada no site. Somos um projeto editorial
+      independente sobre a NR-1 e a carreira na área.
+    </p>
+
+    <h2>O que é um link de afiliado</h2>
+    <p>
+      Alguns links neste site são <strong>links de afiliado</strong>. Isso
+      significa que, se você clicar e realizar uma compra na página oficial do
+      produtor, podemos receber uma <strong>comissão</strong>. Pontos importantes:
+    </p>
+    <ul>
+      <li><strong>O preço para você é exatamente o mesmo</strong> — a comissão é paga pelo produtor, não acrescida ao seu valor.</li>
+      <li><strong>A comissão não influencia nossa análise.</strong> Apontamos prós e contras reais; recomendar algo ruim destruiria a confiança que sustenta o portal.</li>
+      <li>Sinalizamos com um <strong>aviso visível</strong> os conteúdos que contêm links de afiliado.</li>
+      <li>Os links de saída usam o atributo <code>rel="sponsored nofollow"</code>, seguindo as boas práticas recomendadas pelo Google.</li>
+    </ul>
+
+    <h2>Por que isso é bom para você</h2>
+    <p>
+      É essa monetização que nos permite produzir guias aprofundados e gratuitos,
+      manter as informações atualizadas e analisar produtos com honestidade. Você
+      recebe conteúdo de qualidade sem pagar nada; nós somos remunerados apenas se
+      você decidir, por conta própria, adquirir algo que recomendamos.
+    </p>
+
+    <div class="fact-box">
+      <p style="margin:0;">
+        Em resumo: <strong>analisamos com independência, avisamos com
+        transparência e você nunca paga a mais por usar nossos links.</strong>
+      </p>
+    </div>
+
+    <p>
+      Dúvidas sobre esta política? Fale com a gente pela
+      <a href="/contato/">página de contato</a>.
+    </p>
+  </article>
+</Base>

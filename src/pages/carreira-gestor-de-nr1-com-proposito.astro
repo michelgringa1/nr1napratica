@@ -1,0 +1,179 @@
+---
+import Base from '../layouts/Base.astro';
+import CTA from '../components/CTA.astro';
+import AffiliateDisclosure from '../components/AffiliateDisclosure.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import FAQ from '../components/FAQ.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+import { SITE } from '../data/site';
+import {
+  articleSchema,
+  faqSchema,
+  breadcrumbSchema,
+  ENTITIES,
+  type FaqItem,
+} from '../data/schema';
+
+const title = 'Carreira de Gestor de NR1: propósito e mercado em 2026';
+const description =
+  'Cansado de cuidar só de processos? A NR-1 abriu uma carreira que une propósito e demanda real: cuidar da saúde mental no trabalho. Veja como se tornar um Gestor de NR1.';
+const path = '/carreira-gestor-de-nr1-com-proposito/';
+
+const faqItems: FaqItem[] = [
+  {
+    q: 'Preciso ser da área de saúde para trabalhar com saúde mental no trabalho?',
+    a: '<p>Não. A gestão de riscos psicossociais é multidisciplinar: atuam profissionais de RH, segurança do trabalho, gestão, psicologia e pessoas em transição de carreira. O que importa é o <a href="/blog/como-atuar-com-nr1-sem-diploma/">preparo técnico</a>, não um diploma específico.</p>',
+  },
+  {
+    q: 'Dá para viver disso ou é só um complemento?',
+    a: '<p>Depende do modelo. Como consultor(a), é possível atender várias empresas e transformar em atividade principal; como CLT, agrega valor (e salário) ao cargo. Veja <a href="/blog/quanto-ganha-consultor-nr1/">quanto ganha um consultor de NR-1</a>.</p>',
+  },
+  {
+    q: 'É tarde para começar em 2026?',
+    a: '<p>Pelo contrário. A obrigação é recente e a maioria das empresas ainda está se adequando — a demanda por profissionais preparados está no começo. Entrar agora é entrar cedo.</p>',
+  },
+];
+
+const schemas = [
+  articleSchema({
+    headline: 'De cuidar de processos a cuidar de gente: a carreira de Gestor de NR1',
+    description,
+    url: path,
+    datePublished: '2026-07-09',
+    dateModified: SITE.updatedISO,
+    about: ENTITIES.gestorNr1,
+    mentions: [ENTITIES.izabella, ENTITIES.formacao, ENTITIES.saudeMental, ENTITIES.nr1],
+    keywords: [
+      'carreira gestor de nr1',
+      'trabalhar com saúde mental no trabalho',
+      'mudar de carreira propósito',
+      'como se tornar gestor de nr1',
+    ],
+  }),
+  faqSchema(faqItems),
+  breadcrumbSchema([['Início', '/'], ['Carreira com propósito', path]]),
+];
+---
+<Base title={title} description={description} schemas={schemas} ogType="article">
+  <div class="page-hero">
+    <div class="container">
+      <p class="kicker">Carreira · Atualizado em {SITE.updatedLabel}</p>
+      <h1>De cuidar de processos a cuidar de gente: a carreira de Gestor de NR1</h1>
+      <p>
+        Existe um jeito de unir propósito e mercado: ajudar empresas a cuidarem da
+        saúde mental de quem trabalha nelas — agora que isso virou lei.
+      </p>
+    </div>
+  </div>
+
+  <article class="container article">
+    <Breadcrumbs crumbs={[['Início', '/'], ['Carreira com propósito', path]]} />
+    <div class="article-meta">
+      <span class="updated-badge">Atualizado em {SITE.updatedLabel}</span>
+      <span>Por <a href="/sobre/">{SITE.name}</a> · Portal independente</span>
+    </div>
+
+    <AffiliateDisclosure />
+
+    <div class="fact-box">
+      <p style="margin:0;">
+        <strong>Resposta rápida:</strong> a NR-1 tornou obrigatório gerir os riscos
+        psicossociais (saúde mental) no trabalho. Isso criou a função de
+        <strong> Gestor de NR1</strong> — uma carreira que une propósito (cuidar de
+        pessoas) e demanda real (toda empresa CLT precisa se adequar). Não exige
+        diploma específico, exige preparo técnico.
+      </p>
+    </div>
+
+    <h2>Talvez você se identifique com isso</h2>
+    <p>
+      Você entrou no mundo do trabalho para fazer diferença — mas em algum momento
+      se viu preso a planilhas, metas e processos que parecem não terminar. Talvez
+      já tenha sentido na pele o peso de um ambiente que adoece: a ansiedade de
+      domingo à noite, o colega que "sumiu" de licença, o time exausto que ninguém
+      olhou de verdade.
+    </p>
+    <p>
+      Não é frescura. É saúde. E, a partir de 2026, também é <strong>lei</strong>.
+    </p>
+
+    <h2>A história por trás dessa virada</h2>
+    <p>
+      A pauta da saúde mental no trabalho ganhou rosto no Brasil em parte graças a
+      <strong> Izabella Camargo</strong> — jornalista que viveu um burnout durante
+      a carreira na TV e transformou aquela dor em missão. Dela nasceu o conceito
+      dos <strong>"EPIs da Saúde Mental"</strong>: assim como existe equipamento de
+      proteção para o corpo, precisamos de proteção para a mente no ambiente de
+      trabalho.
+    </p>
+    <p>
+      O que era discurso virou norma. A <a href="/nr-1-atualizada-2026/">NR-1
+      atualizada</a> passou a exigir que as empresas cuidem dos
+      <a href="/riscos-psicossociais-exemplos/">riscos psicossociais</a> com a mesma
+      seriedade de um risco físico. E alguém precisa fazer esse trabalho dentro das
+      empresas. Esse alguém é o <strong>Gestor de NR1</strong>.
+    </p>
+
+    <h2>O que faz um Gestor de NR1 (e por que é uma carreira de propósito)</h2>
+    <p>
+      Não é sobre "passar um relatório". É sobre <strong>transformar ambientes</strong>:
+    </p>
+    <ul>
+      <li>Escutar e mapear o que adoece as pessoas naquele trabalho;</li>
+      <li>Traduzir isso em um plano de ação concreto, dentro do <a href="/gro-e-pgr-o-que-e/">PGR</a>;</li>
+      <li>Formar lideranças mais humanas e seguras;</li>
+      <li>Construir o que a Izabella chama de <strong>segurança psicológica</strong> — ambientes onde as pessoas falam sem medo.</li>
+    </ul>
+    <p>
+      É uma função técnica, sim. Mas o coração dela é humano: você passa a ser a
+      pessoa que ajuda empresas a pararem de adoecer gente.
+    </p>
+
+    <CTA text="Quero conhecer a Formação Gestor de NR1 →" />
+
+    <h2>Por que a Formação Gestor de NR1 (e não só "estudar por conta")</h2>
+    <p>
+      Dá para começar sozinho — e recomendamos: leia nosso
+      <a href="/nr-1-atualizada-2026/">guia gratuito da NR-1</a>. Mas para
+      <em> atuar</em> com segurança, você precisa juntar três coisas que dificilmente
+      se aprende soltas: a <strong>base jurídica</strong>, a <strong>técnica</strong>
+      (como mapear e documentar) e a <strong>abordagem humana</strong> de quem
+      entende de saúde mental de verdade.
+    </p>
+    <p>
+      É isso que a <a href="/formacao-gestor-de-nr1-izabella-camargo-review/">Formação
+      Gestor de NR1 da Izabella Camargo</a> reúne: 12 módulos, corpo docente
+      multidisciplinar (advogados, psiquiatra, engenheiro de segurança) e
+      certificado de extensão universitária — com a marca de quem construiu
+      autoridade no tema antes de virar obrigação legal.
+    </p>
+
+    <h2>Para quem é essa virada</h2>
+    <ul>
+      <li>Profissionais de <strong>RH</strong> que querem sair do operacional e liderar uma pauta com propósito;</li>
+      <li>Gente de <strong>segurança e saúde do trabalho</strong> que quer somar os riscos psicossociais ao seu portfólio;</li>
+      <li>Quem está em <strong>transição de carreira</strong> e busca um campo novo, com demanda crescente e significado;</li>
+      <li>Líderes que querem, de verdade, cuidar melhor das suas equipes.</li>
+    </ul>
+
+    <FAQ items={faqItems} />
+
+    <div class="fact-box">
+      <p style="margin:0;">
+        💚 Você não precisa adoecer para descobrir que saúde mental no trabalho é
+        coisa séria. E, pela primeira vez, cuidar disso é também uma
+        <strong> carreira com futuro</strong>.
+      </p>
+    </div>
+
+    <CTA text="Dar o primeiro passo na Formação Gestor de NR1 →" />
+
+    <RelatedLinks
+      links={[
+        { href: '/formacao-gestor-de-nr1-izabella-camargo-review/', label: 'Review completo da Formação Gestor de NR1', note: 'vale a pena?' },
+        { href: '/blog/quanto-ganha-consultor-nr1/', label: 'Quanto ganha um consultor de NR-1' },
+        { href: '/blog/como-atuar-com-nr1-sem-diploma/', label: 'Como atuar com NR-1 sem diploma específico' },
+      ]}
+    />
+  </article>
+</Base>

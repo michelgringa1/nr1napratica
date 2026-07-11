@@ -1,0 +1,15 @@
+---
+export interface Props {
+  items: { id: string; label: string }[];
+  title?: string;
+}
+const { items, title = 'Neste conteúdo' } = Astro.props;
+---
+<nav class="toc" aria-label="Sumário">
+  <strong>{title}</strong>
+  <ol>
+    {items.map((it) => (
+      <li><a href={`#${it.id}`}>{it.label}</a></li>
+    ))}
+  </ol>
+</nav>

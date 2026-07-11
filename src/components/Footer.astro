@@ -1,0 +1,51 @@
+---
+import { SITE } from '../data/site';
+const year = 2026;
+---
+<footer class="site-footer">
+  <div class="container container-wide">
+    <div class="footer-grid">
+      <div>
+        <h4>{SITE.name}</h4>
+        <p class="muted" style="margin:0;font-size:0.88rem;">
+          {SITE.tagline}.
+        </p>
+      </div>
+      <div>
+        <h4>Conteúdo</h4>
+        <a href="/nr-1-atualizada-2026/">NR-1 Atualizada 2026</a>
+        <a href="/formacao-gestor-de-nr1-izabella-camargo-review/">Review da Formação</a>
+        <a href="/carreira-gestor-de-nr1-com-proposito/">Carreira com propósito</a>
+        <a href="/por-que-se-tornar-gestor-de-nr1-agora/">Por que ser Gestor de NR1 agora</a>
+        <a href="/blog/">Blog</a>
+      </div>
+      <div>
+        <h4>Guias NR-1</h4>
+        <a href="/riscos-psicossociais-exemplos/">Riscos psicossociais: exemplos</a>
+        <a href="/multa-nr1-2026/">Multa da NR-1 em 2026</a>
+        <a href="/gro-e-pgr-o-que-e/">GRO e PGR: o que é</a>
+      </div>
+      <div>
+        <h4>Institucional</h4>
+        <a href="/sobre/">Sobre</a>
+        <a href="/contato/">Contato</a>
+        <a href="/aviso-de-afiliado/">Aviso de afiliado</a>
+        <a href="/politica-de-privacidade/">Política de privacidade</a>
+      </div>
+    </div>
+    <div class="footer-disclaimer">
+      <p style="margin:0 0 0.6em;">
+        <strong>Aviso de afiliado:</strong> {SITE.name} é um portal independente,
+        sem vínculo oficial com a Izabella Camargo, com a Hotmart ou com qualquer
+        instituição citada. Podemos receber comissão por indicações realizadas
+        através de links neste site, sem qualquer custo adicional para você.
+      </p>
+      <p style="margin:0;">
+        <strong>Aviso legal:</strong> o conteúdo tem caráter informativo e não
+        constitui consultoria jurídica, contábil ou de segurança do trabalho.
+        Consulte sempre as fontes oficiais (MTE, gov.br) e um profissional
+        habilitado. &copy; {year} {SITE.name}. Todos os direitos reservados.
+      </p>
+    </div>
+  </div>
+</footer>

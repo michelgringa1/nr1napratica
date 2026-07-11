@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+const title = 'Página não encontrada (404)';
+const description = 'A página que você procura não existe ou foi movida.';
+---
+<Base title={title} description={description} noindex={true}>
+  <div class="page-hero">
+    <div class="container">
+      <p class="kicker">Erro 404</p>
+      <h1>Página não encontrada</h1>
+      <p>O endereço que você tentou acessar não existe ou foi movido.</p>
+    </div>
+  </div>
+  <article class="container article">
+    <p>Talvez um destes caminhos ajude:</p>
+    <ul>
+      <li><a href="/">Página inicial</a></li>
+      <li><a href="/nr-1-atualizada-2026/">Guia da NR-1 atualizada em 2026</a></li>
+      <li><a href="/formacao-gestor-de-nr1-izabella-camargo-review/">Review da Formação Gestor de NR1</a></li>
+      <li><a href="/blog/">Blog</a></li>
+    </ul>
+  </article>
+</Base>

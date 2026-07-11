@@ -1,0 +1,191 @@
+---
+import Base from '../layouts/Base.astro';
+import TOC from '../components/TOC.astro';
+import FAQ from '../components/FAQ.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { SITE } from '../data/site';
+import {
+  articleSchema,
+  faqSchema,
+  breadcrumbSchema,
+  ENTITIES,
+  type FaqItem,
+} from '../data/schema';
+
+const title = 'GRO e PGR: O Que São e Qual a Diferença [NR-1]';
+const description =
+  'Entenda de forma simples o que é GRO e PGR na NR-1, qual a diferença entre eles, o que compõe o inventário de riscos e o plano de ação, e onde entram os riscos psicossociais.';
+const path = '/gro-e-pgr-o-que-e/';
+
+const toc = [
+  { id: 'o-que-e-gro', label: 'O que é GRO' },
+  { id: 'o-que-e-pgr', label: 'O que é PGR' },
+  { id: 'diferenca', label: 'GRO x PGR: a diferença' },
+  { id: 'composicao', label: 'O que compõe o PGR' },
+  { id: 'psicossociais', label: 'Onde entram os riscos psicossociais' },
+  { id: 'quem-faz', label: 'Quem faz e quem é obrigado' },
+  { id: 'faq', label: 'Perguntas frequentes' },
+];
+
+const faqItems: FaqItem[] = [
+  {
+    q: 'Qual a diferença entre GRO e PGR?',
+    a: '<p>O <strong>GRO</strong> (Gerenciamento de Riscos Ocupacionais) é o <strong>processo contínuo</strong> de identificar, avaliar e controlar riscos — a lógica de gestão. O <strong>PGR</strong> (Programa de Gerenciamento de Riscos) é o <strong>documento</strong> que materializa esse processo, contendo o inventário de riscos e o plano de ação. Em resumo: GRO é o sistema; PGR é a prova documental.</p>',
+  },
+  {
+    q: 'O que é o inventário de riscos?',
+    a: '<p>É a parte do PGR que <strong>lista e classifica todos os riscos</strong> a que os trabalhadores estão expostos — físicos, químicos, biológicos, ergonômicos, de acidentes e, agora, <strong>psicossociais</strong> — com avaliação de severidade e probabilidade.</p>',
+  },
+  {
+    q: 'Toda empresa é obrigada a ter PGR?',
+    a: '<p>Toda organização com <strong>empregados CLT</strong> deve gerenciar seus riscos ocupacionais. Microempresas e pequenas empresas de menor grau de risco têm <strong>regras simplificadas</strong>, e o MEI sem empregados é dispensado do PGR — mas passa a ter obrigações ao contratar.</p>',
+  },
+  {
+    q: 'Quem pode elaborar o PGR?',
+    a: '<p>A NR-1 não fixa uma única profissão. Na prática, o PGR envolve profissionais de <strong>segurança e saúde do trabalho</strong>, e a parte de <a href="/riscos-psicossociais-exemplos/">riscos psicossociais</a> se beneficia de quem domina o tema — origem da demanda pelo <a href="/formacao-gestor-de-nr1-izabella-camargo-review/">Gestor de NR1</a>.</p>',
+  },
+];
+
+const schemas = [
+  articleSchema({
+    headline: 'GRO e PGR: o que são, qual a diferença e como se relacionam na NR-1',
+    description,
+    url: path,
+    datePublished: '2026-06-20',
+    dateModified: SITE.updatedISO,
+    about: ENTITIES.pgr,
+    keywords: ['gro e pgr', 'o que é pgr', 'o que é gro', 'inventário de riscos', 'diferença gro pgr'],
+  }),
+  faqSchema(faqItems),
+  breadcrumbSchema([['Início', '/'], ['GRO e PGR: o que é', path]]),
+];
+---
+<Base title={title} description={description} schemas={schemas} ogType="article">
+  <div class="page-hero">
+    <div class="container">
+      <p class="kicker">Guia · Atualizado em {SITE.updatedLabel}</p>
+      <h1>GRO e PGR: o que são, qual a diferença e como se relacionam na NR-1</h1>
+      <p>
+        Duas siglas que aparecem o tempo todo na NR-1 — e que confundem muita
+        gente. Aqui você entende cada uma em linguagem simples, com exemplos.
+      </p>
+    </div>
+  </div>
+
+  <article class="container article">
+    <Breadcrumbs crumbs={[['Início', '/'], ['GRO e PGR: o que é', path]]} />
+    <div class="article-meta">
+      <span class="updated-badge">Atualizado em {SITE.updatedLabel}</span>
+      <span>Conteúdo informativo · fontes oficiais (MTE)</span>
+    </div>
+
+    <TOC items={toc} />
+
+    <h2 id="o-que-e-gro">O que é GRO</h2>
+    <p>
+      <strong>GRO</strong> significa <strong>Gerenciamento de Riscos
+      Ocupacionais</strong>. É o <strong>processo</strong> — contínuo e
+      estruturado — pelo qual a empresa identifica os perigos do trabalho, avalia
+      os riscos que eles representam e define medidas para eliminá-los ou
+      controlá-los. Pense no GRO como a <strong>lógica de gestão</strong> exigida
+      pela NR-1: não é um papel, é um ciclo que nunca termina (identificar →
+      avaliar → controlar → monitorar → revisar).
+    </p>
+
+    <h2 id="o-que-e-pgr">O que é PGR</h2>
+    <p>
+      <strong>PGR</strong> significa <strong>Programa de Gerenciamento de
+      Riscos</strong>. É o <strong>documento</strong> que materializa o GRO — a
+      prova de que a empresa está, de fato, gerenciando seus riscos. Sem PGR, o
+      GRO não tem evidência; e é justamente o PGR que a fiscalização audita.
+    </p>
+
+    <h2 id="diferenca">GRO x PGR: a diferença em uma frase</h2>
+    <div class="fact-box">
+      <p style="margin:0;font-size:1.05rem;">
+        👉 <strong>GRO é o processo (o sistema de gestão de riscos). PGR é o
+        documento que registra esse processo.</strong> Um não existe sem o outro:
+        o GRO orienta o que fazer; o PGR comprova que foi feito.
+      </p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th></th><th>GRO</th><th>PGR</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>O que é</strong></td><td>Processo / sistema de gestão</td><td>Documento</td></tr>
+          <tr><td><strong>Natureza</strong></td><td>Contínua (ciclo permanente)</td><td>Registro (atualizável)</td></tr>
+          <tr><td><strong>Função</strong></td><td>Orientar como gerenciar riscos</td><td>Comprovar e detalhar o gerenciamento</td></tr>
+          <tr><td><strong>Contém</strong></td><td>—</td><td>Inventário de riscos + plano de ação</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="composicao">O que compõe o PGR</h2>
+    <p>O PGR tem dois componentes centrais:</p>
+    <ol>
+      <li>
+        <strong>Inventário de riscos</strong> — a lista de todos os riscos
+        ocupacionais (físicos, químicos, biológicos, ergonômicos, de acidentes e
+        psicossociais), cada um avaliado por <strong>severidade</strong> e
+        <strong> probabilidade</strong>.
+      </li>
+      <li>
+        <strong>Plano de ação</strong> — as medidas de prevenção e controle para
+        cada risco, com <strong>responsáveis, prazos e forma de acompanhamento</strong>.
+      </li>
+    </ol>
+
+    <h2 id="psicossociais">Onde entram os riscos psicossociais</h2>
+    <p>
+      Essa é a grande novidade de 2024–2026. Com a
+      <strong> Portaria MTE 1.419/2024</strong>, os
+      <a href="/riscos-psicossociais-exemplos/">fatores de risco psicossocial</a>
+      (assédio, sobrecarga, metas abusivas, falta de autonomia) passaram a ser de
+      <strong> inclusão obrigatória no inventário de riscos do PGR</strong> — no
+      mesmo nível dos riscos físicos e químicos. A
+      <a href="/multa-nr1-2026/">fiscalização punitiva começou em 26/05/2026</a>,
+      e a ausência desse mapeamento no PGR é justamente o que gera autuação.
+      Entenda o quadro completo no
+      <a href="/nr-1-atualizada-2026/">guia da NR-1 atualizada em 2026</a>.
+    </p>
+
+    <h2 id="quem-faz">Quem faz e quem é obrigado</h2>
+    <p>
+      Toda empresa com <strong>empregados CLT</strong> precisa gerenciar seus
+      riscos (com regras simplificadas para micro e pequenas de menor grau de
+      risco). A elaboração envolve profissionais de segurança e saúde do trabalho —
+      e a camada de riscos psicossociais criou uma nova especialização de mercado:
+      o <strong>Gestor de NR1</strong>, profissional capaz de mapear, classificar e
+      documentar esses fatores corretamente.
+    </p>
+    <p>
+      Se você quer atuar nessa função,
+      <a href="/formacao-gestor-de-nr1-izabella-camargo-review/">analisamos a
+      formação mais completa do mercado</a> para essa carreira.
+    </p>
+
+    <FAQ items={faqItems} />
+
+    <hr />
+    <p>
+      <strong>Continue lendo:</strong>
+      <a href="/riscos-psicossociais-exemplos/">15 exemplos de riscos psicossociais para o PGR</a>,
+      <a href="/multa-nr1-2026/">as multas da NR-1 em 2026</a> e o
+      <a href="/nr-1-atualizada-2026/">guia completo da norma</a>.
+    </p>
+    <div class="cta-wrap">
+      <a class="btn-secondary" href="/formacao-gestor-de-nr1-izabella-camargo-review/">
+        Quer dominar o PGR na prática? Veja a formação →
+      </a>
+    </div>
+
+    <p class="muted">
+      <small>
+        Conteúdo informativo baseado na NR-1; não substitui consultoria técnica.
+        Última revisão: {SITE.updatedLabel}.
+      </small>
+    </p>
+  </article>
+</Base>
