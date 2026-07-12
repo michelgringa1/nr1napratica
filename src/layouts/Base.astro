@@ -55,7 +55,16 @@ const fullTitle = title.includes(SITE.name) ? title : `${title} | ${SITE.name}`;
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageAbs} />
 
-    <meta name="theme-color" content="#0f2540" />
+    <meta name="theme-color" content="#0b1a2b" />
+
+    <!-- Fonte display (Fraunces) — única webfont; corpo usa stack de sistema -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,600&display=swap"
+    />
+
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
