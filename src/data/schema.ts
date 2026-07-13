@@ -115,7 +115,7 @@ export function articleSchema(opts: {
   };
 }
 
-/** Person (autor) para a página /sobre — reforça E-E-A-T. */
+/** Person (autor) para a página /sobre. Reforça E-E-A-T. */
 export function personSchema() {
   const s: Record<string, unknown> = {
     '@context': 'https://schema.org',
@@ -146,7 +146,7 @@ export function faqSchema(items: FaqItem[]) {
   };
 }
 
-/** ItemList — para páginas de lista (ex.: "15 exemplos", "12 módulos"). AEO. */
+/** ItemList para páginas de lista (ex.: "15 exemplos", "12 módulos"). AEO. */
 export function itemListSchema(name: string, items: string[]) {
   return {
     '@context': 'https://schema.org',
@@ -161,7 +161,7 @@ export function itemListSchema(name: string, items: string[]) {
   };
 }
 
-/** HowTo — passo a passo (rich result). Passe pares [nome, texto]. */
+/** HowTo, passo a passo (rich result). Passe pares [nome, texto]. */
 export function howToSchema(name: string, steps: [string, string][], description?: string) {
   return {
     '@context': 'https://schema.org',

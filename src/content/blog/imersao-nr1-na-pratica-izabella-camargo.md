@@ -17,11 +17,11 @@ faq:
     a: "<p>Para quem está avaliando entrar na área, é uma forma de baixo compromisso de conhecer a abordagem da Izabella Camargo e o tema antes de decidir pela formação completa. Se você já decidiu atuar profissionalmente, o passo definitivo é a formação.</p>"
 ---
 
-Se você pesquisou "NR1 na Prática" e chegou até aqui, provavelmente viu a **Izabella Camargo** divulgando uma imersão com esse nome e quer entender o que é, se vale a pena e como ela se relaciona com a formação paga. Vamos esclarecer — de forma independente.
+Se você pesquisou "NR1 na Prática" e chegou até aqui, provavelmente viu a **Izabella Camargo** divulgando uma imersão com esse nome e quer entender o que é, se vale a pena e como ela se relaciona com a formação paga. Vamos esclarecer, de forma independente.
 
 ## O que é a "NR1 na Prática"
 
-"NR1 na Prática" é o nome associado à **imersão/experiência** conduzida por Izabella Camargo em torno da NR-1 e dos riscos psicossociais. Na dinâmica típica desse tipo de lançamento, a imersão funciona como uma **porta de entrada**: um contato mais curto e acessível com o tema e com a abordagem da autora, que antecede e apresenta a [Formação Gestor de NR1](/formacao-gestor-de-nr1-izabella-camargo-review/) — o programa completo.
+"NR1 na Prática" é o nome associado à **imersão/experiência** conduzida por Izabella Camargo em torno da NR-1 e dos riscos psicossociais. Na dinâmica típica desse tipo de lançamento, a imersão funciona como uma **porta de entrada**: um contato mais curto e acessível com o tema e com a abordagem da autora, que antecede e apresenta a [Formação Gestor de NR1](/formacao-gestor-de-nr1-izabella-camargo-review/), o programa completo.
 
 > Em resumo: a imersão é a introdução; a formação é o aprofundamento. Quem gosta da primeira costuma avançar para a segunda.
 
@@ -31,11 +31,11 @@ Vale o contexto, porque a autoria pesa num tema sério como esse. Izabella Camar
 
 ## Para quem a imersão faz sentido
 
-- **Curiosos e indecisos** — quem quer entender a oportunidade da NR-1 antes de investir em algo maior.
+- **Curiosos e indecisos:** quem quer entender a oportunidade da NR-1 antes de investir em algo maior.
 - **Profissionais de RH/SST** avaliando migrar ou agregar a competência.
 - **Quem quer "sentir" a didática** da autora antes de decidir pela formação.
 
-Se você **já decidiu** atuar profissionalmente com NR-1 e riscos psicossociais, a imersão é um bom aquecimento — mas o passo que realmente forma o profissional é a [formação completa](/formacao-gestor-de-nr1-izabella-camargo-review/).
+Se você **já decidiu** atuar profissionalmente com NR-1 e riscos psicossociais, a imersão é um bom aquecimento, mas o passo que realmente forma o profissional é a [formação completa](/formacao-gestor-de-nr1-izabella-camargo-review/).
 
 ## Imersão x Formação: qual a diferença
 
@@ -48,8 +48,8 @@ Se você **já decidiu** atuar profissionalmente com NR-1 e riscos psicossociais
 
 ## Conclusão
 
-A imersão **NR1 na Prática** é uma ótima forma de conhecer o tema e a Izabella Camargo com baixo compromisso — especialmente se você ainda está decidindo. Mas ela é o começo da jornada, não o destino. Para se tornar um **Gestor de NR1** capaz de atuar (e cobrar por isso), o caminho é a formação completa.
+A imersão **NR1 na Prática** é uma ótima forma de conhecer o tema e a Izabella Camargo com baixo compromisso, especialmente se você ainda está decidindo. Mas ela é o começo da jornada, não o destino. Para se tornar um **Gestor de NR1** capaz de atuar (e cobrar por isso), o caminho é a formação completa.
 
-Antes de decidir, vale ler nossa análise detalhada: [a Formação Gestor de NR1 vale a pena?](/formacao-gestor-de-nr1-izabella-camargo-review/) — com os 12 módulos, o certificado, o preço e para quem realmente compensa.
+Antes de decidir, vale ler nossa análise detalhada: [a Formação Gestor de NR1 vale a pena?](/formacao-gestor-de-nr1-izabella-camargo-review/), com os 12 módulos, o certificado, o preço e para quem realmente compensa.
 
-<small>Observação: formatos, datas e condições da imersão mudam a cada edição — confirme sempre as informações atuais na página oficial da Izabella Camargo.</small>
+<small>Observação: formatos, datas e condições da imersão mudam a cada edição; confirme sempre as informações atuais na página oficial da Izabella Camargo.</small>

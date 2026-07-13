@@ -1,4 +1,4 @@
-// Configuração central do site — troque valores aqui, refletem em todo o site.
+// Configuração central do site. Troque valores aqui, refletem em todo o site.
 
 export const SITE = {
   domain: 'nr1napratica.online',
@@ -12,10 +12,10 @@ export const SITE = {
   affiliatePath: '/vai/formacao/',
   // Link real (fica SÓ no .htaccess, nunca no HTML das páginas).
   affiliateTarget: 'https://hotm.io/nr1napratica',
-  // Data de atualização exibida ("Atualizado em ...") — atualize a cada revisão.
+  // Data de atualização exibida ("Atualizado em ..."). Atualize a cada revisão.
   updatedLabel: 'Julho/2026',
   updatedISO: '2026-07-10',
-  // Analytics — preencha quando tiver os IDs (deixe vazio para não renderizar).
+  // Analytics: preencha quando tiver os IDs (deixe vazio para não renderizar).
   ga4Id: 'G-4LMQRL02CF',
   gtmId: '', // ex.: 'GTM-XXXXXXX'
   // Meta Pixel: SÓ o ID (público, client-side). NUNCA colocar o token/CAPI aqui.

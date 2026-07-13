@@ -1,5 +1,5 @@
 /* =========================================================
-   NR1 na Prática — Design System "Editorial Premium"
+   NR1 na Prática: Design System "Editorial Premium"
    Tinta (navy profundo) + papel quente + fio dourado.
    Display: Fraunces (serif). Corpo: stack de sistema refinada.
    ========================================================= */
@@ -13,7 +13,7 @@
   --azul-500: #4a8ecb;
   --azul-50: #edf3fa;
 
-  /* Dourado — o fio premium */
+  /* Dourado: o fio premium */
   --ouro: #b8912f;
   --ouro-claro: #d9bc6e;
   --ouro-bg: #faf5e8;
@@ -50,7 +50,7 @@
     Arial, "Noto Sans", sans-serif;
   --font-display: "Fraunces", "Iowan Old Style", Georgia, "Times New Roman", serif;
 
-  /* Grain sutil (PNG pré-rasterizado — sem custo de filtro SVG) */
+  /* Grain sutil (PNG pré-rasterizado, sem custo de filtro SVG) */
   --grain: url("/images/grain.png");
 }
 

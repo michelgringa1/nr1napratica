@@ -4,7 +4,7 @@ import { getCollection } from 'astro:content';
 import { SITE } from '../data/site';
 import { organizationSchema, websiteSchema } from '../data/schema';
 
-const title = `${SITE.name} — NR-1, Riscos Psicossociais e Carreira de Gestor de NR1`;
+const title = `${SITE.name}: NR-1, Riscos Psicossociais e Carreira de Gestor de NR1`;
 const description = SITE.tagline + '. Guias, análises e dados oficiais sobre a NR-1 em 2026.';
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft))
@@ -20,7 +20,7 @@ const schemas = [organizationSchema(), websiteSchema()];
       <h1>Tudo sobre a NR-1, os riscos psicossociais e a nova carreira de Gestor de NR1</h1>
       <p>
         A fiscalização punitiva da NR-1 começou em 26/05/2026. Aqui você entende
-        a norma com fontes oficiais — e descobre como transformar essa mudança em
+        a norma com fontes oficiais e descobre como transformar essa mudança em
         carreira ou consultoria.
       </p>
     </div>
