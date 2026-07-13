@@ -6,6 +6,8 @@ funnel: "MOFU"
 tag: "Carreira"
 pubDate: 2026-07-08
 updatedDate: 2026-07-10
+image: "/images/editorial/gestor-de-nr1-painel.webp"
+imageAlt: "Ilustração de um gestor diante de um painel com indicadores de bem-estar e saúde mental da equipe, representando o trabalho do Gestor de NR1"
 ---
 
 Com a fiscalização punitiva da NR-1 valendo desde **26 de maio de 2026**, uma nova função entrou no radar de quem trabalha (ou quer trabalhar) com pessoas e segurança do trabalho: o **Gestor de NR1**. Neste artigo, respondemos de forma direta as três perguntas que mais aparecem: o que essa pessoa faz, quanto ela ganha e como você pode se tornar uma.

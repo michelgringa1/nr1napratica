@@ -29,6 +29,7 @@ const schemas = [
     headline: d.title,
     description: d.description,
     url: path,
+    image: d.image,
     datePublished: d.pubDate.toISOString().slice(0, 10),
     dateModified: (d.updatedDate ?? d.pubDate).toISOString().slice(0, 10),
   }),
@@ -41,6 +42,7 @@ const schemas = [
   description={d.description}
   schemas={schemas}
   ogType="article"
+  ogImage={d.image}
 >
   <div class="page-hero">
     <div class="container">
@@ -57,6 +59,18 @@ const schemas = [
       <span>Publicado em {fmt(d.pubDate)}</span>
       {d.updatedDate && <span class="updated-badge">Atualizado em {fmt(d.updatedDate)}</span>}
     </div>
+
+    {d.image && (
+      <img
+        class="editorial-img"
+        src={d.image}
+        alt={d.imageAlt ?? d.title}
+        width="1400"
+        height="788"
+        loading="eager"
+        fetchpriority="high"
+      />
+    )}
 
     <div class="post-content">
       <Content />

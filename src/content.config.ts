@@ -13,6 +13,10 @@ const blog = defineCollection({
     pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
     draft: z.boolean().default(false),
+    // Imagem destacada (caminho em /images/...) + alt. Vai pro topo do post,
+    // pros cards (índice/home) e pro schema Article/OG.
+    image: z.string().optional(),
+    imageAlt: z.string().optional(),
     // FAQ opcional → renderiza acordeão + gera FAQPage (featured snippet).
     faq: z.array(z.object({ q: z.string(), a: z.string() })).optional(),
   }),

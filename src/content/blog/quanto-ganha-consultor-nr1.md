@@ -6,6 +6,8 @@ funnel: "MOFU"
 tag: "Carreira"
 pubDate: 2026-07-06
 updatedDate: 2026-07-10
+image: "/images/editorial/consultor-nr1-ganhos.webp"
+imageAlt: "Ilustração de maleta executiva com escada ascendente de moedas e seta dourada de crescimento, representando os ganhos do consultor de NR-1"
 faq:
   - q: "Quanto custa um projeto de gestão de riscos psicossociais para uma empresa?"
     a: "<p>Depende do porte e da complexidade, mas projetos de diagnóstico e estruturação do PGR psicossocial costumam ser precificados por escopo (diagnóstico, plano de ação, treinamentos, acompanhamento). Empresas maiores e com mais unidades pagam mais por causa do volume de trabalho e do número de grupos de exposição.</p>"

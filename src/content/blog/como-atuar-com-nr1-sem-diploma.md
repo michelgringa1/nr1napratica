@@ -6,6 +6,8 @@ funnel: "MOFU"
 tag: "Carreira"
 pubDate: 2026-07-05
 updatedDate: 2026-07-10
+image: "/images/editorial/atuar-sem-diploma-porta.webp"
+imageAlt: "Ilustração de porta dourada aberta com luz, e um diploma com cadeado deixado para trás — atuar com NR-1 não exige diploma específico"
 faq:
   - q: "Preciso ser psicólogo para trabalhar com riscos psicossociais na NR-1?"
     a: "<p>Não. A NR-1 não reserva a gestão de riscos psicossociais a uma única profissão. Psicólogos têm competências valiosas, mas profissionais de RH, segurança do trabalho, saúde ocupacional e consultores também atuam — o que a norma exige é <strong>conhecimento técnico</strong> do processo (mapeamento, PGR, plano de ação), não um registro específico.</p>"

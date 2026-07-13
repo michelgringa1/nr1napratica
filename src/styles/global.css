@@ -977,6 +977,37 @@ tbody tr:last-child td {
   margin-bottom: 1.2rem;
 }
 
+/* ---------- Imagem editorial (largura do texto) ---------- */
+.editorial-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  border: 1px solid var(--cinza-200);
+  box-shadow: var(--sombra);
+  margin: 1.6rem 0 2rem;
+}
+
+/* ---------- Thumb dos cards (sangra até as bordas) ---------- */
+.post-card .card-thumb {
+  display: block;
+  margin: -1.6rem -1.5rem 1.1rem;
+  border-radius: var(--radius) var(--radius) 0 0;
+  overflow: hidden;
+  line-height: 0;
+}
+.post-card .card-thumb img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+.post-card:hover .card-thumb img {
+  transform: scale(1.04);
+}
+
 /* ---------- Imagens flutuantes ---------- */
 .float-img {
   float: right;

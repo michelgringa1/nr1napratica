@@ -6,6 +6,8 @@ funnel: "BOFU"
 tag: "Izabella Camargo"
 pubDate: 2026-07-07
 updatedDate: 2026-07-10
+image: "/images/editorial/imersao-nr1-na-pratica-palco.webp"
+imageAlt: "Auditório com palco iluminado e telão exibindo Imersão NR1 na Prática, representando o evento da Izabella Camargo"
 faq:
   - q: "A imersão NR1 na Prática é gratuita?"
     a: "<p>Eventos e imersões de lançamento costumam ter formatos de acesso variados (gratuitos ou de baixo custo) que antecedem a oferta da formação completa. Como as condições mudam a cada edição, confirme o formato atual na página oficial antes de se inscrever.</p>"

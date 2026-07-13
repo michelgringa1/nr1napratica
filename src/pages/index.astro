@@ -94,18 +94,27 @@ const schemas = [organizationSchema(), websiteSchema()];
       <h2>Guias essenciais da NR-1</h2>
       <div class="card-grid">
         <div class="post-card">
+          <a href="/riscos-psicossociais-exemplos/" class="card-thumb" tabindex="-1" aria-hidden="true">
+            <img src="/images/editorial/thumb-riscos-checklist.webp" alt="" width="800" height="533" loading="lazy" />
+          </a>
           <span class="tag">Riscos psicossociais</span>
           <h3><a href="/riscos-psicossociais-exemplos/">15 exemplos para o PGR</a></h3>
           <p>O que são os fatores de risco psicossocial e a lista prática do que sua empresa precisa mapear.</p>
           <a class="read" href="/riscos-psicossociais-exemplos/">Ler guia →</a>
         </div>
         <div class="post-card">
+          <a href="/multa-nr1-2026/" class="card-thumb" tabindex="-1" aria-hidden="true">
+            <img src="/images/editorial/thumb-multa-martelo.webp" alt="" width="800" height="533" loading="lazy" />
+          </a>
           <span class="tag">Fiscalização</span>
           <h3><a href="/multa-nr1-2026/">Multa da NR-1 em 2026</a></h3>
           <p>Valores, como o cálculo funciona, reincidência e o que fazer para evitar a autuação.</p>
           <a class="read" href="/multa-nr1-2026/">Ler guia →</a>
         </div>
         <div class="post-card">
+          <a href="/gro-e-pgr-o-que-e/" class="card-thumb" tabindex="-1" aria-hidden="true">
+            <img src="/images/editorial/thumb-gro-pgr-engrenagens.webp" alt="" width="800" height="533" loading="lazy" />
+          </a>
           <span class="tag">Conceitos</span>
           <h3><a href="/gro-e-pgr-o-que-e/">GRO e PGR: o que é</a></h3>
           <p>As duas siglas que mais confundem na NR-1, explicadas com exemplos e uma tabela comparativa.</p>
@@ -144,6 +153,11 @@ const schemas = [organizationSchema(), websiteSchema()];
         <div class="card-grid">
           {posts.map((post) => (
             <div class="post-card">
+              {post.data.image && (
+                <a href={`/blog/${post.id}/`} class="card-thumb" tabindex="-1" aria-hidden="true">
+                  <img src={post.data.image} alt="" width="800" height="450" loading="lazy" />
+                </a>
+              )}
               <span class="tag">{post.data.tag}</span>
               <h3><a href={`/blog/${post.id}/`}>{post.data.title}</a></h3>
               <p>{post.data.description}</p>
