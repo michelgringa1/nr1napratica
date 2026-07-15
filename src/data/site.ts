@@ -20,6 +20,9 @@ export const SITE = {
   gtmId: '', // ex.: 'GTM-XXXXXXX'
   // Meta Pixel: SÓ o ID (público, client-side). NUNCA colocar o token/CAPI aqui.
   metaPixelId: '369012164131148',
+  // Microsoft Clarity: mapa de calor + gravações ("onde clicaram"). Cole o ID do
+  // projeto (grátis em clarity.microsoft.com) para ativar. Deixe vazio para não renderizar.
+  clarityId: '', // ex.: 'abcde12345'
 } as const;
 
 // Persona-placeholder de autoria (E-E-A-T). Substitua pela bio real quando tiver.
