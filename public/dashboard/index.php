@@ -310,7 +310,8 @@ $data = ($configured && $authed) ? nr1_fetch_data($start, $end, $prevStart, $pre
     var today=new Date(); today.setHours(0,0,0,0);
     function iso(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
     function brl(s){var p=s.split('-');return p[2]+'/'+p[1]+'/'+p[0];}
-    function render(){
+    var built=false;
+    function build(){
       var html='';
       for(var m=0;m<2;m++){
         var base=new Date(view.getFullYear(),view.getMonth()+m,1);
@@ -322,32 +323,38 @@ $data = ($configured && $authed) ? nr1_fetch_data($start, $end, $prevStart, $pre
         for(var i=0;i<7;i++) html+='<span class="cal-dow">'+DOW[i]+'</span>';
         for(var j=0;j<base.getDay();j++) html+='<span></span>';
         var dim=new Date(base.getFullYear(),base.getMonth()+1,0).getDate();
-        var end2=selEnd||(selStart&&hover?hover:null);
         for(var day=1;day<=dim;day++){
-          var d=new Date(base.getFullYear(),base.getMonth(),day), ds=iso(d), cls='cal-day', future=d>today;
-          if(future) cls+=' off';
-          var a=selStart, b=end2; if(a&&b&&a>b){var t=a;a=b;b=t;}
-          if(a&&ds===a) cls+=' sel start';
-          if(b&&ds===b) cls+=' sel end';
-          if(a&&b&&ds>a&&ds<b) cls+=' inrange';
-          html+='<button type="button" class="'+cls+'" data-d="'+ds+'"'+(future?' disabled':'')+'>'+day+'</button>';
+          var d=new Date(base.getFullYear(),base.getMonth(),day), ds=iso(d), future=d>today;
+          html+='<button type="button" class="cal-day'+(future?' off':'')+'" data-d="'+ds+'"'+(future?' disabled':'')+'>'+day+'</button>';
         }
         html+='</div></div>';
       }
-      grid.innerHTML=html;
+      grid.innerHTML=html; built=true; paint();
+    }
+    function paint(){
+      var end2=selEnd||(selStart&&hover?hover:null);
+      var a=selStart, b=end2; if(a&&b&&a>b){var t=a;a=b;b=t;}
+      var cells=grid.getElementsByClassName('cal-day');
+      for(var i=0;i<cells.length;i++){
+        var cell=cells[i], ds=cell.getAttribute('data-d');
+        cell.classList.remove('sel','start','end','inrange');
+        if(a&&ds===a) cell.classList.add('sel','start');
+        if(b&&ds===b) cell.classList.add('sel','end');
+        if(a&&b&&ds>a&&ds<b) cell.classList.add('inrange');
+      }
       var ok=selStart&&selEnd;
       apply.disabled=!ok;
       lbl.innerHTML = ok ? '<b>'+brl(selStart<selEnd?selStart:selEnd)+'</b> a <b>'+brl(selStart<selEnd?selEnd:selStart)+'</b>' : (selStart?'Agora clique na data final':'Clique na data inicial e depois na final');
     }
-    function pick(ds){ if(!selStart||(selStart&&selEnd)){selStart=ds;selEnd=null;hover=null;} else {selEnd=ds;if(selEnd<selStart){var t=selStart;selStart=selEnd;selEnd=t;}} render(); }
+    function pick(ds){ if(!selStart||(selStart&&selEnd)){selStart=ds;selEnd=null;hover=null;} else {selEnd=ds;if(selEnd<selStart){var t=selStart;selStart=selEnd;selEnd=t;}} paint(); }
     grid.addEventListener('click',function(e){
       e.stopPropagation();
       var nav=e.target.closest('[data-nav]');
-      if(nav){ view.setMonth(view.getMonth()+parseInt(nav.dataset.nav,10)); render(); return; }
-      var d=e.target.closest('.cal-day'); if(!d||d.disabled) return; pick(d.dataset.d);
+      if(nav){ view.setMonth(view.getMonth()+parseInt(nav.dataset.nav,10)); build(); return; }
+      var d=e.target.closest('.cal-day'); if(!d||d.disabled) return; pick(d.getAttribute('data-d'));
     });
-    grid.addEventListener('mouseover',function(e){ var d=e.target.closest('.cal-day'); if(!d||d.disabled) return; if(selStart&&!selEnd){ hover=d.dataset.d; render(); } });
-    btn.addEventListener('click',function(e){ e.stopPropagation(); pop.classList.toggle('open'); if(pop.classList.contains('open')) render(); });
+    grid.addEventListener('mouseover',function(e){ var d=e.target.closest('.cal-day'); if(!d||d.disabled) return; if(selStart&&!selEnd){ hover=d.getAttribute('data-d'); paint(); } });
+    btn.addEventListener('click',function(e){ e.stopPropagation(); pop.classList.toggle('open'); if(pop.classList.contains('open')&&!built) build(); });
     document.addEventListener('click',function(e){ if(!pop.contains(e.target)&&e.target!==btn) pop.classList.remove('open'); });
     apply.addEventListener('click',function(){ if(!selStart||!selEnd) return; var s=selStart<selEnd?selStart:selEnd, en=selStart<selEnd?selEnd:selStart; window.location.search='?start='+s+'&end='+en; });
   })();
