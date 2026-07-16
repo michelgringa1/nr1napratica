@@ -22,7 +22,7 @@ export const SITE = {
   metaPixelId: '369012164131148',
   // Microsoft Clarity: mapa de calor + gravações ("onde clicaram"). Cole o ID do
   // projeto (grátis em clarity.microsoft.com) para ativar. Deixe vazio para não renderizar.
-  clarityId: 'xn107i71xa',
+  clarityId: 'xn3u6ydyrv',
 } as const;
 
 // Persona-placeholder de autoria (E-E-A-T). Substitua pela bio real quando tiver.
