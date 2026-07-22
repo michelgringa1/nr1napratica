@@ -421,15 +421,57 @@
     </div>
   </section>
 
-  <!-- Evento personalizado: clique em "Quero aplicar NR1" (passagem para o site da Izabella) -->
+  <!-- Rastreamento: captura UTMs do anuncio e repassa para o link da Hotmart + pixel -->
   <script>
-    document.querySelectorAll('.btn-cta').forEach(function (botao) {
-      botao.addEventListener('click', function () {
-        if (typeof fbq === 'function') {
-          fbq('trackCustom', 'ClicouAplicarNR1');
-        }
+    (function () {
+      // Parametros que vamos capturar e repassar (UTMs + IDs de clique + rastreio Hotmart)
+      var CHAVES = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid', 'src', 'sck'];
+      var GUARDA = 'nr1_track';
+
+      var atual = new URLSearchParams(window.location.search);
+
+      // Recupera o que ja foi salvo nesta sessao (para nao perder se a pessoa navegar/recarregar)
+      var dados = {};
+      try { dados = JSON.parse(sessionStorage.getItem(GUARDA) || '{}'); } catch (e) {}
+
+      // Novos parametros da URL tem prioridade
+      CHAVES.forEach(function (chave) {
+        var valor = atual.get(chave);
+        if (valor) { dados[chave] = valor; }
       });
-    });
+
+      try { sessionStorage.setItem(GUARDA, JSON.stringify(dados)); } catch (e) {}
+
+      // src e o campo nativo de origem da Hotmart. Se nao veio, monta a partir da campanha/origem.
+      if (!dados.src) {
+        dados.src = dados.utm_campaign || dados.utm_source || 'direto';
+      }
+
+      window._nr1Track = dados;
+
+      // Anexa os parametros a todos os botoes de CTA
+      document.querySelectorAll('.btn-cta').forEach(function (botao) {
+        try {
+          var url = new URL(botao.href);
+          Object.keys(dados).forEach(function (chave) {
+            if (dados[chave]) { url.searchParams.set(chave, dados[chave]); }
+          });
+          botao.href = url.toString();
+        } catch (e) {}
+
+        // Dispara o evento personalizado no clique, com os dados da campanha
+        botao.addEventListener('click', function () {
+          if (typeof fbq === 'function') {
+            fbq('trackCustom', 'ClicouAplicarNR1', {
+              utm_source: dados.utm_source || '',
+              utm_medium: dados.utm_medium || '',
+              utm_campaign: dados.utm_campaign || '',
+              utm_content: dados.utm_content || ''
+            });
+          }
+        });
+      });
+    })();
   </script>
 
 </body>
