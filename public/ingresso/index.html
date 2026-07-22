@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Imersão NR1 na Prática | 4ª Edição com Izabella Camargo</title>
+  <meta name="description" content="Imersão NR1 na Prática, ao vivo e online, dias 15 e 16/08 com Izabella Camargo. Garanta seu ingresso.">
+
+  <!-- Meta Pixel Code -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '369012164131148');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=369012164131148&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --verde: #22b366;
+      --verde-escuro: #1a9a56;
+      --navy: #0f2942;
+      --cinza-texto: #5a6b7b;
+      --cinza-claro: #f4f7fa;
+      --branco: #ffffff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: rgb(27, 39, 51);
+      background: var(--branco);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    @keyframes heroIn {
+      from {
+        transform: translateY(24px);
+        opacity: 0;
+        filter: blur(8px);
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+        filter: blur(0px);
+      }
+    }
+
+    .anim {
+      animation: 0.7s cubic-bezier(0.16, 1, 0.3, 1) both running heroIn;
+    }
+
+    .anim-1 { animation-delay: 0.05s; }
+    .anim-2 { animation-delay: 0.15s; }
+    .anim-3 { animation-delay: 0.25s; }
+    .anim-4 { animation-delay: 0.35s; }
+    .anim-5 { animation-delay: 0.45s; }
+    .anim-6 { animation-delay: 0.55s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .anim {
+        animation: none;
+      }
+    }
+
+    /* SEÇÃO 1 - O EVENTO */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 100vh;
+      align-items: center;
+    }
+
+    .hero-content {
+      padding: 48px 6% 48px 6%;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: 4%;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid #d7e0e8;
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 28px;
+    }
+
+    .badge .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--verde);
+      display: inline-block;
+    }
+
+    .badge .data {
+      color: var(--cinza-texto);
+      font-weight: 500;
+      margin-left: 4px;
+    }
+
+    h1 {
+      font-size: clamp(30px, 4vw, 46px);
+      line-height: 1.15;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 22px;
+    }
+
+    h1 .destaque {
+      color: var(--verde);
+    }
+
+    .subtitulo {
+      font-size: 18px;
+      color: var(--cinza-texto);
+      margin-bottom: 34px;
+      max-width: 92%;
+    }
+
+    .btn-cta {
+      display: inline-block;
+      background: var(--verde);
+      color: var(--branco);
+      text-decoration: none;
+      font-size: 17px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 20px 44px;
+      border-radius: 12px;
+      box-shadow: 0 10px 24px rgba(34, 179, 102, 0.35);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    }
+
+    .btn-cta:hover {
+      background: var(--verde-escuro);
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(34, 179, 102, 0.45);
+    }
+
+    .progresso {
+      margin-top: 32px;
+      max-width: 340px;
+    }
+
+    .barra {
+      height: 8px;
+      background: #e3eaf0;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .barra span {
+      display: block;
+      height: 100%;
+      width: 35%;
+      background: var(--verde);
+      border-radius: 999px;
+    }
+
+    .progresso p {
+      font-size: 13px;
+      color: var(--cinza-texto);
+      margin-top: 8px;
+    }
+
+    .prova-social {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 30px;
+    }
+
+    .avatares {
+      display: flex;
+    }
+
+    .avatares .av {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid var(--branco);
+      margin-left: -12px;
+      background: #cdd9e3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .avatares .av:first-child {
+      margin-left: 0;
+    }
+
+    .avatares .av.mais {
+      background: var(--navy);
+      color: var(--branco);
+    }
+
+    .prova-social p {
+      font-size: 14px;
+      color: var(--cinza-texto);
+    }
+
+    .prova-social p strong {
+      color: var(--navy);
+    }
+
+    .hero-img {
+      background-image: url("hero-gestor.png");
+      background-size: contain;
+      background-position: center bottom;
+      background-repeat: no-repeat;
+      background-color: var(--branco);
+      align-self: stretch;
+      min-height: 100vh;
+    }
+
+    /* SEÇÃO 2 - QUEM CONDUZ */
+    .sobre-secao {
+      background: var(--cinza-claro);
+      padding: 88px 24px;
+    }
+
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+
+    .sobre {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    .sobre-foto {
+      background-image: url("imgi_4_brand-hero-photo.png");
+      background-size: cover;
+      background-position: center top;
+      border-radius: 20px;
+      min-height: 460px;
+    }
+
+    .sup {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #6f8194;
+      margin-bottom: 14px;
+    }
+
+    .sobre h2 {
+      font-size: clamp(28px, 3.4vw, 40px);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+
+    .sobre .cargo {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--verde);
+      margin-bottom: 20px;
+    }
+
+    .sobre p {
+      font-size: 17px;
+      color: var(--cinza-texto);
+      margin-bottom: 20px;
+    }
+
+    .aspas {
+      border-left: 4px solid var(--verde);
+      padding: 6px 0 6px 22px;
+      margin: 26px 0;
+      font-size: 19px;
+      font-weight: 600;
+      color: var(--navy);
+      font-style: italic;
+    }
+
+    .selos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .selos span {
+      background: var(--branco);
+      border: 1px solid #e3eaf0;
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    /* RESPONSIVO */
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+      .hero-img {
+        order: -1;
+        min-height: 340px;
+        height: 340px;
+      }
+      .hero-content {
+        padding: 40px 24px;
+        max-width: 100%;
+      }
+      .subtitulo {
+        max-width: 100%;
+      }
+      .btn-cta {
+        display: block;
+        text-align: center;
+      }
+      .sobre-secao {
+        padding: 56px 20px;
+      }
+      .sobre {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      .sobre-foto {
+        min-height: 320px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SEÇÃO 1 - O EVENTO -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="badge anim anim-1">
+        <span class="dot"></span> Imersão NR1 na Prática, 4ª Edição
+        <span class="data">15 e 16/08, ao vivo e online</span>
+      </div>
+
+      <h1 class="anim anim-2">Atue como Gestor de NR1 e feche <span class="destaque">consultorias de alto valor</span> com empresas.</h1>
+
+      <p class="subtitulo anim anim-3">Em 2 dias, montamos seu plano do zero para atuar com NR1, independentemente da sua experiência ou formação acadêmica.</p>
+
+      <a class="btn-cta anim anim-4" href="https://go.hotmart.com/G106842935G?ap=f614" target="_blank" rel="noopener">Quero aplicar NR1</a>
+
+      <div class="progresso anim anim-5">
+        <div class="barra"><span></span></div>
+        <p>35% dos ingressos vendidos a R$59</p>
+      </div>
+
+      <div class="prova-social anim anim-6">
+        <div class="avatares">
+          <div class="av">JS</div>
+          <div class="av">AC</div>
+          <div class="av">RM</div>
+          <div class="av mais">+15k</div>
+        </div>
+        <p><strong>+15 mil alunos participaram</strong> das edições anteriores</p>
+      </div>
+    </div>
+
+    <div class="hero-img" role="img" aria-label="Izabella Camargo"></div>
+  </section>
+
+  <!-- SEÇÃO 2 - QUEM CONDUZ A IMERSÃO -->
+  <section class="sobre-secao">
+    <div class="container">
+      <div class="sobre">
+        <div class="sobre-foto" role="img" aria-label="Izabella Camargo"></div>
+        <div>
+          <p class="sup">Quem conduz a imersão</p>
+          <h2>Izabella Camargo</h2>
+          <p class="cargo">Jornalista e referência em saúde mental no trabalho</p>
+          <p>Criadora dos EPIs da Saúde Mental, tornou-se voz pioneira na prevenção do burnout depois da própria experiência na TV Globo. Há 7 anos leva essa pauta para dentro das empresas, com palestras que já impactaram mais de 1 milhão de pessoas no Brasil, na França, nos EUA e na África.</p>
+
+          <p class="aspas">"A gestão dos riscos psicossociais vai muito além da NR-1. Tem a ver com a capacidade de adaptação."</p>
+
+          <div class="selos">
+            <span>LinkedIn Top Voice</span>
+            <span>5x TEDx</span>
+            <span>Autora de "Dá um Tempo!"</span>
+            <span>Prêmio iBest 2023 a 2025</span>
+            <span>Top of Mind RH 2024 e 2025</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Evento personalizado: clique em "Quero aplicar NR1" (passagem para o site da Izabella) -->
+  <script>
+    document.querySelectorAll('.btn-cta').forEach(function (botao) {
+      botao.addEventListener('click', function () {
+        if (typeof fbq === 'function') {
+          fbq('trackCustom', 'ClicouAplicarNR1');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
