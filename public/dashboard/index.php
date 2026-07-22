@@ -20,18 +20,25 @@ if (isset($_POST['senha'])) {
 }
 $authed = !empty($_SESSION['nr1_ok']);
 
-// ---------- Período (presets 7/28/90 ou intervalo personalizado) ----------
+// ---------- Período (Hoje, Ontem, presets 7/28/90 ou intervalo personalizado) ----------
 function nr1_valid_date($d) { $t = DateTime::createFromFormat('Y-m-d', $d); return $t && $t->format('Y-m-d') === $d; }
 $presets = [7, 28, 90];
 $today = new DateTime('today');
-$isCustom = false; $rangeN = 28;
+$isCustom = false; $rangeN = 28; $dayPreset = null;
+$rangeParam = (string)($_GET['range'] ?? '');
 if (!empty($_GET['start']) && !empty($_GET['end']) && nr1_valid_date($_GET['start']) && nr1_valid_date($_GET['end'])) {
   $s = new DateTime($_GET['start']); $e = new DateTime($_GET['end']);
   if ($s > $e) { $t = $s; $s = $e; $e = $t; }
   if ($e > $today) $e = clone $today;
   $start = $s->format('Y-m-d'); $end = $e->format('Y-m-d'); $isCustom = true;
+} elseif ($rangeParam === 'hoje') {
+  $dayPreset = 'hoje';
+  $start = $end = $today->format('Y-m-d');
+} elseif ($rangeParam === 'ontem') {
+  $dayPreset = 'ontem';
+  $start = $end = (clone $today)->modify('-1 day')->format('Y-m-d');
 } else {
-  $rangeN = in_array((int)($_GET['range'] ?? 28), $presets, true) ? (int)$_GET['range'] : 28;
+  $rangeN = in_array((int)$rangeParam, $presets, true) ? (int)$rangeParam : 28;
   $end = $today->format('Y-m-d');
   $start = (clone $today)->modify('-' . ($rangeN - 1) . ' days')->format('Y-m-d');
 }
@@ -41,8 +48,16 @@ $prevE = (clone $sD)->modify('-1 day'); $prevS = (clone $prevE)->modify('-' . ($
 $prevStart = $prevS->format('Y-m-d'); $prevEnd = $prevE->format('Y-m-d');
 
 function nr1_fmt_br($d) { return date('d/m/Y', strtotime($d)); }
-$periodLabel = $isCustom ? (nr1_fmt_br($start) . ' a ' . nr1_fmt_br($end)) : ('Últimos ' . $rangeN . ' dias');
-$currentQuery = $isCustom ? ('start=' . $start . '&end=' . $end) : ('range=' . $rangeN);
+if ($isCustom) {
+  $periodLabel = nr1_fmt_br($start) . ' a ' . nr1_fmt_br($end);
+  $currentQuery = 'start=' . $start . '&end=' . $end;
+} elseif ($dayPreset === 'hoje') {
+  $periodLabel = 'Hoje'; $currentQuery = 'range=hoje';
+} elseif ($dayPreset === 'ontem') {
+  $periodLabel = 'Ontem'; $currentQuery = 'range=ontem';
+} else {
+  $periodLabel = 'Últimos ' . $rangeN . ' dias'; $currentQuery = 'range=' . $rangeN;
+}
 
 // ---------- Rótulos ----------
 function nr1_page_label($path) {
@@ -245,9 +260,11 @@ if ($configured && $authed) {
 
   <div class="toolbar">
     <div class="period">
-      <a class="pill <?= (!$isCustom && $rangeN === 7) ? 'on' : '' ?>" href="?range=7<?= $abaSuffix ?>">7 dias</a>
-      <a class="pill <?= (!$isCustom && $rangeN === 28) ? 'on' : '' ?>" href="?range=28<?= $abaSuffix ?>">28 dias</a>
-      <a class="pill <?= (!$isCustom && $rangeN === 90) ? 'on' : '' ?>" href="?range=90<?= $abaSuffix ?>">90 dias</a>
+      <a class="pill <?= $dayPreset === 'hoje' ? 'on' : '' ?>" href="?range=hoje<?= $abaSuffix ?>">Hoje</a>
+      <a class="pill <?= $dayPreset === 'ontem' ? 'on' : '' ?>" href="?range=ontem<?= $abaSuffix ?>">Ontem</a>
+      <a class="pill <?= (!$isCustom && !$dayPreset && $rangeN === 7) ? 'on' : '' ?>" href="?range=7<?= $abaSuffix ?>">7 dias</a>
+      <a class="pill <?= (!$isCustom && !$dayPreset && $rangeN === 28) ? 'on' : '' ?>" href="?range=28<?= $abaSuffix ?>">28 dias</a>
+      <a class="pill <?= (!$isCustom && !$dayPreset && $rangeN === 90) ? 'on' : '' ?>" href="?range=90<?= $abaSuffix ?>">90 dias</a>
       <button type="button" class="pill <?= $isCustom ? 'on' : '' ?>" id="customBtn"><?= $isCustom ? htmlspecialchars($periodLabel) : 'Personalizado &#9662;' ?></button>
       <div class="calpop" id="calPop" data-start="<?= htmlspecialchars($start) ?>" data-end="<?= htmlspecialchars($end) ?>">
         <div class="cal-wrap" id="calGrid"></div>
