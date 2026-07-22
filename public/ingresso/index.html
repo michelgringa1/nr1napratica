@@ -449,6 +449,31 @@
 
       window._nr1Track = dados;
 
+      // Envia o evento (view/click) com as UTMs para o nosso coletor proprio
+      function registrar(evento) {
+        try {
+          var corpo = JSON.stringify({
+            e: evento,
+            s: dados.utm_source || '',
+            m: dados.utm_medium || '',
+            c: dados.utm_campaign || '',
+            t: dados.utm_term || '',
+            ct: dados.utm_content || '',
+            fb: dados.fbclid || '',
+            gc: dados.gclid || '',
+            r: document.referrer || ''
+          });
+          if (navigator.sendBeacon) {
+            navigator.sendBeacon('track.php', new Blob([corpo], { type: 'application/json' }));
+          } else {
+            fetch('track.php', { method: 'POST', body: corpo, headers: { 'Content-Type': 'application/json' }, keepalive: true });
+          }
+        } catch (e) {}
+      }
+
+      // Registra a visita assim que a pagina carrega
+      registrar('view');
+
       // Anexa os parametros a todos os botoes de CTA
       document.querySelectorAll('.btn-cta').forEach(function (botao) {
         try {
@@ -459,8 +484,9 @@
           botao.href = url.toString();
         } catch (e) {}
 
-        // Dispara o evento personalizado no clique, com os dados da campanha
+        // No clique: registra no nosso coletor e dispara o evento do pixel
         botao.addEventListener('click', function () {
+          registrar('click');
           if (typeof fbq === 'function') {
             fbq('trackCustom', 'ClicouAplicarNR1', {
               utm_source: dados.utm_source || '',

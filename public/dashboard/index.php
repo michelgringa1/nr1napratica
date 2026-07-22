@@ -1,6 +1,10 @@
 <?php
 session_start();
 require __DIR__ . '/_ga4.php';
+require __DIR__ . '/_ingresso.php';
+
+// Aba ativa: "site" (Analytics) ou "ingresso" (UTMs da página ponte)
+$aba = (($_GET['aba'] ?? '') === 'ingresso') ? 'ingresso' : 'site';
 
 $cfg = nr1_config();
 $configured = (bool)$cfg;
@@ -75,7 +79,18 @@ function nr1_delta_html($d) {
 }
 $REVIEW = '/formacao-gestor-de-nr1-izabella-camargo-review/';
 
-$data = ($configured && $authed) ? nr1_fetch_data($start, $end, $prevStart, $prevEnd) : null;
+// Sufixo para preservar a aba ativa nos links de período/atualizar
+$abaSuffix = $aba === 'ingresso' ? '&aba=ingresso' : '';
+
+// A aba do site usa GA4; a aba /ingresso lê o log próprio de UTMs (sem Analytics)
+$data = null; $ing = null;
+if ($configured && $authed) {
+  if ($aba === 'ingresso') {
+    $ing = nr1_ingresso_data($start, $end, $prevStart, $prevEnd);
+  } else {
+    $data = nr1_fetch_data($start, $end, $prevStart, $prevEnd);
+  }
+}
 ?><!doctype html>
 <html lang="pt-BR">
 <head>
@@ -101,6 +116,11 @@ $data = ($configured && $authed) ? nr1_fetch_data($start, $end, $prevStart, $pre
   .pill:hover{border-color:var(--gold-soft);color:var(--ink)}
   .pill.on{background:var(--ink);color:#fff;border-color:var(--ink)}
   .tools{display:flex;gap:8px}
+  .tabs{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+  .tab{background:#fff;border:1px solid var(--line);color:var(--muted-2);font-size:.86rem;font-weight:700;padding:9px 18px;border-radius:999px;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+  .tab:hover{border-color:var(--gold-soft);color:var(--ink)}
+  .tab.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .tab .dot{width:7px;height:7px;border-radius:50%;background:var(--gold-soft)}
   .btn{background:var(--gold);color:#231a06;border:none;font-weight:700;font-size:.82rem;padding:8px 15px;border-radius:999px;cursor:pointer;text-decoration:none;display:inline-block}
   .btn-line{background:transparent;color:var(--muted-2);border:1px solid var(--line);font-weight:600;font-size:.82rem;padding:8px 14px;border-radius:999px;text-decoration:none}
   /* Calendário */
@@ -209,19 +229,25 @@ $data = ($configured && $authed) ? nr1_fetch_data($start, $end, $prevStart, $pre
   </div></div>
 
 <?php else:
-  $t = $data['totals'];
-  $when = isset($data['generated']) ? date('d/m/Y H:i', strtotime($data['generated'])) : '';
+  $t = ($aba === 'site' && is_array($data)) ? $data['totals'] : null;
+  $genFrom = $aba === 'ingresso' ? ($ing['generated'] ?? null) : ($data['generated'] ?? null);
+  $when = $genFrom ? date('d/m/Y H:i', strtotime($genFrom)) : date('d/m/Y H:i');
 ?>
   <header class="bar">
     <div class="brand"><h1>NR1 na Prática</h1><span class="tag">Painel</span></div>
     <div class="bar-right"><span class="period-label"><?= htmlspecialchars($periodLabel) ?></span></div>
   </header>
 
+  <nav class="tabs">
+    <a class="tab <?= $aba === 'site' ? 'on' : '' ?>" href="?<?= htmlspecialchars($currentQuery) ?>">Site (Analytics)</a>
+    <a class="tab <?= $aba === 'ingresso' ? 'on' : '' ?>" href="?<?= htmlspecialchars($currentQuery) ?>&aba=ingresso"><span class="dot"></span>Página /ingresso (UTMs)</a>
+  </nav>
+
   <div class="toolbar">
     <div class="period">
-      <a class="pill <?= (!$isCustom && $rangeN === 7) ? 'on' : '' ?>" href="?range=7">7 dias</a>
-      <a class="pill <?= (!$isCustom && $rangeN === 28) ? 'on' : '' ?>" href="?range=28">28 dias</a>
-      <a class="pill <?= (!$isCustom && $rangeN === 90) ? 'on' : '' ?>" href="?range=90">90 dias</a>
+      <a class="pill <?= (!$isCustom && $rangeN === 7) ? 'on' : '' ?>" href="?range=7<?= $abaSuffix ?>">7 dias</a>
+      <a class="pill <?= (!$isCustom && $rangeN === 28) ? 'on' : '' ?>" href="?range=28<?= $abaSuffix ?>">28 dias</a>
+      <a class="pill <?= (!$isCustom && $rangeN === 90) ? 'on' : '' ?>" href="?range=90<?= $abaSuffix ?>">90 dias</a>
       <button type="button" class="pill <?= $isCustom ? 'on' : '' ?>" id="customBtn"><?= $isCustom ? htmlspecialchars($periodLabel) : 'Personalizado &#9662;' ?></button>
       <div class="calpop" id="calPop" data-start="<?= htmlspecialchars($start) ?>" data-end="<?= htmlspecialchars($end) ?>">
         <div class="cal-wrap" id="calGrid"></div>
@@ -229,10 +255,79 @@ $data = ($configured && $authed) ? nr1_fetch_data($start, $end, $prevStart, $pre
       </div>
     </div>
     <div class="tools">
-      <a class="btn" href="?<?= htmlspecialchars($currentQuery) ?>">Atualizar</a>
+      <a class="btn" href="?<?= htmlspecialchars($currentQuery . $abaSuffix) ?>">Atualizar</a>
       <a class="btn-line" href="?sair=1">Sair</a>
     </div>
   </div>
+
+<?php if ($aba === 'ingresso'): ?>
+  <?php
+    $it = $ing['totals'];
+    $ctrTxt = number_format($it['ctr'], 1, ',', '.') . '%';
+  ?>
+  <section class="kpis">
+    <div class="card kpi"><div class="lbl">Visualizações</div><div class="num"><?= nr1_num($it['views']) ?></div><div class="foot"><?= nr1_delta_html($it['views_delta']) ?> <small>vs. período anterior</small></div></div>
+    <div class="card kpi"><div class="lbl">Visitantes</div><div class="num"><?= nr1_num($it['visitors']) ?></div><div class="foot"><?= nr1_delta_html($it['visitors_delta']) ?> <small>vs. período anterior</small></div></div>
+    <div class="card kpi accent"><div class="lbl">Cliques no botão</div><div class="num"><?= nr1_num($it['clicks']) ?></div><div class="foot"><?= nr1_delta_html($it['clicks_delta']) ?> <small>rumo à Hotmart</small></div></div>
+    <div class="card kpi"><div class="lbl">Taxa de clique</div><div class="num"><?= $ctrTxt ?></div><div class="foot"><small>cliques ÷ visualizações</small></div></div>
+  </section>
+
+  <div class="grid2">
+    <div class="panel">
+      <h2>De onde vem o tráfego</h2>
+      <p class="sub">Origem das visitas (utm_source)</p>
+      <div class="src">
+        <?php if (empty($ing['sources'])): ?><p class="sub">Ainda sem dados. Assim que os anúncios rodarem, as origens aparecem aqui.</p>
+        <?php else: foreach ($ing['sources'] as $s): ?>
+          <div class="src-row">
+            <div class="src-name"><?= htmlspecialchars(nr1_ing_source_label($s['name'])) ?><small><?= nr1_num($s['clicks']) ?> cliques</small></div>
+            <div class="track"><div class="fill" style="width:<?= max(3, (int)$s['pct']) ?>%"></div></div>
+            <div class="src-val"><?= (int)$s['pct'] ?>%</div>
+          </div>
+        <?php endforeach; endif; ?>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>Campanhas</h2>
+      <p class="sub">Desempenho por utm_campaign</p>
+      <table><thead><tr><th>Campanha</th><th style="text-align:right">Views</th><th style="text-align:right">Cliques</th><th style="text-align:right">Taxa</th></tr></thead><tbody>
+        <?php if (empty($ing['campaigns'])): ?><tr><td class="pagepath">Ainda sem dados.</td><td class="n">0</td><td class="n">0</td><td class="n">-</td></tr>
+        <?php else: foreach ($ing['campaigns'] as $c): ?>
+          <tr><td class="pagepath"><b><?= htmlspecialchars($c['name']) ?></b></td><td class="n"><?= nr1_num($c['views']) ?></td><td class="n"><?= nr1_num($c['clicks']) ?></td><td class="n"><?= number_format($c['ctr'], 1, ',', '.') ?>%</td></tr>
+        <?php endforeach; endif; ?>
+      </tbody></table>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Criativos e conteúdo</h2>
+    <p class="sub">Desempenho por utm_content (qual anúncio/criativo converte melhor)</p>
+    <table><thead><tr><th>Conteúdo</th><th style="text-align:right">Views</th><th style="text-align:right">Cliques</th><th style="text-align:right">Taxa</th></tr></thead><tbody>
+      <?php if (empty($ing['contents'])): ?><tr><td class="pagepath">Ainda sem dados.</td><td class="n">0</td><td class="n">0</td><td class="n">-</td></tr>
+      <?php else: foreach ($ing['contents'] as $c): ?>
+        <tr><td class="pagepath"><b><?= htmlspecialchars($c['name']) ?></b></td><td class="n"><?= nr1_num($c['views']) ?></td><td class="n"><?= nr1_num($c['clicks']) ?></td><td class="n"><?= number_format($c['ctr'], 1, ',', '.') ?>%</td></tr>
+      <?php endforeach; endif; ?>
+    </tbody></table>
+  </div>
+
+  <div class="panel">
+    <h2>Movimento por dia</h2>
+    <p class="sub">Visualizações e cliques a cada dia do período</p>
+    <table><thead><tr><th>Dia</th><th style="text-align:right">Visualizações</th><th style="text-align:right">Cliques</th><th style="text-align:right">Taxa</th></tr></thead><tbody>
+      <?php if (empty($ing['by_day'])): ?><tr><td class="pagepath">Ainda sem dados.</td><td class="n">0</td><td class="n">0</td><td class="n">-</td></tr>
+      <?php else: foreach ($ing['by_day'] as $d): $tx = $d['views'] > 0 ? round(($d['clicks'] / $d['views']) * 100, 1) : 0; ?>
+        <tr><td class="pagepath"><b><?= htmlspecialchars(nr1_fmt_br($d['date'])) ?></b></td><td class="n"><?= nr1_num($d['views']) ?></td><td class="n"><?= nr1_num($d['clicks']) ?></td><td class="n"><?= number_format($tx, 1, ',', '.') ?>%</td></tr>
+      <?php endforeach; endif; ?>
+    </tbody></table>
+  </div>
+
+  <?php if (!empty($ing['file_missing'])): ?>
+    <div class="panel"><div class="msg">Ainda não chegou nenhum evento. Assim que a página <code>/ingresso</code> receber a primeira visita, os dados começam a aparecer aqui.</div></div>
+  <?php endif; ?>
+
+  <p class="foot-note"><span class="g">&#9679;</span> Coletado direto na página /ingresso pelas UTMs · atualizado em <?= htmlspecialchars($when) ?> · dados em tempo real</p>
+
+<?php else: ?>
 
   <section class="kpis">
     <div class="card kpi"><div class="lbl">Visualizações</div><div class="num"><?= nr1_num($t['views']) ?></div><div class="foot"><?= nr1_delta_html($t['views_delta']) ?> <small>vs. período anterior</small></div></div>
@@ -298,6 +393,8 @@ $data = ($configured && $authed) ? nr1_fetch_data($start, $end, $prevStart, $pre
 
   <p class="foot-note"><span class="g">&#9679;</span> Conectado ao Google Analytics 4 · atualizado em <?= htmlspecialchars($when) ?> · os números guardam por 30 min para carregar rápido</p>
 
+<?php endif; ?>
+
   <script>
   (function(){
     var btn=document.getElementById('customBtn'), pop=document.getElementById('calPop');
@@ -356,7 +453,7 @@ $data = ($configured && $authed) ? nr1_fetch_data($start, $end, $prevStart, $pre
     grid.addEventListener('mouseover',function(e){ var d=e.target.closest('.cal-day'); if(!d||d.disabled) return; if(selStart&&!selEnd){ hover=d.getAttribute('data-d'); paint(); } });
     btn.addEventListener('click',function(e){ e.stopPropagation(); pop.classList.toggle('open'); if(pop.classList.contains('open')&&!built) build(); });
     document.addEventListener('click',function(e){ if(!pop.contains(e.target)&&e.target!==btn) pop.classList.remove('open'); });
-    apply.addEventListener('click',function(){ if(!selStart||!selEnd) return; var s=selStart<selEnd?selStart:selEnd, en=selStart<selEnd?selEnd:selStart; window.location.search='?start='+s+'&end='+en; });
+    apply.addEventListener('click',function(){ if(!selStart||!selEnd) return; var s=selStart<selEnd?selStart:selEnd, en=selStart<selEnd?selEnd:selStart; window.location.search='?start='+s+'&end='+en+'<?= $abaSuffix ?>'; });
   })();
   </script>
 <?php endif; ?>
