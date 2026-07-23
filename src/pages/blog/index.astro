@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import BannerImersao from '../../components/BannerImersao.astro';
 import { getCollection } from 'astro:content';
 import { SITE } from '../../data/site';
 import { breadcrumbSchema } from '../../data/schema';
@@ -55,5 +56,7 @@ const schemas = [breadcrumbSchema([['Início', '/'], ['Blog', '/blog/']])];
         ))}
       </div>
     )}
+
+    <BannerImersao />
   </div>
 </Base>
