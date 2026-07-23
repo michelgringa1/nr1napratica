@@ -7,6 +7,7 @@ import FAQ from '../../components/FAQ.astro';
 import { getCollection, render } from 'astro:content';
 import { AUTHOR } from '../../data/site';
 import { articleSchema, breadcrumbSchema, faqSchema } from '../../data/schema';
+import BannerImersao from '../../components/BannerImersao.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -75,6 +76,8 @@ const schemas = [
     <div class="post-content">
       <Content />
     </div>
+
+    <BannerImersao />
 
     {d.faq && d.faq.length > 0 && <FAQ items={d.faq} />}
 

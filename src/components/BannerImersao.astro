@@ -1,0 +1,58 @@
+---
+/**
+ * Banner da Imersão NR1 na Prática (4ª edição).
+ * Entra no meio do conteúdo das páginas, num intervalo natural entre seções.
+ * Link e arte ficam centralizados aqui: mudar aqui reflete no site inteiro.
+ */
+const href = 'https://go.hotmart.com/G106842935G?ap=f614&bnblg';
+---
+
+<a
+  class="banner-imersao"
+  href={href}
+  target="_blank"
+  rel="sponsored nofollow noopener"
+  aria-label="Imersão NR1 na Prática, 4ª edição, dias 15 e 16/08. Garantir meu ingresso."
+>
+  <img
+    src="/images/banner-imersao-nr1.webp"
+    alt="Imersão NR1 na Prática, 4ª edição, 15 e 16/08: em 2 dias, capacite-se para conduzir a NR1. Garantir meu ingresso."
+    width="1400"
+    height="467"
+    loading="lazy"
+    decoding="async"
+  />
+</a>
+
+<style>
+  .banner-imersao {
+    display: block;
+    margin: 2.2rem 0 2.4rem;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--cinza-200);
+    box-shadow: var(--sombra);
+    line-height: 0;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .banner-imersao:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 32px -14px rgba(11, 26, 43, 0.35);
+  }
+
+  .banner-imersao img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .banner-imersao {
+      transition: none;
+    }
+    .banner-imersao:hover {
+      transform: none;
+    }
+  }
+</style>
