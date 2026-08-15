@@ -11,7 +11,7 @@ export const SITE = {
   // Rota interna de cloaking do link de afiliado (301 no .htaccess).
   affiliatePath: '/vai/formacao/',
   // Link real (fica SÓ no .htaccess, nunca no HTML das páginas).
-  affiliateTarget: 'https://hotm.io/nr1napratica',
+  affiliateTarget: 'https://go.hotmart.com/E107148543R?src=blogreview',
   // Data de atualização exibida ("Atualizado em ..."). Atualize a cada revisão.
   updatedLabel: 'Julho/2026',
   updatedISO: '2026-07-10',
