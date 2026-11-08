@@ -1,45 +1,74 @@
-name: Build e publicar (deploy)
+name: Construir e publicar
 
-# A Hostinger compartilhada não roda "npm run build". Então este workflow builda
-# o site a cada push na main e publica SOMENTE o conteúdo de dist/ (o site pronto,
-# com .htaccess) na branch "deploy". Aponte o Git da Hostinger para a branch "deploy".
-
+# MODELO A (padrao dos sites do Michel, decisao de 29/10/2026):
+#   branch `fonte` = onde se trabalha e se da push (codigo Astro, scripts, este workflow).
+#   branch `main`  = SAIDA (o site pronto, o conteudo de dist/ com .htaccess). A Hostinger puxa a `main` para o public_html.
+# Nunca edite a `main` a mao nem arquivos direto no servidor: o proximo push na `fonte` sobrescreve a `main`.
+# A branch `deploy` (modelo antigo) fica congelada como reserva para voltar atras; nada mais escreve nela.
+#
+# Sem `workflow_dispatch` de proposito: o GitHub so aceita esse gatilho com o arquivo na branch padrao, e aqui
+# a branch padrao (`main`) e so saida. Para rodar de novo: "Re-run" na aba Actions, ou um push na `fonte`.
 on:
   push:
-    branches: [main]
-  workflow_dispatch: {}
+    branches: [fonte]
+
+concurrency:
+  group: publicar-main
+  cancel-in-progress: false
 
 permissions:
   contents: write
 
 jobs:
-  build-deploy:
+  publicar:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      # Mesma versao de Node do workflow antigo (a que gerou a branch `deploy` que esta no ar).
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
 
-      - name: Instalar dependências
+      - name: Instalar dependencias
         run: npm ci
 
-      - name: Build
+      # TZ=UTC: as datas dos posts saem de toLocaleDateString() sem fuso. No UTC do GitHub o resultado e o que esta
+      # no ar; num PC em Brasilia (UTC-3) cinco paginas do blog sairiam com a data um dia antes. Fixado de proposito.
+      - name: Construir o site
         run: npm run build
-
-      - name: Publicar dist/ na branch deploy
-        run: |
-          cd dist
-          touch .nojekyll
-          git init -q
-          git config user.name "deploy-bot"
-          git config user.email "deploy@nr1napratica.online"
-          git add -A
-          git commit -q -m "deploy: ${GITHUB_SHA}"
-          git push -f "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:deploy
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TZ: UTC
+
+      # Regras do CLAUDE.md que "nao podem sair" (ver scripts/itens-fixos.sh): .htaccess e destino da Formacao, chave do
+      # IndexNow, nenhum .txt solto, robots.txt, painel e ponte /ingresso/ presentes, nada de config/chave/log, sem iframe,
+      # so o link direto da Imersao, GA4 e Pixel, sem schema Review.
+      - name: Itens fixos
+        run: bash scripts/itens-fixos.sh dist
+
+      # Trava de publicacao (scripts/gate.mjs; cabecalho do arquivo explica as flags). Sai 1 so em ERRO: se falhar, nada e publicado.
+      #   --sem-travessao --travessao-bruto : nenhum travessao longo em arquivo nenhum (o CLAUDE.md so tolera 5 curtos em intervalos)
+      #   --ignorar-links /vai/             : /vai/formacao/ e redirect do .htaccess, nao tem arquivo
+      #   --permitir-tom reclameaqui        : tolera so a secao "Reclame Aqui e reputacao" do review (3 ocorrencias, A CONFIRMAR 5 do
+      #                                       CLAUDE.md); todo o resto do tom comercial continua barrando. Tirar quando a secao sair.
+      - name: Trava de publicacao
+        run: >
+          node scripts/gate.mjs ./dist --estrito --dominio https://nr1napratica.online
+          --sem-travessao --travessao-bruto --ignorar-links /vai/ --permitir-tom reclameaqui
+
+      # Publica o conteudo de dist/ na raiz da branch main.
+      # keep_files false: o que sumiu de dist/ some da main (e do servidor).
+      # enable_jekyll false: mantem o .nojekyll que o workflow antigo ja gerava (a main fica identica a `deploy` de hoje).
+      # Sem mudanca nenhuma, o peaceiris NAO cria commit (allow_empty_commit false).
+      - name: Publicar na branch main
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: main
+          publish_dir: ./dist
+          keep_files: false
+          enable_jekyll: false
+          user_name: github-actions[bot]
+          user_email: 41898282+github-actions[bot]@users.noreply.github.com
+          commit_message: "Build ${{ github.sha }}"

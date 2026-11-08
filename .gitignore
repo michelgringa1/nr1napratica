@@ -19,3 +19,15 @@ Thumbs.db
 
 # imagens-fonte pesadas da página de vendas (originais); usar as otimizadas em public/images/modulos/
 imagens/
+
+# credenciais e dados que vivem SO no servidor (o repositorio e PUBLICO): nunca versionar
+# (o painel le nr1-dash-config.php, ga4-key.json e ingresso-eventos.jsonl na pasta ACIMA da public_html)
+*-config.php
+*-key.json
+*.jsonl
+*.pem
+*.key
+.env.*
+
+# pasta temporaria de ensaio local
+_site/

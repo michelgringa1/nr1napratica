@@ -49,29 +49,27 @@ PNGs já vão versionados em `public/`).
 - [ ] Preencher `AUTHOR.sameAs` em `src/data/site.ts` com perfis reais (LinkedIn/Instagram) para reforçar E-E-A-T.
 - [ ] Trocar o e-mail em `src/pages/contato.astro`.
 
-## Deploy (GitHub Actions → branch `deploy` → Hostinger)
+## Deploy (modelo A: `fonte` → GitHub Actions → `main` → Hostinger)
 
 A Hostinger compartilhada **não roda `npm run build`**. Por isso o deploy é
 automatizado assim:
 
-1. Você dá `git push` na branch **`main`** (código-fonte).
-2. O GitHub Action (`.github/workflows/deploy.yml`) builda e publica **só o site
-   pronto** (conteúdo de `dist/`, com `.htaccess`) na branch **`deploy`**.
-3. A Hostinger serve a branch **`deploy`** em `public_html`.
+1. Você dá `git push` na branch **`fonte`** (código-fonte; é nela que se trabalha).
+2. O GitHub Action (`.github/workflows/deploy.yml`) instala, builda (`npm run build`),
+   confere os itens fixos (`scripts/itens-fixos.sh`) e a trava (`scripts/gate.mjs`) e
+   publica **só o site pronto** (conteúdo de `dist/`, com `.htaccess`) na branch **`main`**.
+3. A Hostinger serve a branch **`main`** em `public_html`.
 
-### Configuração única na Hostinger (hPanel)
+A `main` é só saída: nunca edite a `main` nem arquivos no servidor (o próximo push na
+`fonte` sobrescreve). A branch `deploy` é do modelo antigo e ficou congelada como reserva.
 
-1. **Avançado → GIT:** repositório `https://github.com/michelgringa1/nr1napratica.git`,
-   branch **`deploy`** (NÃO `main`), diretório `public_html`.
-2. Ative **Auto-Deployment** e copie o **webhook** gerado → cole em GitHub →
-   repo → Settings → Webhooks (assim a Hostinger puxa sozinha a cada build).
-   (Sem webhook, é só clicar "Deploy" no hPanel após cada Action.)
-3. **SSL:** hPanel → SSL → Let's Encrypt + "Forçar HTTPS".
-4. **Teste:** `https://nr1napratica.online/vai/formacao` deve redirecionar com o
-   `ref=B106168547F` intacto (confirme o hotlink na área de afiliado da Hotmart).
-5. **Search Console:** enviar `sitemap-index.xml` e pedir indexação das páginas
-   principais.
+Teste local da trava, antes de dar push (as datas dos posts dependem do fuso, então fixe `TZ=UTC`):
 
-> Fluxo de trabalho no dia a dia: editar → `git push` na `main` → o resto é
-> automático. Regenerar imagens (`node scripts/make-*.mjs`) só se mudar textos dos
-> gráficos.
+```bash
+TZ=UTC npm run build
+bash scripts/itens-fixos.sh dist
+node scripts/gate.mjs ./dist --estrito --dominio https://nr1napratica.online --sem-travessao --travessao-bruto --ignorar-links /vai/ --permitir-tom reclameaqui
+```
+
+> Fluxo de trabalho no dia a dia: editar → `git push` na `fonte` → o resto é automático.
+> Regenerar imagens (`node scripts/make-*.mjs`) só se mudar textos dos gráficos.
