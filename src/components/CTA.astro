@@ -1,19 +1,23 @@
 ---
-import { SITE } from '../data/site';
+import { goFormacao } from '../data/site';
 export interface Props {
   text?: string;
   sub?: string;
+  /** Posição do botão na página (entra no rastreio /go/: <pagina>_<pos>). Cada botão da mesma página usa uma posição diferente. */
+  pos?: string;
 }
 const {
   text = 'Ver oferta oficial da Formação →',
   sub = 'Você é levado à página oficial da Izabella Camargo',
+  pos = 'cta',
 } = Astro.props;
+const href = goFormacao(Astro.url.pathname, pos);
 ---
 <div class="cta-wrap">
   <a
     class="btn-cta"
-    href={SITE.affiliatePath}
-    rel="sponsored nofollow"
+    href={href}
+    rel="sponsored nofollow noopener"
     target="_blank"
   >
     {text}

@@ -29,7 +29,7 @@ A proposta parte de um problema real do mercado. A NR-1 atualizada tornou obriga
 
 As edições anteriores somam mais de **15 mil participantes**, o que dá uma noção de escala do evento.
 
-<a href="https://go.hotmart.com/K106842325X?ap=e3d2&src=rvwimsao" target="_blank" rel="sponsored nofollow noopener">Ver a página oficial da 4ª edição e garantir o ingresso →</a>
+<a href="/go/imersao-nr1-na-pratica/?s=rvwimsao" target="_blank" rel="sponsored nofollow noopener">Ver a página oficial da 4ª edição e garantir o ingresso →</a>
 
 ## Por que ela existe agora: o sexto risco
 
@@ -60,7 +60,7 @@ O conteúdo é dividido em seis blocos, e o desenho chama atenção por um motiv
 
 Esse último módulo é o diferencial mais claro em relação a cursos técnicos comuns. Checklist, PGR e inventário de riscos qualquer curso ensina. **Precificação, proposta e fechamento de contrato**, quase nenhum. Para quem pensa em atuar como consultor, é a parte que costuma valer o ingresso sozinha.
 
-<a href="https://go.hotmart.com/K106842325X?ap=e3d2&src=rvwimsao" target="_blank" rel="sponsored nofollow noopener">Ver a grade completa e as condições do lote atual →</a>
+<a href="/go/imersao-nr1-na-pratica/?s=rvwimsao" target="_blank" rel="sponsored nofollow noopener">Ver a grade completa e as condições do lote atual →</a>
 
 ## Quem conduz e quem ensina
 
@@ -103,7 +103,7 @@ O lote atual está em **R$ 59**, e o valor sobe conforme os lotes se esgotam. O 
 
 Colocando em perspectiva: R$ 59 por dois dias com uma auditora-fiscal do Trabalho, um engenheiro de segurança e um doutor em Direito na grade é um custo de entrada baixo para testar se a área é para você. O risco financeiro da decisão é pequeno, e a garantia de 7 dias reduz ainda mais.
 
-<a href="https://go.hotmart.com/K106842325X?ap=e3d2&src=rvwimsao" target="_blank" rel="sponsored nofollow noopener">Garantir meu ingresso da 4ª edição →</a>
+<a href="/go/imersao-nr1-na-pratica/?s=rvwimsao" target="_blank" rel="sponsored nofollow noopener">Garantir meu ingresso da 4ª edição →</a>
 
 ## Imersão x Formação: qual a diferença
 
@@ -123,7 +123,7 @@ As duas se complementam. A imersão te dá o método aplicável e a noção come
 
 **O ponto de atenção honesto:** dois dias não formam um especialista. A imersão te dá direção, método inicial e a régua comercial, mas a consolidação vem com estudo continuado e prática. Trate como um excelente ponto de partida, não como linha de chegada.
 
-<a href="https://go.hotmart.com/K106842325X?ap=e3d2&src=rvwimsao" target="_blank" rel="sponsored nofollow noopener">Ver condições e garantir o ingresso (15 e 16/08) →</a>
+<a href="/go/imersao-nr1-na-pratica/?s=rvwimsao" target="_blank" rel="sponsored nofollow noopener">Ver condições e garantir o ingresso (15 e 16/08) →</a>
 
 Antes de decidir pelo passo seguinte, vale ler nossa análise detalhada: [a Formação Gestor de NR1 vale a pena?](/formacao-gestor-de-nr1-izabella-camargo-review/), com os 12 módulos, o certificado, o preço e para quem realmente compensa.
 

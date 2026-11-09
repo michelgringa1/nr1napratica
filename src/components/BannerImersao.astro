@@ -1,10 +1,12 @@
 ---
+import { GO_IMERSAO } from '../data/site';
 /**
  * Banner da Imersão NR1 na Prática (4ª edição).
  * Entra no meio do conteúdo das páginas, num intervalo natural entre seções.
  * Link e arte ficam centralizados aqui: mudar aqui reflete no site inteiro.
  */
-const href = 'https://go.hotmart.com/K106842325X?ap=e3d2&src=bannerblg';
+// /go/ (D34): o `s` é o `src` que a Hotmart já recebia (bannerblg); o destino real está em scripts/go-map.json.
+const href = `${GO_IMERSAO}?s=bannerblg`;
 ---
 
 <a

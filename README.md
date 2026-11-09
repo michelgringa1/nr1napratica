@@ -68,8 +68,13 @@ Teste local da trava, antes de dar push (as datas dos posts dependem do fuso, en
 ```bash
 TZ=UTC npm run build
 bash scripts/itens-fixos.sh dist
-node scripts/gate.mjs ./dist --estrito --dominio https://nr1napratica.online --sem-travessao --travessao-bruto --ignorar-links /vai/ --permitir-tom reclameaqui
+node scripts/trava-go.mjs ./dist --map scripts/go-map.json --permitir-diretos "https://go.hotmart.com/K106842325X?ap=e3d2"
+node scripts/gate.mjs ./dist --estrito --dominio https://nr1napratica.online --sem-travessao --travessao-bruto --ignorar-links /vai/,/go/,/api/ --permitir-tom reclameaqui
 ```
+
+Os botões de afiliado passam por `/go/<produto>/?s=<pagina>_<posicao>` (`public/api/go.php`, que registra o clique e
+responde 302 para a Hotmart). Os destinos reais ficam em `scripts/go-map.json`; mudou o mapa, o `go.php` precisa ser
+gerado de novo com o kit do Gestor (com `--sinais`), senão a `trava-go` barra o deploy.
 
 > Fluxo de trabalho no dia a dia: editar → `git push` na `fonte` → o resto é automático.
 > Regenerar imagens (`node scripts/make-*.mjs`) só se mudar textos dos gráficos.

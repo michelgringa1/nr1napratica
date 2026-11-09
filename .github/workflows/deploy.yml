@@ -41,21 +41,29 @@ jobs:
         env:
           TZ: UTC
 
-      # Regras do CLAUDE.md que "nao podem sair" (ver scripts/itens-fixos.sh): .htaccess e destino da Formacao, chave do
-      # IndexNow, nenhum .txt solto, robots.txt, painel e ponte /ingresso/ presentes, nada de config/chave/log, sem iframe,
-      # so o link direto da Imersao, GA4 e Pixel, sem schema Review.
+      # Regras do CLAUDE.md que "nao podem sair" (ver scripts/itens-fixos.sh): .htaccess (destino da Formacao em /vai/formacao/ e
+      # regra /go/), chave do IndexNow, nenhum .txt solto, robots.txt (Disallow /vai/ e /go/), painel e ponte /ingresso/ presentes,
+      # api/go.php e go-stats.php presentes, nada de config/chave/log, sem iframe, link direto da Hotmart so na ponte /ingresso/,
+      # nenhum botao em /vai/formacao/, GA4 (clique /go/) e Pixel, sem schema Review.
       - name: Itens fixos
         run: bash scripts/itens-fixos.sh dist
 
+      # Rastreio /go/ (D34): api/go.php tem de bater com scripts/go-map.json (fonte unica dos destinos), .htaccess com a regra,
+      # robots com Disallow: /go/, todo botao /go/ com rel sponsored nofollow e s valido, nenhum /go/ fora do mapa e nenhum link
+      # direto de afiliado nas paginas. A unica excecao (--permitir-diretos) e a ponte /ingresso/, que monta o src no navegador:
+      # o itens-fixos.sh garante que o link direto da Hotmart so existe nela. Regenerou o go.php? Use --sinais (ver CLAUDE.md).
+      - name: Trava do rastreio /go/
+        run: node scripts/trava-go.mjs ./dist --map scripts/go-map.json --permitir-diretos "https://go.hotmart.com/K106842325X?ap=e3d2"
+
       # Trava de publicacao (scripts/gate.mjs; cabecalho do arquivo explica as flags). Sai 1 so em ERRO: se falhar, nada e publicado.
       #   --sem-travessao --travessao-bruto : nenhum travessao longo em arquivo nenhum (o CLAUDE.md so tolera 5 curtos em intervalos)
-      #   --ignorar-links /vai/             : /vai/formacao/ e redirect do .htaccess, nao tem arquivo
+      #   --ignorar-links /vai/,/go/,/api/  : /vai/formacao/ e /go/<produto>/ sao redirects do servidor (.htaccess e api/go.php), nao tem arquivo
       #   --permitir-tom reclameaqui        : tolera so a secao "Reclame Aqui e reputacao" do review (3 ocorrencias, A CONFIRMAR 5 do
       #                                       CLAUDE.md); todo o resto do tom comercial continua barrando. Tirar quando a secao sair.
       - name: Trava de publicacao
         run: >
           node scripts/gate.mjs ./dist --estrito --dominio https://nr1napratica.online
-          --sem-travessao --travessao-bruto --ignorar-links /vai/ --permitir-tom reclameaqui
+          --sem-travessao --travessao-bruto --ignorar-links /vai/,/go/,/api/ --permitir-tom reclameaqui
 
       # Publica o conteudo de dist/ na raiz da branch main.
       # keep_files false: o que sumiu de dist/ some da main (e do servidor).

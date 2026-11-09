@@ -82,12 +82,22 @@ php_cred=$(grep -rElI 'xkeysib-[a-f0-9]{20,}|AIza[0-9A-Za-z_-]{30,}|EAA[A-Za-z0-
 ifr=$(grep -rliE '<iframe' --include='*.html' "$dir" 2>/dev/null)
 [ -z "$ifr" ] || falha "<iframe> encontrado (cookie stuffing e proibido): $ifr"
 
-# --- links de afiliado: o HTML so pode ter o link direto da Imersao (K106842325X); a Formacao so por /vai/formacao/ (D3 a, D5)
-diretos=$(grep -rhoE 'go\.hotmart\.com/[A-Za-z0-9]+' --include='*.html' "$dir" | sort -u | grep -vxF 'go.hotmart.com/K106842325X')
-[ -z "$diretos" ] || falha "link direto da Hotmart novo ou trocado no HTML (D3 a: perguntar ao Michel): $diretos"
-if grep -rqF 'go.hotmart.com/E107148543R' --include='*.html' "$dir"; then
-  falha "link direto da Formacao (E107148543R) no HTML: o botao tem de usar /vai/formacao/"
-fi
+# --- links de afiliado (D34, desde 08/11/2026): TODO botao passa por /go/ (a trava-go.mjs confere o resto no workflow).
+# O unico HTML com link direto da Hotmart e a ponte /ingresso/ (K106842325X, ap=e3d2; o src e montado no navegador): nao mexer (D3 a: perguntar ao Michel).
+while IFS= read -r f; do
+  r="${f#"$dir"/}"
+  [ "$r" = "ingresso/index.html" ] && continue
+  grep -qF 'go.hotmart.com' "$f" && falha "link direto da Hotmart fora da ponte /ingresso/ (o botao tem de usar /go/): $r"
+done < <(find "$dir" -type f -name '*.html' | sort)
+diretos=$(grep -hoE 'go\.hotmart\.com/[A-Za-z0-9]+' "$dir/ingresso/index.html" | sort -u | grep -vxF 'go.hotmart.com/K106842325X')
+[ -z "$diretos" ] || falha "link direto da Hotmart novo ou trocado na ponte /ingresso/ (D3 a: perguntar ao Michel): $diretos"
+# nenhum botao usa mais /vai/formacao/ (o .htaccess guarda o endereco so para links antigos e de fora)
+vai=$(grep -rlE '<a[^>]*href="/vai/formacao' --include='*.html' "$dir" 2>/dev/null)
+[ -z "$vai" ] || falha "botao com /vai/formacao/ no HTML (use /go/formacao-gestor-nr1/?s=...): $vai"
+# os dois produtos seguem com botao /go/ e o script do GA4 segue olhando /go/ (sem ele o clique_afiliado some)
+tem "$dir/formacao-gestor-de-nr1-izabella-camargo-review/index.html" 'href="/go/formacao-gestor-nr1/?s=review_veredito"'
+tem "$dir/index.html" 'href="/go/imersao-nr1-na-pratica/?s=bannerblg"'
+tem "$dir/index.html" "closest('a[href^=\"/go/\"]')"
 
 # --- GA4 em todas as paginas (a ponte /ingresso/ tem tracker proprio) e Meta Pixel em todas
 while IFS= read -r f; do
