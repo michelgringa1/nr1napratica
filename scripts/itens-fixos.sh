@@ -20,6 +20,8 @@ else
   # destino do link de afiliado da Formacao: trocar e pergunta ao Michel (D3 a); o ".htaccess" e o unico lugar do link
   tem "$h" 'Redirect 302 /vai/formacao https://go.hotmart.com/E107148543R?src=blogreview'
   tem "$h" 'Redirect 302 /vai/formacao/ https://go.hotmart.com/E107148543R?src=blogreview'
+  # rastreio /go/ (D34): sem esta regra os botoes /go/ dariam 404; fica depois dos 301 de https/www
+  tem "$h" 'RewriteRule ^go/([a-z0-9-]{1,40})/?$ /api/go.php?p=$1 [L,QSA]'
   tem "$h" 'RewriteCond %{HTTPS} !=on'
   tem "$h" 'RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]'
   tem "$h" 'RedirectMatch 404 /\.(?!well-known)'
@@ -42,6 +44,7 @@ outros=$(find "$dir" -type f -name '*.txt' ! -name robots.txt ! -name "$chave.tx
 if [ -f "$dir/robots.txt" ]; then
   tem "$dir/robots.txt" 'Allow: /'
   tem "$dir/robots.txt" 'Disallow: /vai/'
+  tem "$dir/robots.txt" 'Disallow: /go/'
   tem "$dir/robots.txt" 'Disallow: /dashboard/'
   tem "$dir/robots.txt" "Sitemap: $dominio/sitemap-index.xml"
 else
@@ -57,12 +60,12 @@ fi
 
 # --- o que vive na pasta publica e precisa ir junto: painel e ponte do evento (PHP e HTML)
 for f in dashboard/index.php dashboard/_ga4.php dashboard/_ingresso.php dashboard/config.sample.php \
-         ingresso/index.html ingresso/track.php index.html; do
+         ingresso/index.html ingresso/track.php api/go.php api/go-stats.php index.html; do
   [ -f "$dir/$f" ] || falha "$f ausente da pasta publicada (a implantacao da Hostinger apaga o que nao esta na main)"
 done
 
 # --- o que NUNCA pode ir para o ar (o repositorio e PUBLICO): config e chave do painel, log de eventos
-for f in dashboard/nr1-dash-config.php nr1-dash-config.php dashboard/ga4-key.json ga4-key.json ingresso-eventos.jsonl ingresso/ingresso-eventos.jsonl; do
+for f in dashboard/nr1-dash-config.php nr1-dash-config.php dashboard/ga4-key.json ga4-key.json ingresso-eventos.jsonl ingresso/ingresso-eventos.jsonl privado api/go-log.csv go-log.csv; do
   [ ! -e "$dir/$f" ] || falha "$f esta na pasta publicada (so pode existir no servidor, acima da public_html)"
 done
 cfg=$(find "$dir" -type f \( -name '*-config.php' -o -name '*.jsonl' -o -name '*-key.json' -o -name '.env*' \) )
