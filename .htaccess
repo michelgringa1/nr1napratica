@@ -20,6 +20,10 @@ Redirect 302 /vai/formacao/ https://go.hotmart.com/E107148543R?src=blogreview
   # Remove www (padroniza em nr1napratica.online)
   RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
   RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+
+  # Rastreio de cliques (D34): /go/<produto>/?s=<pagina>_<posicao> -> api/go.php (registra e responde 302 para a Hotmart).
+  # Fica DEPOIS dos 301 de https e www (www + /go/ da 301 para o apex). Mapa: scripts/go-map.json.
+  RewriteRule ^go/([a-z0-9-]{1,40})/?$ /api/go.php?p=$1 [L,QSA]
 </IfModule>
 
 # ---- Segurança: bloqueia arquivos/pastas ocultos (.git, .env...) exceto .well-known ----

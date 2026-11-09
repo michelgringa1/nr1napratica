@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /vai/
+Disallow: /go/
 Disallow: /dashboard/
 
 Sitemap: https://nr1napratica.online/sitemap-index.xml
