@@ -633,6 +633,11 @@ code {
   box-shadow: var(--sombra);
   background: var(--branco);
 }
+/* Contêiner das tabelas escritas em markdown (posts): só rola de lado se a tabela não couber; sem borda nem margem. */
+.table-scroll {
+  overflow-x: auto;
+  max-width: 100%;
+}
 table {
   border-collapse: collapse;
   width: 100%;
