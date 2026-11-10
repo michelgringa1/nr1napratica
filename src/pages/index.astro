@@ -4,6 +4,7 @@ import { getCollection } from 'astro:content';
 import { SITE } from '../data/site';
 import { organizationSchema, websiteSchema } from '../data/schema';
 import BannerImersao from '../components/BannerImersao.astro';
+import CardLivro from '../components/CardLivro.astro';
 
 const title = `${SITE.name}: NR-1, Riscos Psicossociais e Carreira de Gestor de NR1`;
 const description = SITE.tagline + '. Guias, análises e dados oficiais sobre a NR-1 em 2026.';
@@ -125,6 +126,7 @@ const schemas = [organizationSchema(), websiteSchema()];
     </section>
 
     <BannerImersao />
+    <CardLivro />
 
     <section>
       <h2>Quer atuar com NR-1 e saúde mental no trabalho?</h2>

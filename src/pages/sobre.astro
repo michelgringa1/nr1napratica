@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import { SITE, AUTHOR } from '../data/site';
 import { breadcrumbSchema, personSchema } from '../data/schema';
 import BannerImersao from '../components/BannerImersao.astro';
+import CardLivro from '../components/CardLivro.astro';
 
 const title = 'Sobre o portal e o autor';
 const description =
@@ -49,6 +50,7 @@ const schemas = [
     </p>
 
     <BannerImersao />
+    <CardLivro />
 
     <h2>Compromisso editorial</h2>
     <ul>

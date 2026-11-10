@@ -62,6 +62,12 @@ export const GO_IMERSAO = '/go/imersao-nr1-na-pratica/';
 // Código curto de cada página que tem botão da Formação (entra no `s`: <pagina>_<posicao>, até 40 caracteres).
 // Página nova com botão da Formação: acrescente aqui, senão o build para (de propósito: slug sem código = botão sem rastreio).
 const GO_PAGINAS: Record<string, string> = {
+  '/': 'home',
+  '/multa-nr1-2026/': 'multa',
+  '/riscos-psicossociais-exemplos/': 'riscos',
+  '/gro-e-pgr-o-que-e/': 'gro-pgr',
+  '/sobre/': 'sobre',
+  '/blog/': 'blog',
   '/formacao-gestor-de-nr1-izabella-camargo-review/': 'review',
   '/carreira-gestor-de-nr1-com-proposito/': 'carreira',
   '/nr-1-atualizada-2026/': 'pilar',
@@ -71,6 +77,10 @@ const GO_PAGINAS: Record<string, string> = {
   '/blog/como-atuar-com-nr1-sem-diploma/': 'post-sem-diploma',
   '/blog/imersao-nr1-na-pratica-izabella-camargo/': 'post-imersao',
 };
+
+// Livro "Dá um Tempo!" (Izabella Camargo), produto de apoio na Shopee (link autorizado pelo Michel em 10/11/2026). O card entra pelo
+// componente CardLivro.astro, uma posição por página (card-livro): /go/livro-da-um-tempo/?s=<codigo-da-pagina>_card-livro.
+export const GO_LIVRO = '/go/livro-da-um-tempo/';
 
 /** Endereço do botão da Formação numa página: /go/formacao-gestor-nr1/?s=<codigo-da-pagina>_<posicao>. */
 export function goFormacao(pathname: string, pos: string): string {
@@ -83,4 +93,17 @@ export function goFormacao(pathname: string, pos: string): string {
     throw new Error(`/go/: posição inválida "${s}" (use a-z, 0-9, _ e -, até 40 caracteres).`);
   }
   return `${SITE.affiliatePath}?s=${s}`;
+}
+
+/** Endereço do botão do card do livro numa página: /go/livro-da-um-tempo/?s=<codigo-da-pagina>_card-livro (uma posição só por página). */
+export function goLivro(pathname: string): string {
+  const pagina = GO_PAGINAS[pathname];
+  if (!pagina) {
+    throw new Error(`/go/: a página ${pathname} não tem código em GO_PAGINAS (src/data/site.ts). Acrescente antes de pôr o card do livro nela.`);
+  }
+  const s = `${pagina}_card-livro`;
+  if (!/^[a-z0-9_-]{1,40}$/.test(s)) {
+    throw new Error(`/go/: posição inválida "${s}" (use a-z, 0-9, _ e -, até 40 caracteres).`);
+  }
+  return `${GO_LIVRO}?s=${s}`;
 }

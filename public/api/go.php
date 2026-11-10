@@ -10,6 +10,7 @@
 $map = [
     'formacao-gestor-nr1' => ['https://go.hotmart.com/E107148543R?src=blogreview', '', ''],
     'imersao-nr1-na-pratica' => ['https://go.hotmart.com/K106842325X?ap=e3d2', 'src', ''],
+    'livro-da-um-tempo' => ['https://s.shopee.com.br/7KyRtx7TZA', '', ''],
 ];
 
 // Sinais de navegador (opcao --sinais do gerar-go.mjs; os mesmos do /ir/ do Andrea). So valores de lista fechada vao para o registro: o User-Agent

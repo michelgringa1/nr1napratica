@@ -8,6 +8,7 @@ import { getCollection, render } from 'astro:content';
 import { AUTHOR } from '../../data/site';
 import { articleSchema, breadcrumbSchema, faqSchema } from '../../data/schema';
 import BannerImersao from '../../components/BannerImersao.astro';
+import CardLivro from '../../components/CardLivro.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -78,6 +79,7 @@ const schemas = [
     </div>
 
     <BannerImersao />
+    <CardLivro />
 
     {d.faq && d.faq.length > 0 && <FAQ items={d.faq} />}
 

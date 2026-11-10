@@ -1,0 +1,121 @@
+---
+import { goLivro } from '../data/site';
+/**
+ * Card do livro "Dá um Tempo!", de Izabella Camargo (produto de apoio, Shopee; link autorizado pelo Michel em 10/11/2026).
+ * Entra logo abaixo do banner da Imersão, uma vez por página (posição `card-livro`). Sempre por este componente.
+ * Fatos (lidos em 10/11/2026 na página do livro da Martins Fontes Paulista, que reproduz a sinopse da editora): título e subtítulo,
+ * "reúne percepções de mais de cem entrevistados" e "ditar o ritmo da própria agenda". Sem preço, frete, nota ou promessa.
+ * Destino: scripts/go-map.json (slug livro-da-um-tempo); o `s` do botão é <codigo-da-pagina>_card-livro (GO_PAGINAS em site.ts).
+ */
+const href = goLivro(Astro.url.pathname);
+---
+
+<div class="card-livro">
+  <img
+    class="card-livro__capa"
+    src="/images/livro-da-um-tempo-capa.webp"
+    alt="Capa do livro Dá um Tempo!, de Izabella Camargo: como encontrar limite em um mundo sem limites"
+    width="360"
+    height="540"
+    loading="lazy"
+    decoding="async"
+  />
+  <div class="card-livro__corpo">
+    <p class="card-livro__autora">Izabella Camargo</p>
+    <p class="card-livro__titulo">Dá um Tempo!</p>
+    <p class="card-livro__sub">Como encontrar limite em um mundo sem limites</p>
+    <p class="card-livro__frase">
+      O livro reúne percepções de mais de cem entrevistados e busca ajudar qualquer pessoa a ditar o ritmo da própria agenda.
+    </p>
+    <a class="btn-cta" href={href} target="_blank" rel="sponsored nofollow noopener">Ver o livro na Shopee</a>
+  </div>
+</div>
+
+<style>
+  .card-livro {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    /* o banner acima já traz 2,4rem de margem inferior: o card fica a ~1,1rem dele */
+    margin: -1.3rem 0 2.4rem;
+    padding: 1.1rem 1.5rem 1.1rem 1.1rem;
+    background: var(--branco);
+    border: 1px solid var(--cinza-200);
+    border-radius: var(--radius);
+    box-shadow: var(--sombra);
+  }
+
+  .card-livro__capa {
+    display: block;
+    flex: 0 0 auto;
+    width: 112px;
+    height: auto;
+    aspect-ratio: 2 / 3;
+    border-radius: 4px;
+    box-shadow: 0 10px 22px -10px rgba(11, 26, 43, 0.5), 0 1px 3px rgba(11, 26, 43, 0.18);
+  }
+
+  .card-livro__corpo {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .card-livro__autora {
+    margin: 0;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--cinza-700);
+  }
+
+  .card-livro__titulo {
+    margin: 0.2rem 0 0;
+    font-family: var(--font-display);
+    font-size: 1.45rem;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--azul-900);
+  }
+
+  .card-livro__sub {
+    margin: 0.15rem 0 0;
+    font-size: 0.93rem;
+    line-height: 1.4;
+    color: var(--cinza-700);
+  }
+
+  .card-livro__frase {
+    margin: 0.6rem 0 0.95rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--cinza-700);
+  }
+
+  .card-livro .btn-cta {
+    padding: 11px 26px;
+    font-size: 0.98rem;
+  }
+
+  @media (max-width: 520px) {
+    .card-livro {
+      flex-direction: column;
+      gap: 1rem;
+      padding: 1.1rem 1.1rem 1.2rem;
+      text-align: center;
+    }
+
+    .card-livro__capa {
+      width: 120px;
+    }
+
+    .card-livro__corpo {
+      width: 100%;
+    }
+
+    .card-livro .btn-cta {
+      display: block;
+      padding: 13px 16px;
+    }
+  }
+</style>
