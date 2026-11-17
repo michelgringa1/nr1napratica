@@ -70,6 +70,7 @@ function nr1_page_label($path) {
     '/gro-e-pgr-o-que-e/' => 'GRO e PGR',
     '/carreira-gestor-de-nr1-com-proposito/' => 'Carreira com propósito',
     '/por-que-se-tornar-gestor-de-nr1-agora/' => 'Por que começar agora',
+    '/imersao-nr1-na-pratica/' => 'Imersão (oferta)',
     '/sobre/' => 'Sobre', '/contato/' => 'Contato', '/blog/' => 'Blog',
   ];
   $clean = strtok($path, '?');
