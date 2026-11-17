@@ -9,7 +9,7 @@
    Falha ao gravar nunca impede o redirecionamento. */
 $map = [
     'formacao-gestor-nr1' => ['https://go.hotmart.com/E107148543R?src=blogreview', '', ''],
-    'imersao-nr1-na-pratica' => ['https://go.hotmart.com/K106842325X?ap=e3d2', 'src', ''],
+    'imersao-nr1-na-pratica' => ['https://go.hotmart.com/U108528393X?ap=95fa', 'src', ''],
     'livro-da-um-tempo' => ['https://s.shopee.com.br/7KyRtx7TZA', '', ''],
 ];
 

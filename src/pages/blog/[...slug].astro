@@ -88,6 +88,10 @@ const schemas = [
         { href: '/nr-1-atualizada-2026/', label: 'Guia da NR-1 atualizada em 2026' },
         { href: '/formacao-gestor-de-nr1-izabella-camargo-review/', label: 'Review da Formação Gestor de NR1', note: 'vale a pena?' },
         { href: '/riscos-psicossociais-exemplos/', label: '15 exemplos de riscos psicossociais para o PGR' },
+        // O post da própria imersão já leva o link no corpo do texto (perto do começo): aqui só os outros posts.
+        ...(post.id !== 'imersao-nr1-na-pratica-izabella-camargo'
+          ? [{ href: '/imersao-nr1-na-pratica/', label: 'Imersão NR1 na Prática, 5ª edição: datas, valor e inscrição' }]
+          : []),
       ]}
     />
 

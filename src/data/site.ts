@@ -48,6 +48,7 @@ export const NAV = [
   { label: 'Início', href: '/' },
   { label: 'NR-1 em 2026', href: '/nr-1-atualizada-2026/' },
   { label: 'Review da Formação', href: '/formacao-gestor-de-nr1-izabella-camargo-review/' },
+  { label: 'Imersão NR1', href: '/imersao-nr1-na-pratica/' },
   { label: 'Blog', href: '/blog/' },
   { label: 'Sobre', href: '/sobre/' },
 ] as const;

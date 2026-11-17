@@ -53,7 +53,7 @@ jobs:
       # direto de afiliado nas paginas. A unica excecao (--permitir-diretos) e a ponte /ingresso/, que monta o src no navegador:
       # o itens-fixos.sh garante que o link direto da Hotmart so existe nela. Regenerou o go.php? Use --sinais (ver CLAUDE.md).
       - name: Trava do rastreio /go/
-        run: node scripts/trava-go.mjs ./dist --map scripts/go-map.json --permitir-diretos "https://go.hotmart.com/K106842325X?ap=e3d2"
+        run: node scripts/trava-go.mjs ./dist --map scripts/go-map.json --permitir-diretos "https://go.hotmart.com/U108528393X?ap=95fa"
 
       # Trava de publicacao (scripts/gate.mjs; cabecalho do arquivo explica as flags). Sai 1 so em ERRO: se falhar, nada e publicado.
       #   --sem-travessao --travessao-bruto : nenhum travessao longo em arquivo nenhum (o CLAUDE.md so tolera 5 curtos em intervalos)

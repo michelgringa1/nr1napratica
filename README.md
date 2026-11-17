@@ -68,7 +68,7 @@ Teste local da trava, antes de dar push (as datas dos posts dependem do fuso, en
 ```bash
 TZ=UTC npm run build
 bash scripts/itens-fixos.sh dist
-node scripts/trava-go.mjs ./dist --map scripts/go-map.json --permitir-diretos "https://go.hotmart.com/K106842325X?ap=e3d2"
+node scripts/trava-go.mjs ./dist --map scripts/go-map.json --permitir-diretos "https://go.hotmart.com/U108528393X?ap=95fa"
 node scripts/gate.mjs ./dist --estrito --dominio https://nr1napratica.online --sem-travessao --travessao-bruto --ignorar-links /vai/,/go/,/api/ --permitir-tom reclameaqui
 ```
 

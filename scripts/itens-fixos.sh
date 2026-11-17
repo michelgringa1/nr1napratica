@@ -83,13 +83,13 @@ ifr=$(grep -rliE '<iframe' --include='*.html' "$dir" 2>/dev/null)
 [ -z "$ifr" ] || falha "<iframe> encontrado (cookie stuffing e proibido): $ifr"
 
 # --- links de afiliado (D34, desde 08/11/2026): TODO botao passa por /go/ (a trava-go.mjs confere o resto no workflow).
-# O unico HTML com link direto da Hotmart e a ponte /ingresso/ (K106842325X, ap=e3d2; o src e montado no navegador): nao mexer (D3 a: perguntar ao Michel).
+# O unico HTML com link direto da Hotmart e a ponte /ingresso/ (U108528393X, ap=95fa; o src e montado no navegador): nao mexer (D3 a: perguntar ao Michel).
 while IFS= read -r f; do
   r="${f#"$dir"/}"
   [ "$r" = "ingresso/index.html" ] && continue
   grep -qF 'go.hotmart.com' "$f" && falha "link direto da Hotmart fora da ponte /ingresso/ (o botao tem de usar /go/): $r"
 done < <(find "$dir" -type f -name '*.html' | sort)
-diretos=$(grep -hoE 'go\.hotmart\.com/[A-Za-z0-9]+' "$dir/ingresso/index.html" | sort -u | grep -vxF 'go.hotmart.com/K106842325X')
+diretos=$(grep -hoE 'go\.hotmart\.com/[A-Za-z0-9]+' "$dir/ingresso/index.html" | sort -u | grep -vxF 'go.hotmart.com/U108528393X')
 [ -z "$diretos" ] || falha "link direto da Hotmart novo ou trocado na ponte /ingresso/ (D3 a: perguntar ao Michel): $diretos"
 # nenhum botao usa mais /vai/formacao/ (o .htaccess guarda o endereco so para links antigos e de fora)
 vai=$(grep -rlE '<a[^>]*href="/vai/formacao' --include='*.html' "$dir" 2>/dev/null)

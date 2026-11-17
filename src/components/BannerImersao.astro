@@ -1,35 +1,93 @@
 ---
 import { GO_IMERSAO } from '../data/site';
 /**
- * Banner da Imersão NR1 na Prática (4ª edição).
+ * Banner da Imersão NR1 na Prática (5ª edição, "A Virada", 5 e 6/12/2026).
  * Entra no meio do conteúdo das páginas, num intervalo natural entre seções.
  * Link e arte ficam centralizados aqui: mudar aqui reflete no site inteiro.
+ *
+ * Duas artes (o Michel criou as duas em 17/11/2026), alternadas ENTRE as páginas, nunca na mesma página (cada página mostra um só banner):
+ *   claro = /images/banner-imersao-5a-claro.webp (fundo bege/branco)
+ *   azul  = /images/banner-imersao-5a-azul.webp  (fundo azul escuro)
+ * A escolha é determinística (mapa por caminho, abaixo): 7 páginas em cada versão e, na ordem de navegação (home, review, pilar,
+ * guias, carreira, Sobre, blog e posts), uma página vizinha nunca repete a versão da anterior. Home (claro) e review (azul) ficam
+ * em versões diferentes. Página nova que ganhar o banner e ainda não estiver no mapa cai no desempate por paridade do caminho
+ * (também determinístico): acrescente o caminho em VARIANTE_POR_PAGINA para escolher à mão. Também aceita a prop `variante`.
+ * Arte nova = nome de arquivo novo (o .htaccess dá cache imutável de 1 ano às imagens).
+ * Cuidado: o 15% e o "1º lote a R$39" estão DENTRO da imagem (bitmap): quando o lote virar, a arte precisa ser trocada.
+ *
+ * CLARO DESLIGADO (17/11/2026): a arte clara tem um defeito (o subtítulo sai "plarno" em vez de "plano"). Por ora TODAS as páginas mostram o
+ * AZUL: a entrada `claro` de ARTE aponta para o arquivo azul. O mapa de alternância (VARIANTE_POR_PAGINA) fica intacto; quando o Michel trouxer a
+ * arte clara corrigida (nome de arquivo novo), é só apontar `claro` para ela. NÃO versionar public/images/banner-imersao-5a-claro.webp (o defeito).
+ *
+ * Link de texto embaixo do banner (17/11/2026): leva à página /imersao-nr1-na-pratica/ (datas, valor e programa). É link INTERNO, sem rel sponsored.
  */
+type Variante = 'claro' | 'azul';
+interface Props {
+  variante?: Variante;
+}
+
+const ARTE: Record<Variante, string> = {
+  // claro desligado até o Michel trazer arte corrigida (a antiga, banner-imersao-5a-claro.webp, tem "plarno" no subtítulo): usa o azul.
+  claro: '/images/banner-imersao-5a-azul.webp',
+  azul: '/images/banner-imersao-5a-azul.webp',
+};
+
+const VARIANTE_POR_PAGINA: Record<string, Variante> = {
+  '/': 'claro',
+  '/formacao-gestor-de-nr1-izabella-camargo-review/': 'azul',
+  '/nr-1-atualizada-2026/': 'claro',
+  '/multa-nr1-2026/': 'azul',
+  '/riscos-psicossociais-exemplos/': 'claro',
+  '/gro-e-pgr-o-que-e/': 'azul',
+  '/carreira-gestor-de-nr1-com-proposito/': 'claro',
+  '/por-que-se-tornar-gestor-de-nr1-agora/': 'azul',
+  '/sobre/': 'claro',
+  '/blog/': 'azul',
+  '/blog/gestor-de-nr1-o-que-faz/': 'claro',
+  '/blog/quanto-ganha-consultor-nr1/': 'azul',
+  '/blog/como-atuar-com-nr1-sem-diploma/': 'claro',
+  '/blog/imersao-nr1-na-pratica-izabella-camargo/': 'azul',
+};
+
+const caminho = Astro.url.pathname;
+const desempate: Variante =
+  [...caminho].reduce((soma, c) => soma + c.charCodeAt(0), 0) % 2 === 0 ? 'claro' : 'azul';
+const variante: Variante = Astro.props.variante ?? VARIANTE_POR_PAGINA[caminho] ?? desempate;
+
 // /go/ (D34): o `s` é o `src` que a Hotmart já recebia (bannerblg); o destino real está em scripts/go-map.json.
 const href = `${GO_IMERSAO}?s=bannerblg`;
 ---
 
+<div class="banner-imersao-bloco">
 <a
   class="banner-imersao"
   href={href}
   target="_blank"
   rel="sponsored nofollow noopener"
-  aria-label="Imersão NR1 na Prática, 4ª edição, dias 15 e 16/08. Garantir meu ingresso."
+  aria-label="Imersão NR1 na Prática, 5ª edição, A Virada, 5 e 6 de dezembro. Quero minha virada em 2027."
 >
   <img
-    src="/images/banner-imersao-nr1.webp"
-    alt="Imersão NR1 na Prática, 4ª edição, 15 e 16/08: em 2 dias, capacite-se para conduzir a NR1. Garantir meu ingresso."
+    src={ARTE[variante]}
+    alt="Imersão NR1 na Prática, 5ª edição, A Virada, 5 e 6 de dezembro, ao vivo no YouTube, com Izabella Camargo. 1º lote a R$ 39 em 17/11/2026. Quero minha virada em 2027."
     width="1400"
     height="467"
     loading="lazy"
     decoding="async"
   />
 </a>
+<p class="banner-imersao-mais">
+  <a href="/imersao-nr1-na-pratica/">Datas, valor e programa da Imersão NR1 na Prática →</a>
+</p>
+</div>
 
 <style>
+  .banner-imersao-bloco {
+    margin: 2.2rem 0 2.4rem;
+  }
+
   .banner-imersao {
     display: block;
-    margin: 2.2rem 0 2.4rem;
+    margin: 0;
     border-radius: var(--radius);
     overflow: hidden;
     border: 1px solid var(--cinza-200);
@@ -47,6 +105,24 @@ const href = `${GO_IMERSAO}?s=bannerblg`;
     display: block;
     width: 100%;
     height: auto;
+  }
+
+  .banner-imersao-mais {
+    margin: 0.7rem 0 0;
+    text-align: center;
+    font-size: 0.92rem;
+    line-height: 1.45;
+  }
+
+  .banner-imersao-mais a {
+    color: var(--azul-700);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .banner-imersao-mais a:hover {
+    color: var(--azul-900);
+    text-decoration: underline;
   }
 
   @media (prefers-reduced-motion: reduce) {

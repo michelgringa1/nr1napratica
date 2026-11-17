@@ -33,6 +33,14 @@ const schemas = [breadcrumbSchema([['Início', '/'], ['Blog', '/blog/']])];
       <p class="muted" style="padding:2rem 0;">Em breve, novos artigos.</p>
     ) : (
       <div class="card-grid" style="margin-top:2rem;">
+        <div class="post-card">
+          <span class="tag">Em destaque · Evento ao vivo</span>
+          <h3><a href="/imersao-nr1-na-pratica/">Imersão NR1 na Prática, 5ª edição: datas, valor e inscrição</a></h3>
+          <p>Dois dias ao vivo no YouTube com a Izabella Camargo, em 05 e 06/12/2026. Programa, certificado e como se inscrever.</p>
+          <div style="display:flex;justify-content:flex-end;align-items:center;margin-top:0.6rem;">
+            <a class="read" href="/imersao-nr1-na-pratica/">Ver datas e valor →</a>
+          </div>
+        </div>
         {posts.map((post) => (
           <div class="post-card">
             {post.data.image && (

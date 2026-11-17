@@ -33,7 +33,7 @@ export default defineConfig({
         !page.includes('/vai/') && !page.includes('/politica-de-privacidade/'),
       // lastmod: data da última atualização relevante do site (bump ao revisar em massa)
       serialize(item) {
-        item.lastmod = '2026-07-11T00:00:00.000Z';
+        item.lastmod = '2026-11-17T00:00:00.000Z';
         return item;
       },
     }),
