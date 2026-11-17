@@ -42,8 +42,8 @@ Os ganhos variam muito conforme o formato de atuação:
 
 1. **Entenda a norma a fundo.** Comece pelo nosso [guia da NR-1 atualizada em 2026](/nr-1-atualizada-2026/), que é gratuito e cobre o essencial.
 2. **Qualifique-se de forma estruturada.** Um curso que junte a base jurídica, a técnica (PGR/GRO) e o lado comercial acelera muito a entrada no mercado.
-3. **Monte um método replicável.** Diagnóstico → inventário → plano de ação → monitoramento. É o que você vai vender e entregar.
+3. **Monte um método replicável.** Diagnóstico → inventário → plano de ação → monitoramento. É o que você vai vender e entregar. O [passo a passo do mapeamento de riscos psicossociais](/mapeamento-de-riscos-psicossociais/) mostra cada etapa.
 4. **Construa autoridade.** Conteúdo no LinkedIn, cases e certificado ajudam a fechar os primeiros contratos.
-5. **Comece pelos primeiros clientes.** Muitas vezes a própria empresa onde você já trabalha é o primeiro projeto.
+5. **Comece pelos primeiros clientes.** Muitas vezes a própria empresa onde você já trabalha é o primeiro projeto. Veja [como montar a proposta e conseguir o primeiro cliente de consultoria de NR1](/consultoria-de-nr1/).
 
 Se você quer queimar etapas na parte 2, analisamos a fundo a formação mais completa que encontramos para essa carreira: veja o [review da Formação Gestor de NR1 da Izabella Camargo](/formacao-gestor-de-nr1-izabella-camargo-review/), com os 12 módulos, o certificado e para quem vale a pena.

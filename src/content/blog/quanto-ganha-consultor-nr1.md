@@ -47,6 +47,8 @@ Dois consultores podem cobrar valores muito diferentes pelo mesmo tipo de projet
 3. **Autoridade e prova social:** cases, certificado e presença profissional.
 4. **Porte do cliente:** empresas maiores, com mais unidades e trabalhadores, exigem mais trabalho e pagam mais.
 
+Para montar a proposta e definir o preço de um projeto passo a passo, veja o guia de [consultoria de NR1: como começar, propor e precificar](/consultoria-de-nr1/).
+
 > A lógica é simples: um único contrato de consultoria costuma superar, com folga, o custo de uma boa formação. O investimento na qualificação se paga no primeiro cliente, desde que você realmente saiba entregar.
 
 ## A janela de mercado agora

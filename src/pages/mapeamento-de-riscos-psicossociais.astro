@@ -1,0 +1,496 @@
+---
+import Base from '../layouts/Base.astro';
+import CTA from '../components/CTA.astro';
+import TOC from '../components/TOC.astro';
+import FAQ from '../components/FAQ.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+import BannerImersao from '../components/BannerImersao.astro';
+import CardLivro from '../components/CardLivro.astro';
+import EditorialFigure from '../components/EditorialFigure.astro';
+import {
+  articleSchema,
+  faqSchema,
+  breadcrumbSchema,
+  howToSchema,
+  ENTITIES,
+  type FaqItem,
+} from '../data/schema';
+
+/**
+ * Mapeamento de riscos psicossociais (passo a passo do diagnostico ao plano de acao), pagina 1 de 3 do pedido de 17/11/2026.
+ * Texto: rascunho aprovado (rascunhos/mapeamento-de-riscos-psicossociais.md), convertido por script em 17/11/2026 (o texto nao foi
+ * reescrito a mao). Fatos so de fonte oficial lida em 17/11/2026 (MTE, STF, CVV), com as fontes no fim da pagina.
+ * Os 3 botoes da Formacao passam pelo CTA.astro (/go/formacao-gestor-nr1/?s=mapeamento_<posicao>; codigo `mapeamento` em GO_PAGINAS).
+ * Banner da Imersao e card do livro no fim da secao do questionario (meio da pagina).
+ * As 4 figuras (EditorialFigure) so aparecem no build se o arquivo existir em public/images/editorial/: sem o arquivo, a pagina sai sem a figura.
+ * Imagem de compartilhamento: og-mapeamento-de-riscos-psicossociais.jpg (1200x630, corte centralizado da imagem 1; ogImage do Base e image do Article, igual a pagina da Imersao). Nao tirar na regeracao.
+ * HowTo: os 7 passos saem da tabela das etapas (visivel no texto). Sem Review e sem AggregateRating.
+ */
+const title = "Mapeamento de Riscos Psicossociais: Passo a Passo (NR-1)";
+const description =
+  "Mapeamento de riscos psicossociais passo a passo: do diagnóstico ao inventário e ao plano de ação do PGR, com as exigências da NR-1 e checklist.";
+const path = '/mapeamento-de-riscos-psicossociais/';
+// Imagem de compartilhamento (og:image, twitter:image e image do Article). Nome novo = cache de 1 ano sem problema.
+const imagemOg = '/images/og-mapeamento-de-riscos-psicossociais.jpg';
+
+// Data propria da pagina (nao usa SITE.updatedLabel: o "Atualizado em" global fica em Julho/2026 de proposito).
+const DATA_PAGINA = '17/11/2026';
+const DATA_ISO = '2026-11-17';
+const ROTULO_PAGINA = 'Novembro/2026';
+
+const toc = [
+  {
+    "id": "o-que-e",
+    "label": "O que é o mapeamento de riscos psicossociais e o que a NR-1 exige?"
+  },
+  {
+    "id": "etapas",
+    "label": "Quais são as etapas do mapeamento, do diagnóstico ao plano de ação?"
+  },
+  {
+    "id": "preparar",
+    "label": "Como preparar o mapeamento: quem conduz e por onde começar?"
+  },
+  {
+    "id": "diagnostico",
+    "label": "Como fazer o diagnóstico: como identificar os perigos no trabalho real?"
+  },
+  {
+    "id": "questionario",
+    "label": "Qual questionário usar e ele basta para o mapeamento?"
+  },
+  {
+    "id": "avaliar",
+    "label": "Como avaliar e classificar o nível de risco?"
+  },
+  {
+    "id": "inventario",
+    "label": "O que entra no inventário de riscos psicossociais?"
+  },
+  {
+    "id": "plano-de-acao",
+    "label": "Como montar o plano de ação, a parte mais difícil do mapeamento?"
+  },
+  {
+    "id": "acompanhar",
+    "label": "Como acompanhar, revisar e comprovar o mapeamento?"
+  },
+  {
+    "id": "quem-conduz",
+    "label": "Quem pode conduzir o mapeamento e como aprender a fazer na prática?"
+  },
+  {
+    "id": "faq",
+    "label": "Perguntas frequentes sobre mapeamento de riscos psicossociais"
+  },
+  {
+    "id": "proximo-passo",
+    "label": "Do mapa ao plano: o próximo passo"
+  },
+  {
+    "id": "fontes",
+    "label": "Fontes"
+  }
+];
+
+const faqItems: FaqItem[] = [
+  {
+    "q": "O que é mapeamento de riscos psicossociais?",
+    "a": "<p>É identificar os fatores de risco psicossociais relacionados ao trabalho, avaliar e classificar cada risco, registrá-lo no inventário do PGR e definir um plano de ação, como exige a NR-1 desde 26/05/2026.</p>"
+  },
+  {
+    "q": "Quem pode fazer o mapeamento de riscos psicossociais?",
+    "a": "<p>Segundo o MTE, a NR-1 e a NR-17 não estabelecem, de forma geral, um profissional específico ou uma categoria exclusiva. A empresa designa um responsável ou equipe, inclusive multiprofissional, com conhecimento técnico adequado aos riscos avaliados.</p>"
+  },
+  {
+    "q": "O mapeamento de riscos psicossociais é obrigatório?",
+    "a": "<p>Sim. O item 1.5.3.1.4 da NR-1 inclui os fatores de risco psicossociais relacionados ao trabalho no GRO. Segundo o Guia do MTE, a AEP é obrigatória para todas as empresas, inclusive as dispensadas de elaborar o PGR.</p>"
+  },
+  {
+    "q": "É obrigatório usar questionário para avaliar riscos psicossociais?",
+    "a": "<p>Não. Segundo o MTE, métodos qualitativos e participativos também servem. Quando usado, o questionário sozinho não comprova a gestão: os resultados entram na AEP e/ou no inventário.</p>"
+  },
+  {
+    "q": "Mapeamento de riscos é o mesmo que avaliação psicossocial de cada trabalhador?",
+    "a": "<p>Não. O mapeamento analisa as condições e a organização do trabalho. O MTE diz que ele não se confunde com avaliação clínica individual e que a avaliação médica periódica não substitui esse processo.</p>"
+  },
+  {
+    "q": "Com que frequência o mapeamento deve ser refeito?",
+    "a": "<p>Em regra, a cada dois anos, ou antes em situações como mudanças no trabalho, medidas ineficazes, acidentes ou doenças e pedido justificado dos trabalhadores ou da CIPA.</p>"
+  },
+  {
+    "q": "O mapeamento vale para home office e trabalho híbrido?",
+    "a": "<p>Sim. O MTE confirma que trabalho remoto, híbrido e teletrabalho entram, com estratégias adequadas, como autoavaliações estruturadas ou entrevistas.</p>"
+  },
+  {
+    "q": "Existe modelo pronto de inventário ou planilha?",
+    "a": "<p>Não há modelo obrigatório: cada organização define o formato, com o conteúdo mínimo da NR-1. O Manual do GRO/PGR do MTE traz exemplos orientativos nas páginas 94, 95 e 97.</p>"
+  },
+  {
+    "q": "As multas dos itens psicossociais estão suspensas?",
+    "a": "<p>Sim, temporariamente. O STF suspendeu as multas e outras sanções ligadas aos fatores psicossociais e prorrogou a suspensão por mais 90 dias em setembro de 2026 (ADPF 1316). A obrigação de gerenciar os riscos continua valendo.</p>"
+  },
+  {
+    "q": "Como mapear em uma empresa pequena ou em equipes de 1 ou 2 pessoas?",
+    "a": "<p>O MTE indica observação, análise da atividade e diálogo com os trabalhadores, com cuidado com o anonimato. Para empresas pequenas, o Guia também cita a oficina.</p>"
+  }
+];
+
+// HowTo: coluna "Etapa" + "O que fazer" da tabela das 7 etapas (texto visivel na pagina).
+const passos: [string, string][] = [
+  [
+    "Preparar",
+    "Designar responsável ou equipe com conhecimento técnico adequado, envolver SST, gestores, direção e trabalhadores, comunicar o processo e definir as unidades de avaliação"
+  ],
+  [
+    "Levantar o cenário",
+    "Reunir afastamentos, CAT, indicadores do PCMSO e análises anteriores; escolher um setor piloto sem deixar áreas de fora"
+  ],
+  [
+    "Identificar os perigos",
+    "Observar o trabalho real, dialogar e, se fizer sentido, aplicar questionário ou oficina; descrever perigos, fontes e grupos expostos"
+  ],
+  [
+    "Avaliar e classificar",
+    "Combinar severidade e probabilidade e aplicar os critérios da organização"
+  ],
+  [
+    "Registrar no inventário",
+    "Consolidar identificação e avaliação com o conteúdo mínimo da norma"
+  ],
+  [
+    "Montar o plano de ação",
+    "Definir medidas, prioridade, cronograma, responsáveis e forma de acompanhamento e de aferição"
+  ],
+  [
+    "Acompanhar e revisar",
+    "Verificar a execução, ouvir os trabalhadores, corrigir o que não funcionou e revisar"
+  ]
+];
+
+const schemas = [
+  articleSchema({
+    headline: "Mapeamento de riscos psicossociais: passo a passo do diagnóstico ao plano de ação (NR-1)",
+    description,
+    url: path,
+    image: imagemOg,
+    datePublished: DATA_ISO,
+    dateModified: DATA_ISO,
+    about: ENTITIES.riscosPsicossociais,
+    keywords: [
+      'mapeamento de riscos psicossociais',
+      'avaliação de riscos psicossociais',
+      'inventário de riscos psicossociais',
+      'plano de ação riscos psicossociais',
+      'matriz de risco psicossocial',
+      'AEP NR-17',
+    ],
+  }),
+  howToSchema(
+    'Como fazer o mapeamento de riscos psicossociais, do diagnóstico ao plano de ação',
+    passos,
+    'Passo a passo em 7 etapas para identificar, avaliar e registrar os riscos psicossociais no inventário do PGR e montar o plano de ação, conforme a NR-1.'
+  ),
+  faqSchema(faqItems),
+  breadcrumbSchema([['Início', '/'], ['Mapeamento de riscos psicossociais', path]]),
+];
+---
+<Base title={title} description={description} schemas={schemas} ogType="article" ogImage={imagemOg}>
+  <div class="page-hero">
+    <div class="container">
+      <p class="kicker">Guia · Atualizado em {ROTULO_PAGINA}</p>
+      <h1>Mapeamento de riscos psicossociais: passo a passo do diagnóstico ao plano de ação (NR-1)</h1>
+    </div>
+  </div>
+
+  <article class="container article">
+    <Breadcrumbs crumbs={[['Início', '/'], ['Mapeamento de riscos psicossociais', path]]} />
+    <div class="article-meta">
+      <span class="updated-badge">Atualizado em {DATA_PAGINA}</span>
+      <span>Conteúdo informativo · fontes oficiais (MTE)</span>
+    </div>
+
+    <div class="fact-box" id="resposta-rapida">
+    <p><strong>Resposta rápida:</strong> o mapeamento de riscos psicossociais é o processo de identificar os fatores da organização do trabalho que podem afetar a saúde dos trabalhadores, avaliar o nível de cada risco, registrá-lo no inventário do PGR e definir um plano de ação com responsáveis e prazos. O capítulo 1.5 da NR-1 exige isso desde 26/05/2026.</p>
+    </div>
+
+    <div class="fact-box" id="destaques">
+    <h3>Destaques</h3>
+    <ul class="checks">
+      <li>✔ Passo a passo em 7 etapas, alinhado ao capítulo 1.5 da NR-1 e ao Guia do Ministério do Trabalho</li>
+      <li>✔ Uma linha de inventário preenchida com o exemplo do próprio MTE</li>
+      <li>✔ Matriz didática de severidade e probabilidade para classificar os riscos</li>
+      <li>✔ O que a fiscalização observa, com checklist dos documentos</li>
+      <li>✔ Foco no que mais pesa: transformar o diagnóstico em plano de ação</li>
+    </ul>
+    </div>
+
+    <TOC items={toc} />
+
+    <EditorialFigure file="mapeamento-riscos-psicossociais-1-mesa-mapa-setores.webp" alt="Mesa de trabalho vista de cima com um mapa de setores desenhado em papel, pranchetas com formulários em branco e duas mãos apontando um setor, na preparação do mapeamento de riscos" caption="Imagem ilustrativa" formato="16x9" />
+
+    <h2 id="o-que-e">O que é o mapeamento de riscos psicossociais e o que a NR-1 exige?</h2>
+
+    <p>É a forma prática de cumprir uma exigência direta da norma: o Gerenciamento de Riscos Ocupacionais (GRO) deve abranger também "os fatores de risco psicossociais relacionados ao trabalho" (item 1.5.3.1.4 da NR-1). A nova redação do capítulo 1.5 está em vigor desde 26/05/2026.</p>
+
+    <p>O detalhe está no fim da frase: <strong>relacionados ao trabalho</strong>. O mapeamento olha a organização do trabalho (demandas, prazos, autonomia, relações), não a saúde de cada pessoa. Para rever o conceito, veja a <a href="/riscos-psicossociais-exemplos/">lista dos 15 fatores de risco psicossociais</a>.</p>
+
+    <p>O caminho passa pela NR-17: segundo as Perguntas e Respostas do MTE, todas as empresas devem agir por meio da <strong>Avaliação Ergonômica Preliminar (AEP)</strong>, incluindo os fatores psicossociais, dentro do GRO. O resultado vai para o PGR, com inventário e plano de ação (<a href="/gro-e-pgr-o-que-e/">GRO e PGR explicados</a>).</p>
+
+    <p>Vale o esforço: segundo o Guia do MTE, em 2022 os transtornos ansiosos, os episódios depressivos e as reações ao estresse grave somaram 8,35% dos adoecimentos ocupacionais no Brasil, em 2º lugar. Contexto completo: <a href="/nr-1-atualizada-2026/">NR-1 atualizada</a>.</p>
+
+    <h2 id="etapas">Quais são as etapas do mapeamento, do diagnóstico ao plano de ação?</h2>
+
+    <p>São 7 etapas, da preparação ao acompanhamento. A organização é didática e segue a ordem do capítulo 1.5 da NR-1 e do Guia do MTE. Cada etapa deixa um registro que comprova o processo.</p>
+
+    <div class="table-wrap">
+    <table>
+    <thead>
+    <tr><th>Etapa</th><th>O que fazer</th><th>O que fica registrado</th><th>Base oficial</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>1. Preparar</td><td>Designar responsável ou equipe com conhecimento técnico adequado, envolver SST, gestores, direção e trabalhadores, comunicar o processo e definir as unidades de avaliação</td><td>Responsáveis definidos e comunicado aos trabalhadores</td><td>Guia do MTE; Perguntas e Respostas 1, 7 e 11</td></tr>
+    <tr><td>2. Levantar o cenário</td><td>Reunir afastamentos, CAT, indicadores do PCMSO e análises anteriores; escolher um setor piloto sem deixar áreas de fora</td><td>Base de informações do estabelecimento</td><td>Guia do MTE, seção 3 (preparação)</td></tr>
+    <tr><td>3. Identificar os perigos</td><td>Observar o trabalho real, dialogar e, se fizer sentido, aplicar questionário ou oficina; descrever perigos, fontes e grupos expostos</td><td>Perigos descritos com fonte e grupo exposto</td><td>NR-1, 1.5.4.3.1; Perguntas e Respostas 3, 8 e 11</td></tr>
+    <tr><td>4. Avaliar e classificar</td><td>Combinar severidade e probabilidade e aplicar os critérios da organização</td><td>Níveis de risco e documento de critérios</td><td>NR-1, 1.5.4.4.2 a 1.5.4.4.5.3</td></tr>
+    <tr><td>5. Registrar no inventário</td><td>Consolidar identificação e avaliação com o conteúdo mínimo da norma</td><td>Inventário datado, assinado e atualizado</td><td>NR-1, 1.5.7.3</td></tr>
+    <tr><td>6. Montar o plano de ação</td><td>Definir medidas, prioridade, cronograma, responsáveis e forma de acompanhamento e de aferição</td><td>Plano de ação</td><td>NR-1, 1.5.5.2</td></tr>
+    <tr><td>7. Acompanhar e revisar</td><td>Verificar a execução, ouvir os trabalhadores, corrigir o que não funcionou e revisar</td><td>Registros de implementação e de revisão</td><td>NR-1, 1.5.5.3 e 1.5.4.4.6</td></tr>
+    </tbody>
+    </table>
+    </div>
+
+    <EditorialFigure file="mapeamento-riscos-psicossociais-2-trilha-sete-etapas.webp" alt="Ilustração de uma trilha sinuosa com sete marcos (prancheta, mapa, lupa, balança, pasta de arquivo, calendário e seta circular) que representam as etapas do mapeamento de riscos psicossociais" caption="As sete etapas do mapeamento, do preparo ao acompanhamento." formato="1x1" />
+
+    <p>O mapeamento em si ocupa as etapas 2 e 3; da 4 em diante, o diagnóstico ganha valor.</p>
+
+    <h2 id="preparar">Como preparar o mapeamento: quem conduz e por onde começar?</h2>
+
+    <p>Começa por decidir quem conduz. Segundo o MTE, a NR-1 e a NR-17 não estabelecem, de forma geral, um profissional específico ou uma categoria exclusiva: a empresa designa responsável ou equipe com conhecimento técnico adequado (pergunta 7).</p>
+
+    <p>O Guia do MTE propõe quatro passos preliminares:</p>
+
+    <ol>
+      <li><strong>Verificar se precisa de ajuda especializada.</strong></li>
+      <li><strong>Envolver todas as partes:</strong> SST (e o SESMT, se houver), gerências, alta direção, lideranças e trabalhadores.</li>
+      <li><strong>Atribuir responsabilidades</strong> para cada etapa.</li>
+      <li><strong>Comunicar os trabalhadores</strong> com antecedência, explicando objetivos e resultados esperados.</li>
+    </ol>
+
+    <p>Depois vem o levantamento do cenário: setores, atividades, afastamentos, CATs, indicadores do PCMSO e análises anteriores. O Guia admite começar por um setor piloto, como o que concentra afastamentos por transtorno mental, desde que o processo alcance todas as atividades.</p>
+
+    <p>Por fim, defina as <strong>unidades de avaliação</strong> (atividade, posto, função, setor ou grupo similar de exposição), compatíveis com as do PGR ou da AEP (pergunta 11). Quem vem de outra área encontra o caminho em <a href="/blog/como-atuar-com-nr1-sem-diploma/">como atuar com NR-1 sem diploma específico</a>.</p>
+
+    <h2 id="diagnostico">Como fazer o diagnóstico: como identificar os perigos no trabalho real?</h2>
+
+    <p>O diagnóstico é a identificação dos perigos, feita dentro da AEP. A regra de ouro do Guia do MTE é olhar o <strong>trabalho real, não a tarefa prescrita</strong>: como o trabalho acontece de fato, com as pressões, interrupções e improvisos do dia a dia.</p>
+
+    <EditorialFigure file="mapeamento-riscos-psicossociais-3-observacao-atividade.webp" alt="Profissional de costas, com uma prancheta e uma folha em branco, observando ao fundo uma equipe de atendimento em suas mesas durante o diagnóstico." caption="Imagem ilustrativa" formato="1x1" />
+
+    <p>O Guia descreve quatro caminhos, que podem ser combinados: <strong>observação da atividade</strong> com diálogo, <strong>pesquisas padronizadas</strong> com instrumentos validados, <strong>oficinas moderadas</strong> por setor ou a <strong>combinação</strong> deles. Em qualquer caminho, o Guia pede um ambiente de confiança, para que as questões reais apareçam.</p>
+
+    <p>Em grupos de 1 ou 2 pessoas, o MTE indica observação, análise da atividade e diálogo, com cuidado redobrado com o anonimato (pergunta 11). Trabalho remoto, híbrido e teletrabalho também entram (pergunta 3).</p>
+
+    <p>Para cada perigo, registre a descrição, a fonte ou circunstância e o grupo exposto (item 1.5.4.3.1). Excesso de demandas e falta de autonomia são exemplos comuns. Listas como a do Guia orientam, sem ser taxativas (pergunta 18); a <a href="/riscos-psicossociais-exemplos/">lista completa de fatores</a> serve de roteiro para a observação.</p>
+
+    <h2 id="questionario">Qual questionário usar e ele basta para o mapeamento?</h2>
+
+    <p>O questionário é opcional e, sozinho, não basta. O MTE é direto: o uso de questionário não é obrigatório (pergunta 8), a NR-1 não estabelece instrumento oficial único (pergunta 9) e um questionário padronizado aplicado de forma isolada não comprova a gestão dos riscos psicossociais (perguntas 2 e 10).</p>
+
+    <p>Se a empresa usar questionário, os resultados são analisados tecnicamente e incorporados à AEP e/ou ao inventário. O Guia do MTE acrescenta três cuidados:</p>
+
+    <ul>
+      <li><strong>anonimato garantido</strong> a quem responde;</li>
+      <li><strong>ferramenta adequada</strong> ao risco e ao porte (em empresas grandes, a pesquisa alcança todos os setores; nas pequenas, oficina ou observação funcionam bem);</li>
+      <li><strong>base científica</strong> que dê suporte ao instrumento.</li>
+    </ul>
+
+    <p>Um exemplo público com validação para o Brasil é a <strong>versão curta do COPSOQ II-Br</strong> (Copenhagen Psychosocial Questionnaire), com propriedades psicométricas adequadas para uso no país (Revista de Saúde Pública, 2021) e aplicação à NR-1 discutida na Revista Brasileira de Saúde Ocupacional em 2026. É uma das opções validadas, sem indicação oficial do MTE.</p>
+
+    <p>O processo também não é rastreamento clínico individual: a avaliação médica periódica não o substitui (pergunta 6).</p>
+
+    <BannerImersao />
+    <CardLivro />
+
+    <h2 id="avaliar">Como avaliar e classificar o nível de risco?</h2>
+
+    <p>Para cada risco, a NR-1 manda indicar o nível, determinado pela <strong>combinação da severidade</strong> das possíveis lesões ou agravos à saúde <strong>com a probabilidade</strong> de sua ocorrência (item 1.5.4.4.2). Nos fatores psicossociais, a probabilidade considera "as exigências da atividade de trabalho e a eficácia das medidas de prevenção implementadas" (item 1.5.4.4.5.3).</p>
+
+    <p>A norma não impõe uma matriz: cada organização define e documenta os seus critérios (item 1.5.4.4.2.2). Esse <strong>documento de critérios</strong> (gradações de severidade e probabilidade, níveis de risco, classificação e tomada de decisão) é obrigatório, ao lado do inventário e do plano (pergunta 2). O Guia do MTE lembra que a avaliação qualitativa é aceita e pede caracterizar a exposição por duração, frequência e intensidade.</p>
+
+    <p><strong>Exemplo didático de matriz 3 x 3</strong> (cada organização define os seus critérios):</p>
+
+    <div class="table-wrap">
+    <table>
+    <thead>
+    <tr><th>Severidade \ Probabilidade</th><th>Baixa</th><th>Média</th><th>Alta</th></tr>
+    </thead>
+    <tbody>
+    <tr><td><strong>Alta</strong></td><td>Moderado</td><td>Alto</td><td>Crítico</td></tr>
+    <tr><td><strong>Média</strong></td><td>Baixo</td><td>Moderado</td><td>Alto</td></tr>
+    <tr><td><strong>Baixa</strong></td><td>Baixo</td><td>Baixo</td><td>Moderado</td></tr>
+    </tbody>
+    </table>
+    </div>
+
+    <p>Regra de decisão do exemplo: <strong>baixo</strong>, manter medidas e acompanhar; <strong>moderado</strong>, plano com prazo; <strong>alto</strong>, prioridade no plano; <strong>crítico</strong>, ação imediata. A classificação indica onde adotar ou manter medidas (item 1.5.4.4.3).</p>
+
+    <h2 id="inventario">O que entra no inventário de riscos psicossociais?</h2>
+
+    <p>O inventário consolida a identificação e a avaliação. A NR-1 define o conteúdo mínimo em nove campos (item 1.5.7.3.2), referência da fiscalização (pergunta 22). Ele é datado, assinado e mantido atualizado, com histórico guardado por no mínimo 20 anos, e fica disponível aos trabalhadores, aos sindicatos e à Inspeção do Trabalho.</p>
+
+    <p>Veja uma linha preenchida com o exemplo hipotético do próprio Guia do MTE:</p>
+
+    <div class="table-wrap">
+    <table>
+    <thead>
+    <tr><th>Campo da NR-1 (1.5.7.3.2)</th><th>Exemplo do Guia do MTE</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>a) Processos e ambientes</td><td>Pequeno escritório, 19 trabalhadores, diretor executivo e 4 equipes (administrativa e de pessoal, jurídica, fiscal e contábil)</td></tr>
+    <tr><td>b) Atividades</td><td>Atividades de escritório; as equipes jurídica, fiscal e contábil atendem clientes por telefone e e-mail</td></tr>
+    <tr><td>c) Perigo e fonte</td><td>Excesso de demandas no trabalho (sobrecarga): horas extras frequentes, múltiplas tarefas, intervalos de descanso ignorados</td></tr>
+    <tr><td>d) Possíveis agravos</td><td>O Guia cita estresse, esgotamento, depressão ou doenças cardiovasculares</td></tr>
+    <tr><td>e) Grupos expostos</td><td>Todas as equipes, com volume maior nas que atendem clientes</td></tr>
+    <tr><td>f) Medidas implementadas</td><td>Nenhuma constatada</td></tr>
+    <tr><td>g) Exposição</td><td>Duração, frequência e intensidade, a descrever pela organização</td></tr>
+    <tr><td>h) Dados da ergonomia</td><td>Resultados da AEP, nos termos da NR-17 (campo exigido pela norma)</td></tr>
+    <tr><td>i) Avaliação e classificação</td><td>Conforme os critérios do GRO da organização</td></tr>
+    </tbody>
+    </table>
+    </div>
+
+    <p><em>Exemplo hipotético do Guia de informações sobre os fatores de riscos psicossociais relacionados ao trabalho (MTE, 2025).</em></p>
+
+    <p>Precisa de planilha? O MTE informa que não há modelo padronizado e que o Manual do GRO/PGR traz exemplos orientativos de inventário e plano de ação nas páginas 94, 95 e 97 (pergunta 5). Mais contexto em <a href="/gro-e-pgr-o-que-e/">GRO e PGR explicados</a>.</p>
+
+    <h2 id="plano-de-acao">Como montar o plano de ação, a parte mais difícil do mapeamento?</h2>
+
+    <p>Mapear é a parte mais fácil. O desafio é transformar o diagnóstico em plano de ação: é aí que o processo protege as pessoas de verdade.</p>
+
+    <p>A NR-1 pede um plano com as medidas de prevenção a introduzir, aprimorar ou manter (item 1.5.5.2.1). O número de trabalhadores possivelmente atingidos aumenta a prioridade (item 1.5.5.2.1.1), e cada medida precisa de <strong>cronograma com responsáveis, formas de acompanhamento e aferição de resultados</strong> (item 1.5.5.2.2).</p>
+
+    <p>A lógica é a da hierarquia: primeiro evitar ou eliminar o perigo; quando não for possível, reduzir e controlar. Um fator de risco nem sempre some, mas se gerencia, como a faca na cozinha e a altura na obra. O Guia do MTE prefere intervenções na <strong>organização do trabalho</strong> às individuais ou comportamentais.</p>
+
+    <p>No exemplo do escritório, o Guia sugere para a sobrecarga:</p>
+
+    <ol>
+      <li>priorização de tarefas;</li>
+      <li>maior autonomia e flexibilização de horário;</li>
+      <li>aumento na quantidade de trabalhadores de cada equipe que atende aos clientes;</li>
+      <li>pausas adequadas e regulares;</li>
+      <li>qualificação continuada.</li>
+    </ol>
+
+    <p>As medidas são discutidas antes com a direção e os trabalhadores: a eficácia depende do engajamento de todos.</p>
+
+    <EditorialFigure file="mapeamento-riscos-psicossociais-4-ciclo-plano-acao.webp" alt="Ilustração de um quadro de cronograma com quatro faixas horizontais, um responsável em cada faixa e uma seta circular em volta representando executar, acompanhar e revisar o plano de ação" caption="Do diagnóstico ao plano de ação: executar, acompanhar e revisar." formato="16x9" />
+
+    <CTA text="Aprender a transformar o diagnóstico em plano de ação na Formação Gestor de NR1 →" pos="plano" />
+
+    <h2 id="acompanhar">Como acompanhar, revisar e comprovar o mapeamento?</h2>
+
+    <p>O acompanhamento é planejado: verificar a execução das ações, inspecionar os locais e contar com a participação dos trabalhadores e da CIPA, quando houver (item 1.5.5.3.2). Medida ineficaz é corrigida.</p>
+
+    <p>A avaliação é revista, <strong>em regra, a cada dois anos</strong> ou antes, em seis situações: depois de implementar medidas, em mudanças no trabalho, quando as medidas se mostram insuficientes, em acidentes ou doenças, em mudança legal e a pedido justificado dos trabalhadores ou da CIPA (item 1.5.4.4.6). Para organizações com certificações em sistema de gestão de SST, o prazo pode ser de até 3 anos (item 1.5.4.4.6.1).</p>
+
+    <p>Segundo o MTE, a fiscalização olha a coerência entre metodologia, critérios, realidade das atividades, riscos e medidas, não só papéis (perguntas 14 a 17 e 22). Tenha à mão:</p>
+
+    <ul class="checks">
+      <li>✔ inventário de riscos;</li>
+      <li>✔ plano de ação;</li>
+      <li>✔ documento de critérios;</li>
+      <li>✔ AEP documentada;</li>
+      <li>✔ registros de participação dos trabalhadores;</li>
+      <li>✔ registros de acompanhamento e revisão.</li>
+    </ul>
+
+    <p>Sobre a fiscalização, o MTE explica na pergunta 20 que, para as disposições novas, vale a dupla visita, com caráter inicialmente orientativo nos 90 dias seguintes à vigência. Depois, o STF suspendeu temporariamente as multas e outras sanções dos itens psicossociais, suspensão prorrogada por mais 90 dias em setembro de 2026 (ADPF 1316). A obrigação continua (<a href="/multa-nr1-2026/">multa da NR-1</a>).</p>
+
+    <h2 id="quem-conduz">Quem pode conduzir o mapeamento e como aprender a fazer na prática?</h2>
+
+    <p>Segundo o MTE, a NR-1 e a NR-17 não estabelecem, de forma geral, uma categoria profissional exclusiva: o que conta é o <strong>conhecimento técnico adequado</strong> (pergunta 7). Na prática, é dominar o ciclo inteiro: diagnóstico, análise dos dados, classificação, plano de ação coerente e acompanhamento.</p>
+
+    <p>É esse ciclo que define o trabalho do <a href="/blog/gestor-de-nr1-o-que-faz/">Gestor de NR1</a>, profissional que vem de áreas como RH, psicologia, SST e saúde.</p>
+
+    <p>Para quem quer aprender o método completo, a <strong>Formação Gestor de NR1</strong>, da Izabella Camargo, é o programa de formação dela sobre a aplicação da NR-1 e dos riscos psicossociais nas empresas. Os detalhes estão na nossa <a href="/formacao-gestor-de-nr1-izabella-camargo-review/">análise da Formação Gestor de NR1</a>.</p>
+
+    <p>Para começar com um encontro ao vivo de dois dias, há a <a href="/imersao-nr1-na-pratica/">Imersão NR1 na Prática</a>, também com ela.</p>
+
+    <CTA text="Conhecer a Formação Gestor de NR1 (oferta oficial) →" pos="atuar" />
+
+    <FAQ items={faqItems} heading="Perguntas frequentes sobre mapeamento de riscos psicossociais" />
+
+    <div class="hub-card primary fecho" id="proximo-passo">
+    <h2>Do mapa ao plano: o próximo passo</h2>
+    <p>O mapeamento mostra onde estão os riscos; o plano de ação muda o dia a dia das equipes. Quem domina as duas partes vira peça central na NR-1.</p>
+    <CTA text="Ver a Formação Gestor de NR1 →" pos="final" />
+    </div>
+
+    <p class="nota-fonte"><small>Conteúdo informativo, com base em documentos oficiais lidos em 17/11/2026. Não substitui consultoria jurídica, contábil ou de segurança do trabalho.</small></p>
+
+    <p><strong>Apoio emocional:</strong> se você ou alguém da sua equipe precisar conversar, o CVV atende pelo telefone 188, 24 horas por dia e sem custo de ligação.</p>
+
+    <RelatedLinks
+          links={[
+            { href: '/riscos-psicossociais-exemplos/', label: '15 exemplos de riscos psicossociais para o PGR' },
+            { href: '/gro-e-pgr-o-que-e/', label: 'GRO e PGR: o que são e qual a diferença' },
+            { href: '/nr-1-atualizada-2026/', label: 'Guia da NR-1 atualizada em 2026' },
+            { href: '/multa-nr1-2026/', label: 'Multa da NR-1 em 2026: valores e como funciona' },
+            { href: '/blog/gestor-de-nr1-o-que-faz/', label: 'Gestor de NR1: o que faz e como se tornar um' },
+            { href: '/blog/como-atuar-com-nr1-sem-diploma/', label: 'Como atuar com NR-1 sem diploma específico' },
+            { href: '/consultoria-de-nr1/', label: 'Consultoria de NR1: como começar, propor e precificar' },
+            { href: '/fap-2027/', label: 'FAP 2027: como consultar, contestar e entender o cálculo' },
+            { href: '/formacao-gestor-de-nr1-izabella-camargo-review/', label: 'Review completo da Formação Gestor de NR1' },
+            { href: '/imersao-nr1-na-pratica/', label: 'Imersão NR1 na Prática, 5ª edição: datas, valor e inscrição' },
+          ]}
+        />
+
+    <h2 id="fontes">Fontes</h2>
+    <ul>
+      <li>Ministério do Trabalho e Emprego. <em>NR-1, capítulo 1.5, texto consolidado</em> (itens 1.5.3.1.4, 1.5.3.2, 1.5.4.3.1, 1.5.4.4.2 a 1.5.4.4.6.1, 1.5.5.1 a 1.5.5.3, 1.5.7.3). gov.br, lido em 17/11/2026.</li>
+      <li>Ministério do Trabalho e Emprego. <em>Página oficial da NR-1</em> (vigência do capítulo 1.5 em 26/05/2026, Portarias MTE 1.419/2024 e 765/2025), atualizada em 06/08/2026. gov.br, lida em 17/11/2026.</li>
+      <li>Ministério do Trabalho e Emprego, CGNOR. <em>Guia de informações sobre os fatores de riscos psicossociais relacionados ao trabalho</em>. Brasília, 2025. Lido em 17/11/2026.</li>
+      <li>Ministério do Trabalho e Emprego, CGNOR/DSST/SIT. <em>Perguntas e Respostas sobre o Capítulo 1.5 da NR-1</em>, 1ª rodada, 30/04/2026 (perguntas 1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12, 14 a 18, 20 e 22). Lido em 17/11/2026.</li>
+      <li>Ministério do Trabalho e Emprego. <em>Manual do GRO/PGR da NR-1</em> (2026), documento oficial citado pela pergunta 5 das Perguntas e Respostas (páginas 94, 95 e 97).</li>
+      <li>Supremo Tribunal Federal. "Relator prorroga suspensão de sanções sobre riscos psicossociais no trabalho", ADPF 1316, notícia de 24/09/2026. <a target="_blank" rel="noopener" href="https://noticias.stf.jus.br/?p=166500">noticias.stf.jus.br</a>, lida em 17/11/2026.</li>
+      <li>Gonçalves JS, Moriguchi CS, Chaves TC, Sato TO. "Cross-cultural adaptation and psychometric properties of the short version of COPSOQ II-Brazil". <em>Revista de Saúde Pública</em>, v. 55, art. 69, 2021.</li>
+      <li>Sato TO et al. "Copenhagen Psychosocial Questionnaire, versão curta brasileira (COPSOQ II-Br): aplicação e potencialidades para avaliação dos fatores psicossociais do trabalho no contexto da NR-1". <em>Revista Brasileira de Saúde Ocupacional</em>, v. 51, e21, 2026.</li>
+      <li>CVV, Centro de Valorização da Vida: telefone 188, 24 horas, sem custo de ligação. <a target="_blank" rel="noopener nofollow" href="https://cvv.org.br">cvv.org.br</a>, lido em 17/11/2026.</li>
+    </ul>
+  </article>
+</Base>
+
+<style>
+  #resposta-rapida p {
+    margin: 0;
+  }
+  /* Listas só com ✔ (destaques e checklist): o próprio ✔ faz o papel do marcador. */
+  .checks {
+    list-style: none;
+    padding-left: 0;
+  }
+  .checks li {
+    padding-left: 1.5em;
+    text-indent: -1.5em;
+  }
+  /* Faixa final no padrão do hub-card escuro da home (mesmo estilo da página da Imersão). */
+  .fecho {
+    margin: 3rem 0 1.6rem;
+    text-align: center;
+  }
+  .fecho h2 {
+    margin-top: 0.2em;
+  }
+  .fecho p {
+    margin-inline: auto;
+  }
+  .fecho :global(.cta-wrap) {
+    margin: 1.4rem 0 0.2rem;
+  }
+  .nota-fonte,
+  .nota-fonte small {
+    color: var(--cinza-700);
+  }
+</style>

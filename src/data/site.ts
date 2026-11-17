@@ -77,6 +77,9 @@ const GO_PAGINAS: Record<string, string> = {
   '/blog/quanto-ganha-consultor-nr1/': 'post-quanto-ganha',
   '/blog/como-atuar-com-nr1-sem-diploma/': 'post-sem-diploma',
   '/blog/imersao-nr1-na-pratica-izabella-camargo/': 'post-imersao',
+  '/mapeamento-de-riscos-psicossociais/': 'mapeamento',
+  '/consultoria-de-nr1/': 'consultoria',
+  '/fap-2027/': 'fap',
 };
 
 // Livro "Dá um Tempo!" (Izabella Camargo), produto de apoio na Shopee (link autorizado pelo Michel em 10/11/2026). O card entra pelo

@@ -1,0 +1,515 @@
+---
+import Base from '../layouts/Base.astro';
+import CTA from '../components/CTA.astro';
+import TOC from '../components/TOC.astro';
+import FAQ from '../components/FAQ.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+import BannerImersao from '../components/BannerImersao.astro';
+import CardLivro from '../components/CardLivro.astro';
+import EditorialFigure from '../components/EditorialFigure.astro';
+import {
+  articleSchema,
+  faqSchema,
+  breadcrumbSchema,
+  howToSchema,
+  ENTITIES,
+  type FaqItem,
+} from '../data/schema';
+
+/**
+ * Consultoria de NR1 (como comecar, montar a proposta e precificar o servico), pagina 2 de 3 do pedido de 17/11/2026.
+ * Texto: rascunho aprovado (rascunhos/consultoria-de-nr1.md), convertido por script em 17/11/2026 (o texto nao foi
+ * reescrito a mao). Fatos so de fonte oficial lida em 17/11/2026 (MTE, STF, CFP, ANPD, Receita, Sebrae, Previdencia, INSS, CVV), com as fontes no fim da pagina.
+ * Os 3 botoes da Formacao passam pelo CTA.astro (/go/formacao-gestor-nr1/?s=consultoria_<posicao>; codigo `consultoria` em GO_PAGINAS).
+ * Banner da Imersao e card do livro no fim da secao de precificacao (meio da pagina).
+ * As 4 figuras (EditorialFigure) so aparecem no build se o arquivo existir em public/images/editorial/: sem o arquivo, a pagina sai sem a figura.
+ * Imagem de compartilhamento: og-consultoria-de-nr1.jpg (1200x630, corte centralizado da imagem 1; ogImage do Base e image do Article, igual a pagina da Imersao). Nao tirar na regeracao.
+ * HowTo: os 8 passos saem da lista numerada do H2 da proposta (texto visivel na pagina). Sem Review e sem AggregateRating.
+ * Link para a pagina 3 (FAP 2027 e NR-1): vem do proprio rascunho (fim do paragrafo do INSS do H2 de valor; reconversao de 17/11/2026). O gerador nao injeta mais nada.
+ */
+const title = "Consultoria de NR1: Como Começar, Propor e Precificar";
+const description =
+  "Consultoria de NR1: escopo e entregáveis, como montar a proposta, o método para precificar, contrato, LGPD e como conseguir o primeiro cliente.";
+const path = '/consultoria-de-nr1/';
+// Imagem de compartilhamento (og:image, twitter:image e image do Article). Nome novo = cache de 1 ano sem problema.
+const imagemOg = '/images/og-consultoria-de-nr1.jpg';
+
+// Data propria da pagina (nao usa SITE.updatedLabel: o "Atualizado em" global fica em Julho/2026 de proposito).
+const DATA_PAGINA = '17/11/2026';
+const DATA_ISO = '2026-11-17';
+const ROTULO_PAGINA = 'Novembro/2026';
+
+const toc = [
+  {
+    "id": "o-que-e",
+    "label": "O que é uma consultoria de NR1 e o que a empresa realmente contrata?"
+  },
+  {
+    "id": "quem-pode",
+    "label": "Quem pode prestar uma consultoria de NR1?"
+  },
+  {
+    "id": "formalizar",
+    "label": "Como formalizar a atividade antes do primeiro contrato?"
+  },
+  {
+    "id": "escopo",
+    "label": "Qual é o escopo de uma consultoria de NR1 e o que a empresa recebe?"
+  },
+  {
+    "id": "proposta",
+    "label": "Como montar a proposta de uma consultoria de NR1?"
+  },
+  {
+    "id": "precificar",
+    "label": "Como precificar uma consultoria de NR1?"
+  },
+  {
+    "id": "valor",
+    "label": "Como mostrar o valor do serviço a quem decide na empresa?"
+  },
+  {
+    "id": "contrato",
+    "label": "Como fechar o contrato e dividir as responsabilidades?"
+  },
+  {
+    "id": "dados",
+    "label": "Como cuidar dos dados dos trabalhadores numa consultoria de NR1?"
+  },
+  {
+    "id": "primeiro-cliente",
+    "label": "Como conseguir o primeiro cliente de consultoria de NR1?"
+  },
+  {
+    "id": "faq",
+    "label": "Perguntas frequentes sobre consultoria de NR1"
+  },
+  {
+    "id": "proximo-passo",
+    "label": "Do escopo ao contrato: o próximo passo"
+  },
+  {
+    "id": "fontes",
+    "label": "Fontes"
+  }
+];
+
+const faqItems: FaqItem[] = [
+  {
+    "q": "O que faz uma consultoria de NR1?",
+    "a": "<p>Apoia a empresa a identificar os perigos psicossociais, avaliar os riscos, montar o inventário e o plano de ação e acompanhar a execução. A responsabilidade pelo PGR continua da empresa.</p>"
+  },
+  {
+    "q": "Quem pode prestar consultoria de NR1?",
+    "a": "<p>Segundo o MTE, as normas não definem, de forma geral, uma categoria exclusiva: a empresa designa quem tem conhecimento técnico adequado. Pelo CFP, a avaliação psicológica, quando necessária, é privativa do psicólogo.</p>"
+  },
+  {
+    "q": "A empresa é obrigada a contratar uma consultoria externa?",
+    "a": "<p>Não. Segundo o MTE, não há previsão nas NR, de forma geral, de contratação de profissional específico. A empresa decide se precisa de ajuda especializada.</p>"
+  },
+  {
+    "q": "A consultoria assume a responsabilidade legal pelo PGR?",
+    "a": "<p>Não. Segundo o MTE, a responsabilidade legal pelo PGR é da organização. A consultoria entrega o trabalho técnico, e a empresa adota os documentos, datados e assinados.</p>"
+  },
+  {
+    "q": "Quanto cobrar por uma consultoria de NR1?",
+    "a": "<p>Não há tabela oficial. O preço sai do escopo: horas por fase vezes um valor-hora que cubra custos, impostos e margem, mais custos diretos. Depois, compare com o mercado.</p>"
+  },
+  {
+    "q": "O que não pode faltar numa proposta de consultoria de NR1?",
+    "a": "<p>Escopo, método, entregáveis, cronograma, responsabilidades, cuidados com os dados, condições e validade, deixando claro que a responsabilidade pelo PGR continua com a empresa.</p>"
+  },
+  {
+    "q": "Quem pode aplicar testes psicológicos no mapeamento?",
+    "a": "<p>Segundo o CFP, o uso profissional de testes psicológicos é privativo do psicólogo (Resolução CFP 31/2022). Para o MTE, o questionário não é obrigatório: métodos qualitativos também servem.</p>"
+  },
+  {
+    "q": "Como proteger os dados dos trabalhadores na pesquisa?",
+    "a": "<p>Trate o dado de saúde como sensível (LGPD), colete só o necessário, garanta o anonimato, entregue resultados agregados e combine no contrato o papel de cada parte.</p>"
+  },
+  {
+    "q": "Preciso formalizar um CNPJ para prestar consultoria de NR1?",
+    "a": "<p>Formalizar permite emitir nota fiscal e assinar contrato como empresa. O enquadramento, seja MEI, ME ou outro, depende da atividade e do faturamento previstos: confirme com o seu contador.</p>"
+  },
+  {
+    "q": "Como conseguir o primeiro cliente de consultoria de NR1?",
+    "a": "<p>Comece pela empresa onde você já atua e pela sua rede de RH, contabilidade e medicina ocupacional. Ofereça um piloto em um setor, com escopo fechado.</p>"
+  }
+];
+
+// HowTo: os 8 passos da lista numerada "Para montar a sua, siga oito passos" (texto visivel na pagina).
+const passos: [string, string][] = [
+  [
+    "Entenda a demanda numa reunião com quem decide",
+    "Entenda a demanda numa reunião com quem decide."
+  ],
+  [
+    "Defina as unidades de avaliação: setores, funções ou grupos de exposição",
+    "Defina as unidades de avaliação: setores, funções ou grupos de exposição."
+  ],
+  [
+    "Feche o escopo, com o que entra e o que fica fora",
+    "Feche o escopo, com o que entra e o que fica fora."
+  ],
+  [
+    "Liste os entregáveis e as premissas, como acesso às equipes e um responsável interno",
+    "Liste os entregáveis e as premissas, como acesso às equipes e um responsável interno."
+  ],
+  [
+    "Monte o cronograma com as dependências da empresa",
+    "Monte o cronograma com as dependências da empresa."
+  ],
+  [
+    "Calcule o preço pelo método da próxima seção",
+    "Calcule o preço pelo método da próxima seção."
+  ],
+  [
+    "Inclua as condições: validade, escopo adicional e a responsabilidade da empresa pelo PGR",
+    "Inclua as condições: validade, escopo adicional e a responsabilidade da empresa pelo PGR."
+  ],
+  [
+    "Apresente ao decisor e ajuste o que for preciso",
+    "Apresente ao decisor e ajuste o que for preciso."
+  ]
+];
+
+const schemas = [
+  articleSchema({
+    headline: "Consultoria de NR1: como começar, montar a proposta e precificar o serviço",
+    description,
+    url: path,
+    image: imagemOg,
+    datePublished: DATA_ISO,
+    dateModified: DATA_ISO,
+    about: ENTITIES.riscosPsicossociais,
+    keywords: [
+      'consultoria de nr1',
+      'consultoria nr1',
+      'proposta de consultoria nr1',
+      'quanto cobrar consultoria nr1',
+      'escopo consultoria nr1',
+      'contrato de consultoria',
+      'LGPD nr1',
+    ],
+  }),
+  howToSchema(
+    'Como montar a proposta de uma consultoria de NR1',
+    passos,
+    'Oito passos para montar a proposta de uma consultoria de NR1, do entendimento da demanda à apresentação ao decisor.'
+  ),
+  faqSchema(faqItems),
+  breadcrumbSchema([['Início', '/'], ['Consultoria de NR1', path]]),
+];
+---
+<Base title={title} description={description} schemas={schemas} ogType="article" ogImage={imagemOg}>
+  <div class="page-hero">
+    <div class="container">
+      <p class="kicker">Guia · Atualizado em {ROTULO_PAGINA}</p>
+      <h1>Consultoria de NR1: como começar, montar a proposta e precificar o serviço</h1>
+    </div>
+  </div>
+
+  <article class="container article">
+    <Breadcrumbs crumbs={[['Início', '/'], ['Consultoria de NR1', path]]} />
+    <div class="article-meta">
+      <span class="updated-badge">Atualizado em {DATA_PAGINA}</span>
+      <span>Conteúdo informativo · fontes oficiais</span>
+    </div>
+
+    <div class="fact-box" id="resposta-rapida">
+    <p><strong>Resposta rápida:</strong> consultoria de NR1 é o serviço de apoiar uma empresa na gestão dos riscos psicossociais exigida pela NR-1: diagnóstico, inventário, plano de ação e acompanhamento. A responsabilidade pelo PGR continua com a empresa, que designa quem tem conhecimento técnico adequado. A proposta e o preço nascem do escopo combinado com o cliente.</p>
+    </div>
+
+    <div class="fact-box" id="destaques">
+    <h3>Destaques</h3>
+    <ul class="checks">
+      <li>✔ Escopo em 7 fases, com o que a empresa recebe em cada uma e a base no capítulo 1.5 da NR-1</li>
+      <li>✔ Modelo de proposta em 9 seções, pronto para adaptar</li>
+      <li>✔ Método de precificação passo a passo e os fatores que pesam no preço</li>
+      <li>✔ Contrato, divisão de responsabilidades e cuidado com os dados dos trabalhadores (LGPD)</li>
+      <li>✔ Como mostrar valor a quem decide e conquistar o primeiro cliente</li>
+    </ul>
+    </div>
+
+    <TOC items={toc} />
+
+    <EditorialFigure file="consultoria-nr1-1-pasta-proposta-quatro-etapas.webp" alt="Ilustração de uma pasta de proposta aberta com quatro cartões que representam diagnóstico, inventário, plano de ação e acompanhamento de uma consultoria de NR1" caption="As frentes de um projeto de consultoria de NR1: diagnóstico, inventário, plano de ação e acompanhamento." formato="16x9" />
+
+    <h2 id="o-que-e">O que é uma consultoria de NR1 e o que a empresa realmente contrata?</h2>
+
+    <p>A empresa contrata apoio técnico para identificar os perigos psicossociais, avaliar os riscos, registrar o resultado e planejar as medidas. Desde 26/05/2026, o capítulo 1.5 da NR-1 inclui os fatores de risco psicossociais relacionados ao trabalho no Gerenciamento de Riscos Ocupacionais (GRO), e o resultado vai para o PGR (<a href="/gro-e-pgr-o-que-e/">GRO e PGR explicados</a>).</p>
+
+    <p>Quem decide se precisa de ajuda é a própria organização. O Guia do MTE coloca isso como primeiro passo: verificar se precisa de ajuda especializada. Segundo as Perguntas e Respostas do MTE (pergunta 1), a organização determina os meios e é a responsável legal pelo PGR e pela Avaliação Ergonômica Preliminar (AEP).</p>
+
+    <p>Vocabulário ajuda a vender: o mercado fala em "laudo", mas os documentos do MTE falam em inventário de riscos, documento de critérios e plano de ação. Mais contexto na <a href="/nr-1-atualizada-2026/">NR-1 atualizada</a> e em <a href="/blog/gestor-de-nr1-o-que-faz/">o que faz o Gestor de NR1</a>.</p>
+
+    <h2 id="quem-pode">Quem pode prestar uma consultoria de NR1?</h2>
+
+    <p>Segundo o MTE, a NR-1 e a NR-17 não estabelecem, de forma geral, um profissional específico ou uma categoria exclusiva (Perguntas e Respostas, pergunta 7). A organização designa responsável ou equipe com conhecimento técnico adequado, e o trabalho pode envolver equipe multiprofissional.</p>
+
+    <EditorialFigure file="consultoria-nr1-2-reuniao-equipe-multiprofissional.webp" alt="Profissionais de áreas diferentes em volta de uma mesa redonda, com prancheta, notebook e folhas impressas, planejando juntos uma consultoria de NR1." caption="Imagem ilustrativa" formato="1x1" />
+
+    <p>Isso abre espaço para perfis que se completam: RH, segurança e saúde no trabalho, psicologia e gestão de pessoas.</p>
+
+    <p>O Conselho Federal de Psicologia (CFP) traz regras que vale conhecer. A Resolução CFP 14/2023 regulamenta a atuação do psicólogo na avaliação de riscos psicossociais, feita individualmente ou em equipe multiprofissional ou intersetorial. Na versão comentada da resolução, o CFP afirma que essa avaliação não se reduz à avaliação psicológica individual e que a avaliação psicológica, quando necessária, é privativa do psicólogo (Lei 4.119/1962). Segundo o CFP, o uso profissional de testes psicológicos também é privativo da profissão (Resolução CFP 31/2022).</p>
+
+    <p>Na prática, cada profissional define o escopo conforme a sua formação e chama o colega certo quando o projeto pede. O Confea tem discutido o tema, com uma proposta de normativo apresentada pelo Crea-RJ para as atividades técnicas de segurança do trabalho. Se você vem de outra área, veja <a href="/blog/como-atuar-com-nr1-sem-diploma/">como atuar com NR-1 sem diploma específico</a>.</p>
+
+    <h2 id="formalizar">Como formalizar a atividade antes do primeiro contrato?</h2>
+
+    <p>Formalizar permite emitir nota fiscal e assinar contrato como empresa. O enquadramento, seja MEI, ME ou outro, depende da atividade e do faturamento previstos: confirme com o seu contador qual formato combina com o seu momento. Este guia não faz recomendação fiscal ou contábil.</p>
+
+    <h2 id="escopo">Qual é o escopo de uma consultoria de NR1 e o que a empresa recebe?</h2>
+
+    <p>O escopo segue o ciclo do capítulo 1.5 da NR-1: preparar, diagnosticar, avaliar, registrar, planejar e acompanhar. A tabela mostra o que o consultor faz em cada fase, o que a empresa recebe e quem formaliza a entrega.</p>
+
+    <div class="table-wrap">
+    <table>
+    <thead>
+    <tr><th>Fase</th><th>O que o consultor faz</th><th>O que a empresa recebe</th><th>Quem formaliza</th><th>Base</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>1. Preparo</td><td>Reunião de demanda; apoio para designar responsável; unidades de avaliação; comunicado aos trabalhadores</td><td>Escopo e cronograma</td><td>Empresa (designa)</td><td>Guia do MTE; perguntas 1, 7 e 11</td></tr>
+    <tr><td>2. Diagnóstico (AEP)</td><td>Observa o trabalho real, dialoga e usa questionário ou oficina quando couber, com anonimato</td><td>Perigos com fonte e grupo exposto</td><td>Empresa (adota)</td><td>NR-1, 1.5.4.3.1; perguntas 8 e 10</td></tr>
+    <tr><td>3. Avaliação</td><td>Combina severidade e probabilidade; redige os critérios</td><td>Níveis de risco e documento de critérios</td><td>Empresa (adota)</td><td>NR-1, 1.5.4.4.2 e 1.5.4.4.2.2</td></tr>
+    <tr><td>4. Inventário</td><td>Consolida identificação e avaliação</td><td>Inventário de riscos</td><td>Empresa (data e assina)</td><td>NR-1, 1.5.7.2 e 1.5.7.3</td></tr>
+    <tr><td>5. Plano de ação</td><td>Propõe medidas, prioridade, cronograma e responsáveis</td><td>Plano de ação</td><td>Empresa (adota e executa)</td><td>NR-1, 1.5.5.2</td></tr>
+    <tr><td>6. Devolutiva e liderança (opcional)</td><td>Apresenta o resultado à direção; capacita lideranças; palestra</td><td>Apresentação e material</td><td>Conforme o contrato</td><td>Escopo contratado</td></tr>
+    <tr><td>7. Acompanhamento (recorrente)</td><td>Verifica a execução, ouve os trabalhadores e revisa</td><td>Registros de acompanhamento e revisão</td><td>Empresa (registra)</td><td>NR-1, 1.5.5.3 e 1.5.4.4.6</td></tr>
+    </tbody>
+    </table>
+    </div>
+
+    <p>Os documentos do PGR são elaborados sob a responsabilidade da organização, datados e assinados (item 1.5.7.2): o consultor entrega o trabalho técnico e a empresa o adota. As fases 6 e 7 abrem espaço para um contrato recorrente.</p>
+
+    <p>O passo a passo está no guia de <a href="/mapeamento-de-riscos-psicossociais/">mapeamento de riscos psicossociais</a>, e a <a href="/riscos-psicossociais-exemplos/">lista de fatores de risco psicossociais</a> serve de roteiro para a observação.</p>
+
+    <h2 id="proposta">Como montar a proposta de uma consultoria de NR1?</h2>
+
+    <p>A proposta nasce do escopo: primeiro você entende a demanda e define o que será avaliado; depois descreve entregas, prazos e condições. Nove seções reúnem o que o decisor precisa para dizer sim.</p>
+
+    <div class="table-wrap">
+    <table>
+    <thead>
+    <tr><th>Seção da proposta</th><th>O que entra</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>1. Partes e validade</td><td>Identificação da empresa e de quem presta o serviço; validade da proposta</td></tr>
+    <tr><td>2. Contexto e objetivo</td><td>A demanda e a base normativa (NR-1, capítulo 1.5)</td></tr>
+    <tr><td>3. Escopo</td><td>Estabelecimentos, setores e funções incluídos; o que fica fora</td></tr>
+    <tr><td>4. Método</td><td>AEP e técnicas (observação, entrevistas, oficinas, questionário quando couber); anonimato</td></tr>
+    <tr><td>5. Entregáveis e formato</td><td>Inventário, documento de critérios, plano de ação e devolutiva</td></tr>
+    <tr><td>6. Cronograma e dependências</td><td>Marcos por semana e o que a empresa fornece (acesso, responsável interno, comunicado)</td></tr>
+    <tr><td>7. Responsabilidades</td><td>Do prestador e da contratante; a responsabilidade legal pelo PGR continua da organização</td></tr>
+    <tr><td>8. Dados e confidencialidade</td><td>LGPD, anonimato e relatório agregado</td></tr>
+    <tr><td>9. Investimento e condições</td><td>Forma de cobrança, reajuste, escopo adicional e acompanhamento posterior</td></tr>
+    </tbody>
+    </table>
+    </div>
+
+    <p>Para montar a sua, siga oito passos:</p>
+
+    <ol>
+      <li>Entenda a demanda numa reunião com quem decide.</li>
+      <li>Defina as unidades de avaliação: setores, funções ou grupos de exposição.</li>
+      <li>Feche o escopo, com o que entra e o que fica fora.</li>
+      <li>Liste os entregáveis e as premissas, como acesso às equipes e um responsável interno.</li>
+      <li>Monte o cronograma com as dependências da empresa.</li>
+      <li>Calcule o preço pelo método da próxima seção.</li>
+      <li>Inclua as condições: validade, escopo adicional e a responsabilidade da empresa pelo PGR.</li>
+      <li>Apresente ao decisor e ajuste o que for preciso.</li>
+    </ol>
+
+    <p>Segundo a página oficial da Formação Gestor de NR1, lida em 17/11/2026, o módulo 3 ("Comunicação assertiva") capacita o aluno a "vender palestras, diagnósticos e consultorias com ética, segurança técnica e valor percebido; estruturar modelos de precificação e contratos sustentáveis".</p>
+
+    <CTA text="Ver como a Formação Gestor de NR1 ensina a vender consultorias, precificar e estruturar contratos →" pos="proposta" />
+
+    <h2 id="precificar">Como precificar uma consultoria de NR1?</h2>
+
+    <p>Não existe tabela oficial: os documentos do MTE não definem valores. O preço sai de um método: estimar as horas de cada fase do escopo, somar os custos do negócio, aplicar a margem desejada e, por fim, conferir com o mercado.</p>
+
+    <p>O Sebrae organiza a base em "Como definir preço de venda?" (2018): levantar gastos fixos e variáveis, calcular a margem de contribuição, chegar ao preço pela margem desejada ou pelo markup e comparar com os concorrentes, lembrando que qualidade e percepção do cliente explicam diferenças.</p>
+
+    <p>Na consultoria, a conta cabe em três passos:</p>
+
+    <ol>
+      <li><strong>Horas:</strong> estime as horas de cada fase do escopo, incluindo reuniões e ajustes, que costumam somar mais do que parece.</li>
+      <li><strong>Valor-hora:</strong> divida os custos do negócio (gastos fixos, impostos, ferramentas) pelas horas que você consegue cobrar no mês e acrescente a margem.</li>
+      <li><strong>Preço do projeto:</strong> multiplique as horas pelo valor-hora e some os custos diretos, como licença e viagem.</li>
+    </ol>
+
+    <div class="table-wrap">
+    <table>
+    <thead>
+    <tr><th>Fator</th><th>Por que pesa</th><th>Como entra na conta</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>Número de trabalhadores e de estabelecimentos</td><td>Mais pessoas e locais pedem mais coleta e análise</td><td>Horas de campo e de análise</td></tr>
+    <tr><td>Unidades de avaliação (setores, funções, grupos de exposição)</td><td>Cada uma pede observação e registro</td><td>Horas por unidade</td></tr>
+    <tr><td>Método (observação, oficinas, questionário)</td><td>Define o esforço e a ferramenta</td><td>Horas e custo de licença</td></tr>
+    <tr><td>Profundidade dos entregáveis</td><td>Inventário, critérios, plano e devolutiva têm esforços diferentes</td><td>Horas por entregável</td></tr>
+    <tr><td>Capacitação de liderança e palestra (opcionais)</td><td>São serviços adicionais do escopo</td><td>Horas e preparo</td></tr>
+    <tr><td>Deslocamento e presença no local</td><td>Custo direto</td><td>Custo variável</td></tr>
+    <tr><td>Acompanhamento e recorrência</td><td>Revisão a cada dois anos ou antes, mais a verificação das ações</td><td>Contrato recorrente ou por demanda</td></tr>
+    <tr><td>Prazo e urgência</td><td>Pede equipe e prioridade</td><td>Ajuste de cronograma e margem</td></tr>
+    <tr><td>Custo do próprio negócio</td><td>O preço precisa sustentar o negócio</td><td>Gastos fixos, impostos, margem e markup</td></tr>
+    </tbody>
+    </table>
+    </div>
+
+    <EditorialFigure file="consultoria-nr1-3-fatores-de-preco.webp" alt="Ilustração de uma prancheta com quatro controles deslizantes, ao lado de símbolos de prédio, equipe, relógio e calendário, que representam os fatores que pesam no preço de uma consultoria de NR1" caption="Porte, unidades de avaliação, horas e recorrência: os fatores que entram no preço." formato="1x1" />
+
+    <p>A forma de cobrança também entra na proposta: projeto fechado, valor por unidade de avaliação ou contrato recorrente. Venda o projeto completo, não "o laudo". Para a visão de carreira, com CLT e PJ, veja <a href="/blog/quanto-ganha-consultor-nr1/">quanto ganha um consultor de NR1</a>.</p>
+
+    <BannerImersao />
+    <CardLivro />
+
+    <h2 id="valor">Como mostrar o valor do serviço a quem decide na empresa?</h2>
+
+    <p>Fale a língua do negócio: adoecimento, afastamentos, rotatividade e processos pesam no resultado. A multa entra no fim da conversa. O seu papel é mostrar onde está o risco e qual plano vai tratá-lo.</p>
+
+    <p>Segundo o Ministério da Previdência Social (notícia de 28/01/2026), foram concedidos 546.254 benefícios por incapacidade temporária por transtornos mentais e comportamentais em 2025, crescimento de mais de 15% sobre os 472.328 de 2024; transtornos ansiosos e episódios depressivos lideram nos dois anos. O Guia do MTE registra que, em 2022, esses transtornos e as reações ao estresse grave somaram 8,35% dos adoecimentos ocupacionais no Brasil, em 2º lugar, e cita a estimativa da OIT e da OMS de 12 bilhões de dias de trabalho perdidos por ano por depressão e ansiedade.</p>
+
+    <p>Segundo o INSS, quando o transtorno mental tem relação com o trabalho e o afastamento gera benefício acidentário, o empregado pode ter estabilidade de 12 meses após o retorno. Esse benefício acidentário também entra no cálculo do FAP: veja <a href="/fap-2027/">FAP 2027: como consultar e contestar</a>.</p>
+
+    <p>A obrigação está em vigor desde 26/05/2026. O STF suspendeu temporariamente as multas e outras sanções dos itens psicossociais, suspensão prorrogada por mais 90 dias em setembro de 2026 (ADPF 1316); veja a <a href="/multa-nr1-2026/">multa da NR-1</a>. Apresente o plano com clareza: o compromisso da consultoria é com o método.</p>
+
+    <h2 id="contrato">Como fechar o contrato e dividir as responsabilidades?</h2>
+
+    <p>O contrato deixa claro quem faz o quê. O ponto central, segundo o MTE (pergunta 7): a responsabilidade legal pela elaboração, implementação e manutenção do PGR é da organização, que define formalmente seus responsáveis.</p>
+
+    <p>Itens comuns:</p>
+
+    <ul>
+      <li>partes, objeto e escopo;</li>
+      <li>entregáveis e prazos;</li>
+      <li>obrigações da contratante: designar responsável interno, dar acesso às equipes, comunicar os trabalhadores e fornecer documentos;</li>
+      <li>obrigações do prestador;</li>
+      <li>responsabilidade da organização pelo PGR;</li>
+      <li>propriedade e uso dos documentos;</li>
+      <li>confidencialidade e tratamento de dados (LGPD);</li>
+      <li>pagamento, reajuste e escopo adicional;</li>
+      <li>revisão e acompanhamento: a NR-1 pede revisar a avaliação, em regra, a cada dois anos ou antes, em situações como mudanças no trabalho e medidas insuficientes (item 1.5.4.4.6);</li>
+      <li>rescisão e foro.</li>
+    </ul>
+
+    <p>É um roteiro geral, sem aconselhamento jurídico: peça a um advogado que revise o seu contrato.</p>
+
+    <h2 id="dados">Como cuidar dos dados dos trabalhadores numa consultoria de NR1?</h2>
+
+    <p>Com o cuidado de dado sensível. Pela LGPD (Lei 13.709/2018, art. 5º, II), dado referente à saúde vinculado a uma pessoa é dado pessoal sensível, e o art. 11 traz hipóteses próprias para tratá-lo, como reforçam as perguntas frequentes da ANPD.</p>
+
+    <p>Boas práticas para o projeto:</p>
+
+    <ul>
+      <li><strong>Finalidade e necessidade:</strong> colete só o que serve ao diagnóstico e entregue relatório agregado (art. 6º).</li>
+      <li><strong>Anonimato:</strong> o Guia do MTE pede garantir o anonimato de quem responde a questionário.</li>
+      <li><strong>Grupos pequenos:</strong> o MTE pede cuidado com a confidencialidade e o anonimato (pergunta 11).</li>
+      <li><strong>Resultado coletivo:</strong> o processo olha a organização do trabalho e não é rastreamento clínico individual (pergunta 6).</li>
+      <li><strong>Papéis definidos:</strong> pela LGPD (Lei 13.709/2018, art. 5º, VII), o operador realiza o tratamento de dados pessoais em nome do controlador; o papel da consultoria se define caso a caso, no contrato.</li>
+    </ul>
+
+    <p>A base legal do tratamento é decisão da empresa com o seu jurídico; este guia não faz aconselhamento jurídico.</p>
+
+    <h2 id="primeiro-cliente">Como conseguir o primeiro cliente de consultoria de NR1?</h2>
+
+    <p>Comece por onde já existe confiança, com um escopo que você domina. Receio do primeiro projeto é comum, e método claro resolve boa parte disso.</p>
+
+    <p>Caminhos práticos:</p>
+
+    <ol>
+      <li>A empresa em que você já trabalha ou que já atende, levando a NR-1 à diretoria.</li>
+      <li>A sua rede: contatos de RH, escritórios de contabilidade e serviços de medicina ocupacional que atendem empresas.</li>
+      <li>Um piloto em um setor, com escopo, prazo e entregas fechados.</li>
+      <li>Uma apresentação curta, em linguagem de negócio, conduzida por quem vai executar o trabalho.</li>
+    </ol>
+
+    <EditorialFigure file="consultoria-nr1-4-reuniao-primeiro-cliente.webp" alt="Mesa de reunião com uma pasta azul fechada, caderno aberto, caneta e dois copos d'água; duas pessoas sentadas, uma com a mão sobre a pasta." caption="Imagem ilustrativa" formato="16x9" />
+
+    <p>Para se preparar com a Izabella Camargo, veja a nossa <a href="/formacao-gestor-de-nr1-izabella-camargo-review/">análise da Formação Gestor de NR1</a>. A <a href="/imersao-nr1-na-pratica/">Imersão NR1 na Prática</a>, também com ela, tem no programa oficial um bloco sobre cliente ideal, abordagem e proposta.</p>
+
+    <CTA text="Conhecer a Formação Gestor de NR1 (oferta oficial) →" pos="cliente" />
+
+    <FAQ items={faqItems} heading="Perguntas frequentes sobre consultoria de NR1" />
+
+    <div class="hub-card primary fecho" id="proximo-passo">
+    <h2>Do escopo ao contrato: o próximo passo</h2>
+    <p>Quem domina escopo, proposta e preço apresenta a consultoria com segurança à diretoria.</p>
+    <CTA text="Ver a Formação Gestor de NR1 →" pos="final" />
+    </div>
+
+    <p class="nota-fonte"><small>Conteúdo informativo, com base em documentos oficiais lidos em 17/11/2026. Não substitui consultoria jurídica, contábil ou de segurança do trabalho.</small></p>
+
+    <p><strong>Apoio emocional:</strong> se você ou alguém da sua equipe precisar conversar, o CVV atende pelo telefone 188, 24 horas por dia e sem custo de ligação.</p>
+
+    <RelatedLinks
+          links={[
+            { href: '/mapeamento-de-riscos-psicossociais/', label: 'Mapeamento de riscos psicossociais: passo a passo (NR-1)' },
+            { href: '/riscos-psicossociais-exemplos/', label: '15 exemplos de riscos psicossociais para o PGR' },
+            { href: '/gro-e-pgr-o-que-e/', label: 'GRO e PGR: o que são e qual a diferença' },
+            { href: '/nr-1-atualizada-2026/', label: 'Guia da NR-1 atualizada em 2026' },
+            { href: '/multa-nr1-2026/', label: 'Multa da NR-1 em 2026: valores e como funciona' },
+            { href: '/blog/gestor-de-nr1-o-que-faz/', label: 'Gestor de NR1: o que faz e como se tornar um' },
+            { href: '/blog/como-atuar-com-nr1-sem-diploma/', label: 'Como atuar com NR-1 sem diploma específico' },
+            { href: '/blog/quanto-ganha-consultor-nr1/', label: 'Quanto ganha um consultor de NR-1 e riscos psicossociais?' },
+            { href: '/formacao-gestor-de-nr1-izabella-camargo-review/', label: 'Review completo da Formação Gestor de NR1' },
+            { href: '/imersao-nr1-na-pratica/', label: 'Imersão NR1 na Prática, 5ª edição: datas, valor e inscrição' },
+          ]}
+        />
+
+    <h2 id="fontes">Fontes</h2>
+    <ul>
+      <li>Ministério do Trabalho e Emprego. <em>NR-1, capítulo 1.5, texto consolidado</em> (itens 1.5.3, 1.5.4.3.1, 1.5.4.4.2, 1.5.4.4.2.2, 1.5.4.4.6, 1.5.5.2, 1.5.5.3, 1.5.7.2 e 1.5.7.3). gov.br, lido em 17/11/2026.</li>
+      <li>Ministério do Trabalho e Emprego. <em>Página oficial da NR-1</em>, atualizada em 06/08/2026. gov.br, lida em 17/11/2026.</li>
+      <li>Ministério do Trabalho e Emprego, CGNOR. <em>Guia de informações sobre os fatores de riscos psicossociais relacionados ao trabalho</em>. Brasília, 2025. Lido em 17/11/2026.</li>
+      <li>Ministério do Trabalho e Emprego, CGNOR/DSST/SIT. <em>Perguntas e Respostas sobre o Capítulo 1.5 da NR-1</em>, 1ª rodada, 30/04/2026 (perguntas 1, 6, 7, 8, 10 e 11). Lido em 17/11/2026.</li>
+      <li>Supremo Tribunal Federal. "Relator prorroga suspensão de sanções sobre riscos psicossociais no trabalho", ADPF 1316, setembro de 2026. <a target="_blank" rel="noopener" href="https://noticias.stf.jus.br/?p=166500">noticias.stf.jus.br</a>, lida em 17/11/2026.</li>
+      <li>Conselho Federal de Psicologia. <em>Resolução CFP nº 14, de 28/06/2023</em> e <em>Resolução nº 14/2023 comentada</em> (2025). site.cfp.org.br, lidas em 17/11/2026.</li>
+      <li>Conselho Federal de Psicologia. "Nova resolução do CFP destaca diretrizes para a avaliação psicológica" (Resolução CFP nº 31/2022), notícia de 21/12/2022. site.cfp.org.br, lida em 17/11/2026.</li>
+      <li>Brasil. <em>Lei nº 4.119, de 27/08/1962</em>, art. 13, §1º. planalto.gov.br, lida em 17/11/2026.</li>
+      <li>Confea. Notícias de 01/06/2026 e 11/08/2026 sobre riscos psicossociais e a NR-1. confea.org.br, lidas em 17/11/2026.</li>
+      <li>Sebrae. <em>Como definir preço de venda?</em> Brasília, 2018. bibliotecas.sebrae.com.br, lido em 17/11/2026.</li>
+      <li>Ministério da Previdência Social. "Previdência Social concede 546.254 benefícios por incapacidade temporária por transtornos mentais e comportamentais", notícia de 28/01/2026. gov.br, lida em 17/11/2026.</li>
+      <li>INSS. "Transtornos mentais podem garantir estabilidade de 12 meses no emprego após alta médica", notícia de 29/01/2024. gov.br, lida em 17/11/2026.</li>
+      <li>Brasil. <em>Lei nº 13.709/2018 (LGPD)</em>, arts. 5º (II e VII), 6º e 11. planalto.gov.br, lida em 17/11/2026.</li>
+      <li>ANPD. <em>Perguntas frequentes</em> (modificada em 09/09/2026). gov.br, lida em 17/11/2026.</li>
+      <li>Izabella Camargo. <em>Formação Gestor de NR1</em>, página oficial (módulo 3). lp.camargoizabella.com.br, lida em 17/11/2026.</li>
+      <li>Imersão NR1 na Prática, 5ª edição: programa oficial. https://iza-camargo.aiedadigital.com/, lido em 17/11/2026.</li>
+      <li>CVV, Centro de Valorização da Vida: telefone 188, 24 horas, sem custo de ligação. <a target="_blank" rel="noopener nofollow" href="https://cvv.org.br">cvv.org.br</a>, lido em 17/11/2026.</li>
+    </ul>
+  </article>
+</Base>
+
+<style>
+  #resposta-rapida p {
+    margin: 0;
+  }
+  /* Listas só com ✔ (destaques): o próprio ✔ faz o papel do marcador. */
+  .checks {
+    list-style: none;
+    padding-left: 0;
+  }
+  .checks li {
+    padding-left: 1.5em;
+    text-indent: -1.5em;
+  }
+  /* Faixa final no padrão do hub-card escuro da home (mesmo estilo da página da Imersão). */
+  .fecho {
+    margin: 3rem 0 1.6rem;
+    text-align: center;
+  }
+  .fecho h2 {
+    margin-top: 0.2em;
+  }
+  .fecho p {
+    margin-inline: auto;
+  }
+  .fecho :global(.cta-wrap) {
+    margin: 1.4rem 0 0.2rem;
+  }
+  .nota-fonte,
+  .nota-fonte small {
+    color: var(--cinza-700);
+  }
+</style>

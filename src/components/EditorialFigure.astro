@@ -1,0 +1,75 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+import sharp from 'sharp';
+
+/**
+ * Figura editorial de página nova (17/11/2026). Só renderiza se o arquivo existir em public/images/editorial/ NA HORA DO BUILD.
+ * Sem o arquivo, não sai nada no HTML (nem <figure> vazia, nem comentário) e o build não falha nem avisa: a página nasce sem a
+ * figura e passa a ter a figura sozinha no build seguinte ao dia em que o arquivo for salvo no lugar (imagem nova = nome de arquivo novo,
+ * porque o .htaccess dá cache imutável de 1 ano). width/height saem do arquivo real (sem layout shift).
+ *
+ *   file     nome do .webp em public/images/editorial/
+ *   alt      texto alternativo
+ *   caption  legenda visível (opcional; nas fotos realistas geradas por IA: "Imagem ilustrativa")
+ *   formato  '16x9' = largura da coluna do texto (classe global .editorial-img) | '1x1' = centralizada, no máximo 440 px
+ */
+export interface Props {
+  file: string;
+  alt: string;
+  caption?: string;
+  formato: '16x9' | '1x1';
+}
+const { file, alt, caption, formato } = Astro.props;
+
+// Só nome simples de .webp (sem barra nem ..): o arquivo é sempre procurado só em public/images/editorial/.
+const nomeValido = /^[a-z0-9][a-z0-9._-]*\.webp$/i.test(file);
+const caminho = path.join(process.cwd(), 'public', 'images', 'editorial', file);
+const existe = nomeValido && fs.existsSync(caminho);
+
+let largura = 0;
+let altura = 0;
+if (existe) {
+  const meta = await sharp(caminho).metadata();
+  largura = meta.width ?? 0;
+  altura = meta.height ?? 0;
+}
+const pronto = existe && largura > 0 && altura > 0;
+---
+{pronto && (
+  <figure class:list={['figura', `figura--${formato}`]}>
+    <img
+      class="editorial-img"
+      src={`/images/editorial/${file}`}
+      alt={alt}
+      width={largura}
+      height={altura}
+      loading="lazy"
+      decoding="async"
+    />
+    {caption && <figcaption>{caption}</figcaption>}
+  </figure>
+)}
+
+<style>
+  /* Estilo só desta figura (não mexe no CSS global). A .editorial-img global traz borda, sombra e margem de 1,6rem/2rem:
+     a margem passa para a <figure>, para a legenda ficar colada na imagem. */
+  .figura {
+    margin: 1.6rem 0 2rem;
+  }
+  .figura img {
+    margin: 0;
+  }
+  /* 1:1 (decisão do Michel): centralizada e no máximo 440 px de largura. */
+  .figura--1x1 {
+    max-width: 440px;
+    margin-inline: auto;
+  }
+  .figura figcaption {
+    margin-top: 0.6rem;
+    font-size: 0.86rem;
+    line-height: 1.4;
+    text-align: center;
+    color: var(--cinza-700);
+  }
+</style>
