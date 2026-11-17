@@ -71,6 +71,9 @@ function nr1_page_label($path) {
     '/carreira-gestor-de-nr1-com-proposito/' => 'Carreira com propósito',
     '/por-que-se-tornar-gestor-de-nr1-agora/' => 'Por que começar agora',
     '/imersao-nr1-na-pratica/' => 'Imersão (oferta)',
+    '/mapeamento-de-riscos-psicossociais/' => 'Mapeamento de riscos',
+    '/consultoria-de-nr1/' => 'Consultoria de NR1',
+    '/fap-2027/' => 'FAP 2027',
     '/sobre/' => 'Sobre', '/contato/' => 'Contato', '/blog/' => 'Blog',
   ];
   $clean = strtok($path, '?');
