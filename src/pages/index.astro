@@ -18,7 +18,7 @@ const schemas = [organizationSchema(), websiteSchema()];
 <Base title={title} description={description} schemas={schemas}>
   <div class="page-hero">
     <div class="container container-wide">
-      <p class="kicker">Portal independente sobre NR-1</p>
+      <p class="kicker">Portal NR1 na Prática</p>
       <h1>Tudo sobre a NR-1, os riscos psicossociais e a nova carreira de Gestor de NR1</h1>
       <p>
         A fiscalização punitiva da NR-1 começou em 26/05/2026. Aqui você entende
@@ -34,9 +34,23 @@ const schemas = [organizationSchema(), websiteSchema()];
         <p class="kicker" style="color:var(--ouro-claro);">Comece por aqui · Guia</p>
         <h2>NR-1 Atualizada em 2026</h2>
         <p>
-          O que mudou com a Portaria 1.419/2024, a linha do tempo até a
-          fiscalização punitiva, multas, o que a empresa precisa fazer e a
-          oportunidade de carreira que nasceu disso tudo.
+          O guia completo para entender a NR-1 em 2026 sem rodeios: o que mudou
+          com a Portaria 1.419/2024, a linha do tempo até a obrigação em vigor
+          desde 26/05/2026 e o que isso significa para a sua empresa ou para a
+          sua carreira.
+        </p>
+        <p class="lista-titulo">No guia você encontra:</p>
+        <ul class="checks">
+          <li>✔ Os riscos psicossociais no PGR e quem precisa cumprir a norma</li>
+          <li>✔ A linha do tempo, com a suspensão das multas pelo STF e o que continua obrigatório</li>
+          <li>✔ Os números do problema: o que os dados da Previdência mostram sobre afastamentos por transtornos mentais</li>
+          <li>✔ O passo a passo para a empresa se adequar: mapear, registrar, agir e monitorar</li>
+          <li>✔ Como funcionam as multas da NR-28 e como evitar a autuação</li>
+          <li>✔ A carreira de Gestor de NR1 e a demanda por profissionais preparados</li>
+        </ul>
+        <p>
+          Linguagem direta e fontes oficiais, para você terminar a leitura
+          sabendo qual é o seu próximo passo.
         </p>
         <p>
           <a class="btn-cta" href="/nr-1-atualizada-2026/">
@@ -47,22 +61,23 @@ const schemas = [organizationSchema(), websiteSchema()];
       <div class="hub-card">
         <img
           class="hub-card-img"
-          src="/images/modulos/formacao-gestor-de-nr1-capa.webp"
-          alt="Capa da Formação Gestor de NR1, curso da Izabella Camargo"
-          width="640"
-          height="640"
+          src="/images/imersao-nr1-na-pratica-5a-edicao-capa.webp"
+          alt="Capa da Imersão NR1 na Prática, 5ª edição, gravação, com a Izabella Camargo ao microfone"
+          width="552"
+          height="552"
           loading="lazy"
         />
-        <p class="kicker" style="color:var(--ouro);">Análise · Review</p>
-        <h2>Formação Gestor de NR1 vale a pena?</h2>
+        <p class="kicker" style="color:var(--ouro);">Evento ao vivo · 5ª edição</p>
+        <h2>Imersão NR1 na Prática</h2>
         <p>
-          Análise independente e sincera da Formação Gestor de NR1 da Izabella
-          Camargo: os 12 módulos, o corpo docente, o certificado MEC, o preço e
-          para quem realmente compensa em 2026.
+          Dois dias ao vivo no YouTube com a Izabella Camargo, em 05 e 06/12/2026,
+          das 9h às 17h, para começar 2027 como Gestor de NR1: como consultor de
+          empresas ou como referência em NR-1 na empresa onde você trabalha. Com
+          certificado digital de participação e a opção de levar a gravação.
         </p>
         <p>
-          <a class="btn-secondary" href="/formacao-gestor-de-nr1-izabella-camargo-review/">
-            Ler o review completo →
+          <a class="btn-secondary" href="/imersao-nr1-na-pratica/">
+            Ver datas, programa e valor →
           </a>
         </p>
       </div>
@@ -210,3 +225,21 @@ const schemas = [organizationSchema(), websiteSchema()];
     )}
   </div>
 </Base>
+
+<style>
+  /* Listas só com ✔ (destaques): o próprio ✔ faz o papel do marcador (mesmo padrão de consultoria-de-nr1). */
+  .checks {
+    list-style: none;
+    padding-left: 0;
+  }
+  .checks li {
+    padding-left: 1.5em;
+    text-indent: -1.5em;
+  }
+  /* Rótulo da lista dentro do card escuro (o strong global fica escuro demais sobre o azul). */
+  .lista-titulo {
+    color: #fff !important;
+    font-weight: 700;
+    margin-bottom: 0.6em;
+  }
+</style>
