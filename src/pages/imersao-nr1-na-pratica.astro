@@ -17,19 +17,21 @@ import {
  * Texto: rascunho aprovado (rascunhos/imersao-nr1-na-pratica.md), convertido por script em 17/11/2026, com 3 ajustes do Michel
  * (sem "horário de Brasília"; sem a data exata do fim da suspensão das multas; "Atualizado em" próprio da página).
  * Fatos: página oficial da imersão lida em 17/11/2026 (rascunhos/fonte-oficial-imersao-5a-edicao-2026-11-17.txt).
- * Valor e lote: "1º lote a R$ 39" é o do dia 17/11/2026 (último dia do 1º lote). Quando o lote mudar: trocar o selo, a resposta rápida,
+ * Valor e lote: "1º lote a R$ 39" (lido em 17/11/2026). Desde 19/11/2026 a página diz só "últimas vagas do 1º lote", por ordem do Michel, SEM dizer
+ * quando o lote vira (nada de "último dia", "hoje" nem data de virada). Quando o lote mudar: trocar o selo, a resposta rápida,
  * a tabela de dados, a seção "Quanto custa", o FAQ, a faixa final, a nota do rodapé do texto e o `price` do Event, e subir DATA_PAGINA.
  * Os 7 botões levam a /go/imersao-nr1-na-pratica/?s=pgimersao<posicao> (o `s` é o `src` da Hotmart, sem hífen; o destino está em scripts/go-map.json).
  * Esta página NÃO leva o BannerImersao nem o CardLivro (ela já tem os botões da Imersão).
  */
 const title = "Imersão NR1 na Prática 5ª Edição: Datas, Valor e Inscrição";
 const description =
-  "Imersão NR1 na Prática 5ª edição com Izabella Camargo: 05 e 06/12, ao vivo no YouTube, certificado e 1º lote a R$ 39 em 17/11/2026. Veja o programa.";
+  "Imersão NR1 na Prática 5ª edição com Izabella Camargo: 05 e 06/12, ao vivo no YouTube, certificado e últimas vagas do 1º lote a R$ 39. Veja o programa.";
 const path = '/imersao-nr1-na-pratica/';
 
 // Data própria da página (não usa SITE.updatedLabel: o "Atualizado em" global é de Julho/2026 e vale para outras páginas).
-const DATA_PAGINA = '17/11/2026';
-const DATA_ISO = '2026-11-17';
+const DATA_PAGINA = '19/11/2026';
+const DATA_ISO = '2026-11-19'; // dateModified
+const DATA_PUBLICADA_ISO = '2026-11-17'; // datePublished e início da oferta (a página entrou no ar em 17/11/2026)
 
 // Imagem do topo (arte do Michel, 1400x732) e imagem de compartilhamento (1200x630). Nome novo = cache de 1 ano sem problema.
 const imagemTopo = '/images/imersao-nr1-na-pratica-hero.webp';
@@ -77,7 +79,7 @@ const faqItems: FaqItem[] = [
   },
   {
     q: "Quanto custa a Imersão NR1 na Prática?",
-    a: "<p>Em 17/11/2026, o 1º lote custava <strong>R$ 39</strong>, e era o último dia desse lote. O valor muda por lote: vale sempre o que a página oficial mostra no dia da compra.</p>",
+    a: "<p>O 1º lote custa <strong>R$ 39</strong> e está nas últimas vagas. O valor muda por lote: vale sempre o que a página oficial mostra no dia da compra.</p>",
   },
   {
     q: "A imersão vai ficar gravada?",
@@ -127,13 +129,13 @@ const eventSchema = {
   image: [urlOg],
   organizer: { '@type': 'Person', name: 'Izabella Camargo' },
   performer: { '@type': 'Person', name: 'Izabella Camargo' },
-  // Sem aggregateRating e sem Review (decisão do projeto). Sem priceValidUntil: não há fonte para o fim do lote além de "hoje".
+  // Sem aggregateRating e sem Review (decisão do projeto). Sem priceValidUntil: não há fonte para o fim do lote (e a página não diz quando ele vira).
   offers: {
     '@type': 'Offer',
     price: '39.00',
     priceCurrency: 'BRL',
     availability: 'https://schema.org/InStock',
-    validFrom: DATA_ISO,
+    validFrom: DATA_PUBLICADA_ISO,
     url: urlPagina,
   },
 };
@@ -144,7 +146,7 @@ const schemas = [
     description,
     url: path,
     image: imagemOg,
-    datePublished: DATA_ISO,
+    datePublished: DATA_PUBLICADA_ISO,
     dateModified: DATA_ISO,
     mentions: [ENTITIES.riscosPsicossociais, ENTITIES.gro, ENTITIES.izabella, ENTITIES.gestorNr1],
     keywords: [
@@ -187,10 +189,10 @@ const schemas = [
       <span>Por <a href="/sobre/">{SITE.name}</a> · Conteúdo informativo, pode conter links de afiliado</span>
     </div>
 
-    <p class="selo">1º lote a R$ 39 · hoje, 17/11/2026, é o último dia do 1º lote</p>
+    <p class="selo">Últimas vagas do 1º lote · R$ 39</p>
 
     <div class="fact-box" id="resposta-rapida">
-      <p><strong>Resposta rápida:</strong> a Imersão NR1 na Prática 5ª edição, "A Virada", acontece em <strong>05 e 06 de dezembro de 2026</strong>, das 9h às 17h, <strong>ao vivo no YouTube</strong>, conduzida pela <strong>Izabella Camargo</strong> e professores. O ingresso inclui os 2 dias e certificado digital de participação. Em 17/11/2026, o 1º lote custava <strong>R$ 39</strong>, com direito de arrependimento de 7 dias.</p>
+      <p><strong>Resposta rápida:</strong> a Imersão NR1 na Prática 5ª edição, "A Virada", acontece em <strong>05 e 06 de dezembro de 2026</strong>, das 9h às 17h, <strong>ao vivo no YouTube</strong>, conduzida pela <strong>Izabella Camargo</strong> e professores. O ingresso inclui os 2 dias e certificado digital de participação. O 1º lote custa <strong>R$ 39</strong> e está nas últimas vagas, com direito de arrependimento de 7 dias.</p>
     </div>
 
     <div class="cta-wrap">
@@ -249,7 +251,7 @@ const schemas = [
       </tr>
       <tr>
       <td>Valor do 1º lote</td>
-      <td>R$ 39 (lido em 17/11/2026, último dia do 1º lote; o valor muda por lote e vale o da página oficial no dia da compra)</td>
+      <td>R$ 39, últimas vagas do 1º lote (lido em 17/11/2026; o valor muda por lote e vale o da página oficial no dia da compra)</td>
       </tr>
       <tr>
       <td>Gravação</td>
@@ -359,7 +361,7 @@ const schemas = [
 
     <h2 id="valor">Quanto custa a Imersão NR1 na Prática?</h2>
 
-    <p>Em 17/11/2026, o <strong>1º lote custava R$ 39</strong>, no último dia desse lote. O valor muda por lote: vale o que a página oficial mostra no dia da compra, e quem entra cedo paga menos.</p>
+    <p>O <strong>1º lote custa R$ 39</strong> e está nas últimas vagas. O valor muda por lote: vale o que a página oficial mostra no dia da compra, e quem entra cedo paga menos.</p>
 
     <p>O ingresso inclui:</p>
 
@@ -384,7 +386,7 @@ const schemas = [
       <tr>
       <td>Ingresso, 1º lote</td>
       <td>R$ 39</td>
-      <td>Último dia do 1º lote em 17/11/2026</td>
+      <td>Últimas vagas do 1º lote</td>
       <td>2 dias ao vivo + certificado</td>
       </tr>
       <tr>
@@ -504,7 +506,7 @@ const schemas = [
 
     <div class="hub-card primary fecho" id="fecho">
       <h2>Ano novo, vida nova. Mas desta vez com um plano.</h2>
-      <p>05 e 06/12/2026 · ao vivo no YouTube · certificado · 1º lote a R$ 39 em 17/11/2026.</p>
+      <p>05 e 06/12/2026 · ao vivo no YouTube · certificado · últimas vagas do 1º lote a R$ 39.</p>
       <div class="cta-wrap">
         <a class="btn-cta" href={go('fecho')} target="_blank" rel="sponsored nofollow noopener">Quero minha virada em 2027</a>
       </div>

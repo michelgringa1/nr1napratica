@@ -5,7 +5,7 @@ export const SITE = {
   url: 'https://nr1napratica.online',
   name: 'NR1 na Prática',
   // Descrição curta usada como fallback de meta description e no schema Organization.
-  tagline: 'Portal independente sobre NR-1, riscos psicossociais e a carreira de Gestor de NR1',
+  tagline: 'Portal NR1 na Prática: NR-1, riscos psicossociais e a carreira de Gestor de NR1',
   lang: 'pt-BR',
   locale: 'pt_BR',
   // Rastreio de cliques (D34): todo botão de afiliado passa por /go/<produto>/?s=<pagina>_<posicao>
