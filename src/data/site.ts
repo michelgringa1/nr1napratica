@@ -80,6 +80,9 @@ const GO_PAGINAS: Record<string, string> = {
   '/mapeamento-de-riscos-psicossociais/': 'mapeamento',
   '/consultoria-de-nr1/': 'consultoria',
   '/fap-2027/': 'fap',
+  '/aep-avaliacao-ergonomica-preliminar/': 'aep',
+  '/o-que-e-nr-1/': 'onr1',
+  '/nr-1-saude-mental-no-trabalho/': 'saudemental',
 };
 
 // Livro "Dá um Tempo!" (Izabella Camargo), produto de apoio na Shopee (link autorizado pelo Michel em 10/11/2026). O card entra pelo

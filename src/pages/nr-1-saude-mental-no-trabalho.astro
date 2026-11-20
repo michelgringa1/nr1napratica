@@ -1,0 +1,403 @@
+---
+import Base from '../layouts/Base.astro';
+import CTA from '../components/CTA.astro';
+import TOC from '../components/TOC.astro';
+import FAQ from '../components/FAQ.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+import BannerImersao from '../components/BannerImersao.astro';
+import CardLivro from '../components/CardLivro.astro';
+import EditorialFigure from '../components/EditorialFigure.astro';
+import {
+  articleSchema,
+  faqSchema,
+  breadcrumbSchema,
+  ENTITIES,
+  type FaqItem,
+} from '../data/schema';
+
+/**
+ * NR-1 e saude mental no trabalho (o que a norma exige, numeros oficiais da Previdencia e como comecar); pagina 3 de 3 do pedido de 19/11/2026.
+ * Texto: rascunho aprovado (rascunhos/nr-1-saude-mental-no-trabalho.md), convertido por script em 20/11/2026 (o texto nao foi reescrito a mao).
+ * Fatos so de fonte oficial lida em 19/11/2026 (Previdencia, MTE: NR-1, Perguntas e Respostas, Guia, CANPAT 2026; Agencia Brasil; STF; AGU; LP da Formacao; pagina oficial da Imersao; CVV), com as fontes no fim da pagina.
+ * Os 2 botoes da Formacao passam pelo CTA.astro (/go/formacao-gestor-nr1/?s=saudemental_<posicao>; codigo `saudemental` em GO_PAGINAS).
+ * As 5 figuras (EditorialFigure) so aparecem no build se o arquivo existir em public/images/editorial/: sem o arquivo, a pagina sai sem a figura e o texto dos blocos 1:1 segue como paragrafos comuns.
+ * Decisao do Michel de 20/11/2026 ("Aprovar"): M3 mantida (frase de apoio com o CVV, telefone 188, 24 horas, sem custo de ligacao, cvv.org.br; marcador removido) e M5 = opcao A (criar a pagina).
+ * Tema de saude mental e juridico (AUTORIZACOES 1.1): so fato de fonte oficial; a frase sobre "diagnosticar" usa a pergunta 6 do MTE e o Guia de 2025 (nao a Agencia Brasil).
+ * Banner da Imersao e card do livro no fim da secao dos numeros oficiais (meio da pagina).
+ * Imagem de compartilhamento: og-nr-1-saude-mental-no-trabalho.jpg (1200x630, corte centralizado da imagem 1; ogImage do Base e image do Article, igual as paginas de 17/11/2026). Nao tirar se a pagina for regerada por script.
+ * Sem HowTo, sem Review, sem AggregateRating e sem schema medico (a pagina nao e conteudo de saude clinica).
+ */
+const title = "NR-1 e Saúde Mental no Trabalho: o que a Norma Exige";
+const description =
+  "NR-1 e saúde mental no trabalho: o que a norma diz sobre riscos psicossociais, quando passou a valer, números oficiais da Previdência e como começar.";
+const path = '/nr-1-saude-mental-no-trabalho/';
+// Imagem de compartilhamento (og:image, twitter:image e image do Article): corte da imagem 1, arquivo em public/images/ (imagem trocada = nome novo, cache de 1 ano).
+const imagemOg = '/images/og-nr-1-saude-mental-no-trabalho.jpg';
+
+// Data propria da pagina (nao usa SITE.updatedLabel: o "Atualizado em" global fica em Julho/2026 de proposito).
+const DATA_PAGINA = '20/11/2026';
+const DATA_ISO = '2026-11-20';
+const ROTULO_PAGINA = 'Novembro/2026';
+
+const toc = [
+  {
+    "id": "o-que-diz",
+    "label": "O que a NR-1 diz sobre saúde mental no trabalho?"
+  },
+  {
+    "id": "diagnostico",
+    "label": "A NR-1 pede diagnóstico ou tratamento de cada trabalhador?"
+  },
+  {
+    "id": "fatores",
+    "label": "Quais são os fatores de risco psicossocial ligados à saúde mental?"
+  },
+  {
+    "id": "numeros",
+    "label": "Quais são os números oficiais de afastamento por transtornos mentais?"
+  },
+  {
+    "id": "vigencia",
+    "label": "Desde quando a regra vale e o que está suspenso?"
+  },
+  {
+    "id": "pratica",
+    "label": "O que a empresa pode fazer na prática pela saúde mental no trabalho?"
+  },
+  {
+    "id": "remoto",
+    "label": "E o trabalho remoto, híbrido e teletrabalho?"
+  },
+  {
+    "id": "quem-cuida",
+    "label": "Quem cuida da saúde mental no trabalho dentro da empresa?"
+  },
+  {
+    "id": "faq",
+    "label": "Perguntas frequentes sobre NR-1 e saúde mental"
+  },
+  {
+    "id": "proximo-passo",
+    "label": "Da prevenção à prática: o próximo passo"
+  },
+  {
+    "id": "fontes",
+    "label": "Fontes"
+  }
+];
+
+const faqItems: FaqItem[] = [
+  {
+    "q": "A NR-1 fala de saúde mental?",
+    "a": "<p>Fala dos fatores de risco psicossociais relacionados ao trabalho, que podem afetar a saúde mental. Desde 26/05/2026, o item 1.5.3.1.4 inclui esses fatores no gerenciamento de riscos ocupacionais de toda empresa com empregados CLT.</p>"
+  },
+  {
+    "q": "Quando a NR-1 de saúde mental entrou em vigor?",
+    "a": "<p>Em 26/05/2026, data fixada pela Portaria MTE nº 765/2025 para a nova redação do capítulo 1.5. Segundo o MTE, a inspeção começou com dupla visita e caráter orientativo nos 90 dias seguintes.</p>"
+  },
+  {
+    "q": "A empresa precisa fazer avaliação psicológica dos funcionários?",
+    "a": "<p>Para o gerenciamento de riscos, não. O MTE explica que o processo analisa as condições e a organização do trabalho e não se confunde com a avaliação clínica individual da saúde mental. A avaliação médica periódica não substitui esse processo.</p>"
+  },
+  {
+    "q": "Quais documentos a empresa precisa ter?",
+    "a": "<p>Segundo o MTE, são obrigatórios o inventário de riscos, o plano de ação e o documento dos critérios adotados no GRO. A AEP documentada serve de evidência e, para ME e EPP de graus de risco 1 e 2 dispensadas do PGR, é documento obrigatório.</p>"
+  },
+  {
+    "q": "Quantos afastamentos por transtornos mentais houve em 2025?",
+    "a": "<p>A Previdência Social concedeu 546.254 benefícios por incapacidade temporária por transtornos mentais e comportamentais em 2025, alta de 15,66% sobre os 472.328 de 2024 (notícia de 28/01/2026).</p>"
+  },
+  {
+    "q": "Questionário de saúde mental basta para cumprir a NR-1?",
+    "a": "<p>Não. Segundo o MTE, um questionário padronizado aplicado de forma isolada não comprova a gestão dos riscos psicossociais. Os resultados precisam ser analisados e incorporados à AEP e/ou ao inventário de riscos.</p>"
+  },
+  {
+    "q": "A NR-1 vale para home office?",
+    "a": "<p>Vale. O MTE confirma que a identificação de perigos e a avaliação de riscos, incluindo os psicossociais, alcançam o trabalho remoto, o híbrido e o teletrabalho, com estratégias adequadas a cada contexto.</p>"
+  },
+  {
+    "q": "Quem pode cuidar dos riscos psicossociais na empresa?",
+    "a": "<p>Segundo o MTE, não há, de forma geral, categoria profissional exclusiva: a empresa designa responsável ou equipe com conhecimento técnico adequado, inclusive multiprofissional.</p>"
+  },
+  {
+    "q": "A NR-1 de saúde mental foi suspensa?",
+    "a": "<p>Não. A norma está em vigor; o que o STF suspendeu temporariamente foram as multas e outras sanções ligadas aos itens psicossociais. As diretrizes gerais continuam valendo e devem ser observadas.</p>"
+  }
+];
+
+const schemas = [
+  articleSchema({
+    headline: "NR-1 e saúde mental no trabalho: o que a norma exige, como começar e os números oficiais",
+    description,
+    url: path,
+    image: imagemOg,
+    datePublished: DATA_ISO,
+    dateModified: DATA_ISO,
+    about: ENTITIES.riscosPsicossociais,
+    keywords: [
+      "nr1 saúde mental",
+      "nr 01 saúde mental",
+      "saúde mental no trabalho",
+      "saúde mental nas empresas",
+      "fatores de risco psicossociais",
+      "adoecimento mental no trabalho",
+      "saúde mental no trabalho lei",
+    ],
+  }),
+  faqSchema(faqItems),
+  breadcrumbSchema([['Início', '/'], ["NR-1 e saúde mental no trabalho", path]]),
+];
+---
+<Base title={title} description={description} schemas={schemas} ogType="article" ogImage={imagemOg}>
+  <div class="page-hero">
+    <div class="container">
+      <p class="kicker">Guia · Atualizado em {ROTULO_PAGINA}</p>
+      <h1>NR-1 e saúde mental no trabalho: o que a norma exige, como começar e os números oficiais</h1>
+    </div>
+  </div>
+
+  <article class="container article">
+    <Breadcrumbs crumbs={[['Início', '/'], ["NR-1 e saúde mental no trabalho", path]]} />
+    <div class="article-meta">
+      <span class="updated-badge">Atualizado em {DATA_PAGINA}</span>
+      <span>Conteúdo informativo · fontes oficiais</span>
+    </div>
+
+    <div class="fact-box" id="resposta-rapida">
+    <p><strong>Resposta rápida:</strong> desde 26/05/2026, a NR-1 inclui os fatores de risco psicossociais relacionados ao trabalho no gerenciamento de riscos ocupacionais (GRO). São perigos que nascem da concepção, da organização e da gestão do trabalho e podem afetar a saúde mental. O foco é a organização do trabalho, não o diagnóstico de cada pessoa, com registro no inventário e no plano de ação.</p>
+    </div>
+
+    <div class="fact-box" id="destaques">
+    <h3>Destaques</h3>
+    <ul class="checks">
+      <li>✔ O que a NR-1 diz sobre saúde mental, item por item, em linguagem simples</li>
+      <li>✔ A diferença entre gerenciar riscos e avaliar a saúde de cada trabalhador, nas palavras do MTE</li>
+      <li>✔ Os números oficiais da Previdência de 2024 e 2025, com a fonte</li>
+      <li>✔ Um caminho prático em cinco passos para começar</li>
+      <li>✔ Quem pode conduzir esse trabalho na empresa</li>
+    </ul>
+    </div>
+
+    <div class="table-wrap">
+    <table>
+    <thead>
+    <tr><th>Item</th><th>O que vale</th><th>Fonte</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>Regra</td><td>O GRO abrange os fatores de risco psicossociais relacionados ao trabalho</td><td>NR-1, item 1.5.3.1.4</td></tr>
+    <tr><td>Ligação com a ergonomia</td><td>Considerar as condições de trabalho nos termos da NR-17</td><td>NR-1, item 1.5.3.2.1</td></tr>
+    <tr><td>Em vigor desde</td><td>26/05/2026 (Portaria MTE nº 765/2025)</td><td>Texto consolidado da NR-1</td></tr>
+    <tr><td>Como a empresa age</td><td>Por meio da Avaliação Ergonômica Preliminar (AEP), no contexto do GRO</td><td>MTE, pergunta 1</td></tr>
+    <tr><td>Documentos obrigatórios</td><td>Inventário de riscos, plano de ação e documento de critérios</td><td>MTE, pergunta 2</td></tr>
+    <tr><td>Exame médico substitui?</td><td>Não: o processo analisa o trabalho, não a saúde clínica de cada pessoa</td><td>MTE, pergunta 6</td></tr>
+    <tr><td>Benefícios por transtornos mentais em 2025</td><td>546.254 (472.328 em 2024; alta de 15,66%)</td><td>Previdência, 28/01/2026</td></tr>
+    <tr><td>Sanções dos itens psicossociais</td><td>Suspensas temporariamente pelo STF; as diretrizes gerais da norma continuam válidas</td><td>STF, ADPF 1316</td></tr>
+    </tbody>
+    </table>
+    </div>
+
+    <TOC items={toc} />
+
+    <EditorialFigure file="nr-1-saude-mental-no-trabalho-1-escritorio-plantas.webp" alt="Escritório claro visto através de uma divisória de vidro com plantas, com um profissional de costas trabalhando no notebook e uma colega ao fundo" caption="Imagem ilustrativa" formato="16x9" prioridade />
+
+    <h2 id="o-que-diz">O que a NR-1 diz sobre saúde mental no trabalho?</h2>
+
+    <p>A NR-1 não usa a expressão "saúde mental" nos seus itens: ela fala em <strong>fatores de risco psicossociais relacionados ao trabalho</strong>. O item 1.5.3.1.4 manda o gerenciamento de riscos ocupacionais abranger esses fatores, ao lado dos agentes físicos, químicos e biológicos, dos acidentes e da ergonomia. A redação está em vigor desde 26/05/2026.</p>
+
+    <p>O item seguinte completa a regra. Pelo 1.5.3.2.1, a organização deve considerar as condições de trabalho, nos termos da NR-17, incluindo os fatores de risco psicossociais. É por isso que o tema entra pela ergonomia e pela organização do trabalho, e não pela área médica.</p>
+
+    <p>O Guia do Ministério do Trabalho e Emprego (MTE) define esses fatores, para fins de aplicação no GRO, como perigos decorrentes de problemas na concepção, na organização e na gestão do trabalho, que podem gerar efeitos na saúde do trabalhador em nível psicológico, físico e social, como o desencadeamento ou o agravamento de estresse no trabalho, esgotamento, depressão e DORT.</p>
+
+    <p>Na probabilidade, a norma também foi clara: para os fatores psicossociais, a avaliação considera "as exigências da atividade de trabalho e a eficácia das medidas de prevenção implementadas" (item 1.5.4.4.5.3). A pergunta, portanto, é sobre o trabalho: o que ele exige e o que já protege quem o faz.</p>
+
+    <p>Para entender a NR-1 inteira, capítulo por capítulo, leia <a href="/o-que-e-nr-1/">o que é a NR-1</a>.</p>
+
+    <h2 id="diagnostico">A NR-1 pede diagnóstico ou tratamento de cada trabalhador?</h2>
+
+    <p>Para o gerenciamento de riscos, não. Segundo o MTE, o processo de identificação de perigos e avaliação de riscos "não se confunde com a avaliação clínica individual da saúde mental dos trabalhadores" (Perguntas e Respostas, pergunta 6). O objetivo é verificar se características, exigências ou condições do trabalho podem atuar como fatores de risco e pedem medidas de prevenção.</p>
+
+    <EditorialFigure file="nr-1-saude-mental-no-trabalho-2-lupa-organizacao.webp" alt="Ilustração de uma grande lupa sobre uma mesa de trabalho com relógio, calendário em branco, pilha de pastas e balões de conversa, que representa a avaliação da organização do trabalho" caption="O olhar da NR-1 vai para a organização do trabalho." formato="1x1" lado="direita">
+      <p>O Guia do MTE diz o mesmo com outras palavras: não se trata de verificar sintomas individuais ou a sensação do que está ocorrendo no trabalhador, nem de medir algum sinal biológico, mas de verificar as condições de trabalho a que ele está submetido. O Guia ainda pede para evitar a confusão com o exame médico de aptidão, que segue regras próprias do PCMSO (NR-7).</p>
+
+      <p>Por isso a avaliação médica periódica, mesmo sob sigilo, não substitui o processo da NR-1 (pergunta 6). A empresa olha metas, ritmo, jornadas, autonomia, comunicação e relações, e não prontuários.</p>
+    </EditorialFigure>
+
+    <p>Esse desenho também protege as pessoas: o trabalho de prevenção fala da organização e do dever da empresa, e os dados de saúde de cada trabalhador continuam no lugar deles, sob os cuidados do médico.</p>
+
+    <h2 id="fatores">Quais são os fatores de risco psicossocial ligados à saúde mental?</h2>
+
+    <p>São situações do dia a dia de trabalho que, mal geridas, podem afetar a saúde mental. A Agência Brasil, ao noticiar a entrada em vigor da norma em 26/05/2026, citou como exemplos a sobrecarga de trabalho e o assédio. O Guia do MTE traz uma lista mais longa, com 13 fatores.</p>
+
+    <p>Para organizar a leitura, agrupamos os fatores em quatro frentes: <strong>as demandas</strong> (volume, prazos, ritmo, jornada), <strong>o controle</strong> (autonomia, clareza de papel, participação nas decisões), <strong>as relações</strong> (liderança, apoio, conflitos, assédio e violência) e <strong>o contexto</strong> (mudanças, insegurança, comunicação falha).</p>
+
+    <p>As listas do Guia e do Manual do MTE são orientativas e não taxativas (pergunta 18): cada empresa identifica os fatores presentes na sua realidade.</p>
+
+    <p>A lista completa, com 15 exemplos explicados, está no guia de <a href="/riscos-psicossociais-exemplos/">riscos psicossociais: exemplos</a>.</p>
+
+    <h2 id="numeros">Quais são os números oficiais de afastamento por transtornos mentais?</h2>
+
+    <p>Em 2025, a Previdência Social concedeu <strong>546.254 benefícios por incapacidade temporária</strong> por transtornos mentais e comportamentais (capítulo V da CID-10), alta de <strong>15,66%</strong> sobre 2024, quando foram concedidos 472.328. Os dados são da notícia oficial do Ministério da Previdência Social publicada em 28/01/2026.</p>
+
+    <p>Entre os diagnósticos com mais concessões, segundo a mesma fonte:</p>
+
+    <div class="table-wrap">
+    <table>
+    <thead>
+    <tr><th>Código CID</th><th>Descrição</th><th>2024</th><th>2025</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>F41</td><td>Outros transtornos ansiosos</td><td>141.414</td><td>166.489</td></tr>
+    <tr><td>F32</td><td>Episódios depressivos</td><td>113.604</td><td>126.608</td></tr>
+    <tr><td>F31</td><td>Transtorno afetivo bipolar</td><td>51.314</td><td>60.904</td></tr>
+    <tr><td>F33</td><td>Transtorno depressivo recorrente</td><td>52.627</td><td>60.551</td></tr>
+    <tr><td>F43</td><td>Reações ao stress grave e transtornos de adaptação</td><td>20.873</td><td>23.773</td></tr>
+    <tr><td>Total</td><td>Todas as doenças do capítulo V</td><td>472.328</td><td>546.254</td></tr>
+    </tbody>
+    </table>
+    </div>
+
+    <p><em>Fonte: Ministério da Previdência Social, notícia de 28/01/2026 (atualizada em 26/10/2026). Benefícios concedidos, não pessoas.</em></p>
+
+    <EditorialFigure file="nr-1-saude-mental-no-trabalho-3-barras-2024-2025.webp" alt="Ilustração de uma prancheta com cinco pares de barras horizontais, a barra de baixo de cada par um pouco maior, ao lado de uma pasta de arquivo, sem números" caption="Ilustração: os números de 2024 e 2025 estão na tabela desta seção." formato="16x9" />
+
+    <p>Dois recortes da mesma notícia: as mulheres receberam 63,46% dos benefícios de 2025 (346.613, contra 199.641 para homens), e o total de benefícios por incapacidade temporária, somando todas as doenças, cresceu 15,19% de 2024 para 2025.</p>
+
+    <p>Como ler o número: são <strong>benefícios concedidos</strong>, e uma mesma pessoa pode receber mais de um. A notícia também não separa os casos ligados ao trabalho dos demais. O dado mostra o tamanho do tema na saúde dos brasileiros; a NR-1 trata da parte que cabe à empresa: prevenir os fatores do trabalho.</p>
+
+    <BannerImersao />
+    <CardLivro />
+
+    <h2 id="vigencia">Desde quando a regra vale e o que está suspenso?</h2>
+
+    <p>A regra vale desde 26/05/2026, data em que a nova redação do capítulo 1.5 da NR-1 entrou em vigor. Segundo o MTE (pergunta 20), para as disposições novas vale a dupla visita, com caráter inicialmente orientativo nos 90 dias seguintes; a Agência Brasil registrou a mesma orientação no dia da vigência.</p>
+
+    <p>Depois, o STF suspendeu temporariamente as multas e outras sanções ligadas aos itens psicossociais (ADPF 1316, decisão de 25/06/2026). A suspensão foi prorrogada por mais 90 dias em decisão noticiada pelo STF em 24/09/2026, e, em decisão noticiada pela AGU e pelo STF em 14/10/2026, o relator suspendeu por 60 dias a tramitação das ADPFs 1316, 1333 e 1340 e manteve a liminar.</p>
+
+    <p>O próprio STF ressaltou que as diretrizes gerais da norma continuam válidas e devem ser observadas. A linha do tempo completa está no guia da <a href="/nr-1-atualizada-2026/">NR-1 atualizada</a> e no da <a href="/multa-nr1-2026/">multa da NR-1</a>.</p>
+
+    <h2 id="pratica">O que a empresa pode fazer na prática pela saúde mental no trabalho?</h2>
+
+    <p>O caminho é o próprio GRO, aplicado aos fatores psicossociais. Em linhas gerais, segundo o MTE (pergunta 1), isso significa identificar perigos, avaliar riscos, adotar medidas de prevenção e acompanhar todo o processo, por meio da AEP da NR-17. Em cinco passos:</p>
+
+    <ol>
+      <li><strong>Identificar</strong> os fatores presentes no trabalho real, setor por setor, dentro da <a href="/aep-avaliacao-ergonomica-preliminar/">Avaliação Ergonômica Preliminar (AEP)</a>.</li>
+      <li><strong>Avaliar e classificar</strong> cada risco com critérios documentados, como pede a NR-1.</li>
+      <li><strong>Registrar</strong> no inventário de riscos e montar o <strong>plano de ação</strong>, com medidas, responsáveis e cronograma.</li>
+      <li><strong>Acompanhar</strong> a execução e corrigir o que não funcionou.</li>
+      <li><strong>Ouvir os trabalhadores</strong> em todas as etapas.</li>
+    </ol>
+
+    <EditorialFigure file="nr-1-saude-mental-no-trabalho-4-roda-de-conversa.webp" alt="Grupo de sete pessoas sentadas em cadeiras dispostas em círculo numa sala de treinamento, vistas de cima, durante uma conversa com a equipe" caption="Imagem ilustrativa" formato="1x1" lado="esquerda">
+      <p>O quinto passo é exigência da norma: o item 1.5.3.3 manda a organização adotar mecanismos de participação dos trabalhadores, de consulta sobre a percepção de riscos (inclusive pela CIPA, quando houver) e de comunicação dos riscos do inventário e das medidas do plano de ação. Segundo o MTE (pergunta 17), a fiscalização tende a olhar a participação efetiva e contínua, não só registros isolados.</p>
+    </EditorialFigure>
+
+    <p>Um cuidado: um questionário padronizado, aplicado sozinho, não comprova a gestão desses riscos. Os resultados precisam ser analisados tecnicamente e incorporados à AEP e/ou ao inventário (pergunta 2).</p>
+
+    <p>O passo a passo detalhado, com inventário e plano de ação, está no guia de <a href="/mapeamento-de-riscos-psicossociais/">mapeamento de riscos psicossociais</a>.</p>
+
+    <h2 id="remoto">E o trabalho remoto, híbrido e teletrabalho?</h2>
+
+    <p>Também entram. Segundo o MTE (pergunta 3), a AEP, incluindo os perigos psicossociais, deve considerar as condições de trabalho de todas as formas de organização e execução do trabalho, o que inclui o regime remoto, o híbrido e o teletrabalho.</p>
+
+    <p>Para essas situações, a própria empresa define estratégias compatíveis com o contexto, com base em critérios técnicos. O MTE cita como exemplos instrumentos de levantamento de informações, autoavaliações estruturadas e entrevistas, entre outros meios tecnicamente fundamentados.</p>
+
+    <p>Na prática, os temas de atenção no trabalho a distância costumam ser os mesmos do presencial, vistos de outro ângulo: volume de demandas, limites de jornada, isolamento, clareza das entregas e qualidade da comunicação com a liderança.</p>
+
+    <h2 id="quem-cuida">Quem cuida da saúde mental no trabalho dentro da empresa?</h2>
+
+    <p>Quem conduz o processo é quem a empresa designar, desde que tenha <strong>conhecimento técnico adequado</strong>. Segundo o MTE, a NR-1 e a NR-17 não estabelecem, de forma geral, um profissional específico ou uma categoria exclusiva para identificar perigos e avaliar riscos, incluindo os psicossociais (pergunta 7).</p>
+
+    <EditorialFigure file="nr-1-saude-mental-no-trabalho-5-quadro-plano-acao.webp" alt="Profissional de costas organizando notas adesivas coloridas, sem texto, em colunas num quadro de vidro de uma sala de reunião, preparando um plano de ação" caption="Imagem ilustrativa" formato="16x9" />
+
+    <p>A responsabilidade legal é da organização, que pode montar uma equipe multiprofissional conforme a necessidade técnica do caso (pergunta 7). Isso abriu espaço para profissionais de RH, psicologia, SST e saúde que dominam o ciclo inteiro: ouvir as equipes, analisar os dados, classificar os riscos, montar um plano de ação coerente e acompanhar os resultados.</p>
+
+    <p>O tema ganhou peso também no governo: a Campanha Nacional de Prevenção de Acidentes do Trabalho (CANPAT) de 2026 tem como tema oficial "Pela Prevenção dos Riscos Psicossociais no Trabalho", lançada pelo MTE com o Manual do capítulo 1.5 e um curso EAD na plataforma da Escola Nacional da Inspeção do Trabalho (ENIT).</p>
+
+    <p>É esse trabalho que define o <a href="/blog/gestor-de-nr1-o-que-faz/">Gestor de NR1</a>. Para aprender o método completo, a <strong>Formação Gestor de NR1</strong>, da Izabella Camargo, reúne módulos sobre riscos psicossociais, cultura organizacional e o papel da liderança, e trata o que a página oficial chama de "EPIs da Saúde Mental": a passagem do diagnóstico para medidas concretas e planos de ação do PGR. Os detalhes estão na nossa <a href="/formacao-gestor-de-nr1-izabella-camargo-review/">análise da Formação Gestor de NR1</a>.</p>
+
+    <p>Para começar com um encontro ao vivo, há a <a href="/imersao-nr1-na-pratica/">Imersão NR1 na Prática</a>, também com ela: a 5ª edição acontece em 05 e 06/12/2026, ao vivo no YouTube. E, para empresas que preferem contratar o serviço, o guia de <a href="/consultoria-de-nr1/">consultoria de NR-1</a> mostra como funciona.</p>
+
+    <CTA text="Conhecer a Formação Gestor de NR1 (oferta oficial) →" pos="meio" />
+
+    <FAQ items={faqItems} heading="Perguntas frequentes sobre NR-1 e saúde mental" />
+
+    <div class="hub-card primary fecho" id="proximo-passo">
+    <h2>Da prevenção à prática: o próximo passo</h2>
+    <p>Saúde mental no trabalho começa pela organização do trabalho. Quem sabe conduzir esse processo, do diagnóstico ao plano de ação, vira peça central da NR-1 em qualquer empresa.</p>
+    <CTA text="Ver a Formação Gestor de NR1 →" pos="final" />
+    </div>
+
+    <p class="nota-fonte"><small>Conteúdo informativo, com base em documentos oficiais lidos em 19/11/2026. Não substitui consultoria jurídica, contábil ou de segurança do trabalho.</small></p>
+
+    <p><strong>Apoio emocional:</strong> se você ou alguém da sua equipe precisar conversar, o CVV atende pelo telefone 188, 24 horas por dia e sem custo de ligação, e também pelo site <a target="_blank" rel="noopener nofollow" href="https://cvv.org.br">cvv.org.br</a>.</p>
+
+    <RelatedLinks
+          links={[
+            { href: '/o-que-e-nr-1/', label: "O que é a NR-1: para que serve, quem precisa cumprir e o que mudou em 2026" },
+            { href: '/aep-avaliacao-ergonomica-preliminar/', label: "AEP (Avaliação Ergonômica Preliminar): o que é, quem precisa fazer e como entram os riscos psicossociais" },
+            { href: '/mapeamento-de-riscos-psicossociais/', label: "Mapeamento de riscos psicossociais: passo a passo (NR-1)" },
+            { href: '/riscos-psicossociais-exemplos/', label: "15 exemplos de riscos psicossociais para o PGR" },
+            { href: '/nr-1-atualizada-2026/', label: "Guia da NR-1 atualizada em 2026" },
+            { href: '/multa-nr1-2026/', label: "Multa da NR-1 em 2026: valores e como funciona" },
+            { href: '/consultoria-de-nr1/', label: "Consultoria de NR1: como começar, propor e precificar" },
+            { href: '/formacao-gestor-de-nr1-izabella-camargo-review/', label: "Review completo da Formação Gestor de NR1" },
+            { href: '/imersao-nr1-na-pratica/', label: "Imersão NR1 na Prática, 5ª edição: datas, valor e inscrição" },
+          ]}
+        />
+
+    <h2 id="fontes">Fontes</h2>
+    <ul class="fontes">
+      <li>Ministério do Trabalho e Emprego. <em>NR-01, Disposições gerais e gerenciamento de riscos ocupacionais</em>, texto consolidado (itens 1.5.3.1.4, 1.5.3.2, 1.5.3.2.1, 1.5.3.3 e 1.5.4.4.5.3; capítulo 1.5 com redação da Portaria MTE nº 1.419/2024, em vigor em 26/05/2026 pela Portaria MTE nº 765/2025). <a target="_blank" rel="noopener" href="https://www.gov.br/trabalho-e-emprego/pt-br/acesso-a-informacao/participacao-social/conselhos-e-orgaos-colegiados/comissao-tripartite-partitaria-permanente/normas-regulamentadora/normas-regulamentadoras-vigentes/nr-01-atualizada-2025-i-3.pdf">https://www.gov.br/trabalho-e-emprego/pt-br/acesso-a-informacao/participacao-social/conselhos-e-orgaos-colegiados/comissao-tripartite-partitaria-permanente/normas-regulamentadora/normas-regulamentadoras-vigentes/nr-01-atualizada-2025-i-3.pdf</a>, lido em 19/11/2026.</li>
+      <li>Ministério do Trabalho e Emprego, CGNOR/DSST/SIT. <em>Perguntas e Respostas sobre o Capítulo 1.5 da NR-1</em>, 1ª rodada, 30/04/2026 (perguntas 1, 2, 3, 6, 7, 17, 18 e 20). <a target="_blank" rel="noopener" href="https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/inspecao-do-trabalho/seguranca-e-saude-no-trabalho/canpat-2/canpat-2025/perguntas-e-respostas-gro-pgr-1a-rodada.pdf">https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/inspecao-do-trabalho/seguranca-e-saude-no-trabalho/canpat-2/canpat-2025/perguntas-e-respostas-gro-pgr-1a-rodada.pdf</a>, lido em 19/11/2026.</li>
+      <li>Ministério do Trabalho e Emprego, CGNOR. <em>Guia de informações sobre os fatores de riscos psicossociais relacionados ao trabalho</em>. Brasília, 2025 (definição dos fatores; "Evite confusão com exame médico de aptidão"). <a target="_blank" rel="noopener" href="https://www.gov.br/trabalho-e-emprego/pt-br/acesso-a-informacao/participacao-social/conselhos-e-orgaos-colegiados/comissao-tripartite-partitaria-permanente/normas-regulamentadora/normas-regulamentadoras-vigentes/guia-nr-01-revisado.pdf">https://www.gov.br/trabalho-e-emprego/pt-br/acesso-a-informacao/participacao-social/conselhos-e-orgaos-colegiados/comissao-tripartite-partitaria-permanente/normas-regulamentadora/normas-regulamentadoras-vigentes/guia-nr-01-revisado.pdf</a>, lido em 19/11/2026.</li>
+      <li>Ministério da Previdência Social. "Previdência Social concede 546.254 benefícios por incapacidade temporária por transtornos mentais e comportamentais", 28/01/2026 (atualizada em 26/10/2026). <a target="_blank" rel="noopener" href="https://www.gov.br/previdencia/pt-br/noticias/2026/janeiro/previdencia-social-concede-546-254-beneficios-por-incapacidade-temporaria-por-transtornos-mentais-e-comportamentais">https://www.gov.br/previdencia/pt-br/noticias/2026/janeiro/previdencia-social-concede-546-254-beneficios-por-incapacidade-temporaria-por-transtornos-mentais-e-comportamentais</a>, lida em 19/11/2026.</li>
+      <li>Agência Brasil. "Novas regras sobre saúde mental no trabalho entram em vigor", 26/05/2026. <a target="_blank" rel="noopener" href="https://agenciabrasil.ebc.com.br/saude/noticia/2026-05/novas-regras-sobre-saude-mental-no-trabalho-entram-em-vigor">https://agenciabrasil.ebc.com.br/saude/noticia/2026-05/novas-regras-sobre-saude-mental-no-trabalho-entram-em-vigor</a>, lida em 19/11/2026.</li>
+      <li>Ministério do Trabalho e Emprego. "MTE lança Canpat 2026 com foco na prevenção de riscos psicossociais no trabalho", 07/04/2026. <a target="_blank" rel="noopener" href="https://www.gov.br/trabalho-e-emprego/pt-br/noticias-e-conteudo/2026/abril/mte-lanca-canpat-2026-com-foco-na-prevencao-de-riscos-psicossociais-no-trabalho-1">https://www.gov.br/trabalho-e-emprego/pt-br/noticias-e-conteudo/2026/abril/mte-lanca-canpat-2026-com-foco-na-prevencao-de-riscos-psicossociais-no-trabalho-1</a>, lida em 19/11/2026.</li>
+      <li>Supremo Tribunal Federal. "STF suspende sanções da NR-1 e abre conciliação sobre regras de riscos psicossociais no trabalho", ADPF 1316, 25/06/2026. <a target="_blank" rel="noopener" href="https://noticias.stf.jus.br/postsnoticias/stf-suspende-sancoes-da-nr-1-e-abre-conciliacao-sobre-regras-de-riscos-psicossociais-no-trabalho/">https://noticias.stf.jus.br/postsnoticias/stf-suspende-sancoes-da-nr-1-e-abre-conciliacao-sobre-regras-de-riscos-psicossociais-no-trabalho/</a>, lida em 19/11/2026.</li>
+      <li>Supremo Tribunal Federal. "Relator prorroga suspensão de sanções sobre riscos psicossociais no trabalho", 24/09/2026. <a target="_blank" rel="noopener" href="https://noticias.stf.jus.br/postsnoticias/relator-prorroga-suspensao-de-sancoes-sobre-riscos-psicossociais-no-trabalho/">https://noticias.stf.jus.br/postsnoticias/relator-prorroga-suspensao-de-sancoes-sobre-riscos-psicossociais-no-trabalho/</a>, lida em 19/11/2026.</li>
+      <li>Supremo Tribunal Federal. "Relator autoriza levar discussão sobre NR-1 a fórum da AGU para viabilizar conciliação", 14/10/2026. <a target="_blank" rel="noopener" href="https://noticias.stf.jus.br/postsnoticias/relator-autoriza-levar-discussao-sobre-nr-1-a-forum-da-agu-para-viabilizar-conciliacao/">https://noticias.stf.jus.br/postsnoticias/relator-autoriza-levar-discussao-sobre-nr-1-a-forum-da-agu-para-viabilizar-conciliacao/</a>, lida em 20/11/2026.</li>
+      <li>Advocacia-Geral da União. "STF suspende ações que questionam NR-1 e inclui Sejan no esforço pelo consenso", 14/10/2026 (atualizada em 26/10/2026). <a target="_blank" rel="noopener" href="https://www.gov.br/agu/pt-br/comunicacao/noticias/stf-suspende-acoes-que-questionam-nr-1-e-inclui-sejan-no-esforco-pelo-consenso/">https://www.gov.br/agu/pt-br/comunicacao/noticias/stf-suspende-acoes-que-questionam-nr-1-e-inclui-sejan-no-esforco-pelo-consenso/</a>, lida em 19/11/2026.</li>
+      <li>Formação Gestor de NR1, página oficial (módulos de cultura organizacional, liderança e "EPIs da Saúde Mental"). <a target="_blank" rel="noopener" href="https://lp.camargoizabella.com.br/formacao-gestor-de-nr1">https://lp.camargoizabella.com.br/formacao-gestor-de-nr1</a>, lida em 19/11/2026.</li>
+      <li>Imersão NR1 na Prática, 5ª edição: página oficial. <a target="_blank" rel="noopener" href="https://iza-camargo.aiedadigital.com/">https://iza-camargo.aiedadigital.com/</a>, lida em 19/11/2026.</li>
+      <li>CVV, Centro de Valorização da Vida: telefone 188, 24 horas por dia e sem custo de ligação. <a target="_blank" rel="noopener nofollow" href="https://cvv.org.br">https://cvv.org.br</a>, lido em 19/11/2026.</li>
+    </ul>
+  </article>
+</Base>
+
+<style>
+  #resposta-rapida p {
+    margin: 0;
+  }
+  /* Listas só com ✔ (destaques): o próprio ✔ faz o papel do marcador. */
+  .checks {
+    list-style: none;
+    padding-left: 0;
+  }
+  .checks li {
+    padding-left: 1.5em;
+    text-indent: -1.5em;
+  }
+  /* Faixa final no padrão do hub-card escuro da home (mesmo estilo da página da Imersão). */
+  .fecho {
+    margin: 3rem 0 1.6rem;
+    text-align: center;
+  }
+  .fecho h2 {
+    margin-top: 0.2em;
+  }
+  .fecho p {
+    margin-inline: auto;
+  }
+  .fecho :global(.cta-wrap) {
+    margin: 1.4rem 0 0.2rem;
+  }
+  .nota-fonte,
+  .nota-fonte small {
+    color: var(--cinza-700);
+  }
+  /* Fontes com URL completa: sem isto, as URLs longas empurram a pagina para o lado no celular. */
+  .fontes li {
+    overflow-wrap: anywhere;
+  }
+</style>

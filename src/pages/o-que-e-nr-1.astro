@@ -1,0 +1,469 @@
+---
+import Base from '../layouts/Base.astro';
+import CTA from '../components/CTA.astro';
+import TOC from '../components/TOC.astro';
+import FAQ from '../components/FAQ.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import RelatedLinks from '../components/RelatedLinks.astro';
+import BannerImersao from '../components/BannerImersao.astro';
+import CardLivro from '../components/CardLivro.astro';
+import EditorialFigure from '../components/EditorialFigure.astro';
+import {
+  articleSchema,
+  faqSchema,
+  breadcrumbSchema,
+  ENTITIES,
+  type FaqItem,
+} from '../data/schema';
+
+/**
+ * O que e a NR-1 (para que serve, quem precisa cumprir e o que mudou em 2026); pagina 2 de 3 do pedido de 19/11/2026.
+ * Texto: rascunho aprovado (rascunhos/o-que-e-nr-1.md), convertido por script em 20/11/2026 (o texto nao foi reescrito a mao).
+ * Fatos so de fonte oficial lida em 19/11/2026 (MTE: NR-1 consolidada, pagina oficial, Perguntas e Respostas; Agencia Brasil; STF; AGU; pagina oficial da Imersao), com as fontes no fim da pagina.
+ * Os 2 botoes da Formacao passam pelo CTA.astro (/go/formacao-gestor-nr1/?s=onr1_<posicao>; codigo `onr1` em GO_PAGINAS).
+ * As 5 figuras (EditorialFigure) so aparecem no build se o arquivo existir em public/images/editorial/: sem o arquivo, a pagina sai sem a figura e o texto dos blocos 1:1 segue como paragrafos comuns.
+ * Banner da Imersao e card do livro no fim da secao "O que sao GRO e PGR dentro da NR-1?" (meio da pagina).
+ * Imagem de compartilhamento: og-o-que-e-nr-1.jpg (1200x630, corte centralizado da imagem 1; ogImage do Base e image do Article, igual as paginas de 17/11/2026). Nao tirar se a pagina for regerada por script.
+ * Links para a pagina 1 (/aep-avaliacao-ergonomica-preliminar/): as 2 expressoes reservadas pelo redator (H2 do item 1.5.3.2 e H2 do MEI) viram link; o texto nao muda.
+ * Link para a pagina 3 (/nr-1-saude-mental-no-trabalho/): a frase reservada "Nao se trata de diagnosticar pessoas" (H2 "O que mudou na NR-1 em 2026?") vira link; o texto nao muda.
+ * Sem HowTo, sem Review e sem AggregateRating.
+ */
+const title = "O que é a NR-1? Para que serve e quem precisa cumprir";
+const description =
+  "O que é a NR-1, para que serve, quem precisa cumprir, quais são os capítulos e o que mudou em 2026 (GRO, PGR e riscos psicossociais).";
+const path = '/o-que-e-nr-1/';
+// Imagem de compartilhamento (og:image, twitter:image e image do Article): corte da imagem 1, arquivo em public/images/ (imagem trocada = nome novo, cache de 1 ano).
+const imagemOg = '/images/og-o-que-e-nr-1.jpg';
+
+// Data propria da pagina (nao usa SITE.updatedLabel: o "Atualizado em" global fica em Julho/2026 de proposito).
+const DATA_PAGINA = '20/11/2026';
+const DATA_ISO = '2026-11-20';
+const ROTULO_PAGINA = 'Novembro/2026';
+
+const toc = [
+  {
+    "id": "o-que-e",
+    "label": "O que é a NR-1, em palavras simples?"
+  },
+  {
+    "id": "para-que-serve",
+    "label": "Para que serve a NR-1?"
+  },
+  {
+    "id": "quem-cumpre",
+    "label": "Quem precisa cumprir a NR-1?"
+  },
+  {
+    "id": "capitulos",
+    "label": "Quais são os capítulos da NR-1?"
+  },
+  {
+    "id": "deveres",
+    "label": "Quais são os deveres do empregador e do trabalhador?"
+  },
+  {
+    "id": "item-1-5-3-2",
+    "label": "O que o item 1.5.3.2 da NR-1 determina?"
+  },
+  {
+    "id": "gro-pgr",
+    "label": "O que são GRO e PGR dentro da NR-1?"
+  },
+  {
+    "id": "o-que-mudou",
+    "label": "O que mudou na NR-1 em 2026?"
+  },
+  {
+    "id": "multas",
+    "label": "As multas dos itens psicossociais estão suspensas?"
+  },
+  {
+    "id": "mei",
+    "label": "A NR-1 vale para MEI e pequenas empresas?"
+  },
+  {
+    "id": "certificado",
+    "label": "A NR-1 exige certificado?"
+  },
+  {
+    "id": "quem-cuida",
+    "label": "Quem pode cuidar da NR-1 na empresa e que campo de trabalho isso abriu?"
+  },
+  {
+    "id": "faq",
+    "label": "Perguntas frequentes sobre a NR-1"
+  },
+  {
+    "id": "proximo-passo",
+    "label": "Da definição à prática: o próximo passo"
+  },
+  {
+    "id": "fontes",
+    "label": "Fontes"
+  }
+];
+
+const faqItems: FaqItem[] = [
+  {
+    "q": "O que é a NR-1 em resumo?",
+    "a": "<p>É a Norma Regulamentadora nº 1, que traz as disposições gerais, o campo de aplicação, os termos e as definições comuns a todas as NR e as diretrizes do gerenciamento de riscos ocupacionais (GRO), base do PGR.</p>"
+  },
+  {
+    "q": "A NR-1 é obrigatória para todas as empresas?",
+    "a": "<p>É obrigatória para organizações e órgãos públicos que tenham empregados regidos pela CLT (item 1.2.1.1). MEI, ME e EPP têm tratamento diferenciado, mas continuam sujeitos às demais disposições das NR.</p>"
+  },
+  {
+    "q": "Quantos capítulos tem a NR-1?",
+    "a": "<p>Nove capítulos, do 1.1 (objetivo) ao 1.9 (disposições finais), e 2 anexos. O mais extenso é o 1.5, do gerenciamento de riscos ocupacionais.</p>"
+  },
+  {
+    "q": "Quais são as responsabilidades do empregador na NR-1?",
+    "a": "<p>Entre elas: cumprir e fazer cumprir as regras de SST, informar os trabalhadores sobre riscos e medidas de prevenção e implementar medidas de prevenção, ouvidos os trabalhadores, na ordem de prioridade do item 1.4.1.</p>"
+  },
+  {
+    "q": "A NR-1 precisa de certificado?",
+    "a": "<p>Os treinamentos previstos nas NR precisam. O item 1.7.1.1 manda emitir certificado ao fim de cada treinamento inicial, periódico ou eventual, com conteúdo, carga horária, data, local, instrutores e responsável técnico.</p>"
+  },
+  {
+    "q": "Quais são as NRs mais importantes?",
+    "a": "<p>Cada NR trata de um tema, e a importância depende da atividade da empresa. A NR-1 é a norma geral, que vale para todas; as demais detalham assuntos específicos, como a NR-17 para as condições de trabalho.</p>"
+  },
+  {
+    "q": "MEI precisa cumprir a NR-1?",
+    "a": "<p>Sim. O MEI é dispensado de elaborar o PGR (item 1.8.1), mas a dispensa não afasta as demais disposições das NR (item 1.8.5).</p>"
+  },
+  {
+    "q": "A NR-1 foi suspensa?",
+    "a": "<p>Não. A norma está em vigor; o que o STF suspendeu temporariamente foram as multas e outras sanções dos itens psicossociais, com prorrogação noticiada em 24/09/2026. As diretrizes gerais da norma continuam válidas e devem ser observadas.</p>"
+  },
+  {
+    "q": "Quem pode fazer a gestão da NR-1 na empresa?",
+    "a": "<p>Segundo o MTE, não há, de forma geral, categoria profissional exclusiva: a empresa designa responsável ou equipe com conhecimento técnico adequado aos riscos avaliados, inclusive multiprofissional.</p>"
+  }
+];
+
+const schemas = [
+  articleSchema({
+    headline: "O que é a NR-1: para que serve, quem precisa cumprir e o que mudou em 2026",
+    description,
+    url: path,
+    image: imagemOg,
+    datePublished: DATA_ISO,
+    dateModified: DATA_ISO,
+    about: ENTITIES.nr1,
+    keywords: [
+      "o que é nr1",
+      "nr1 o que é",
+      "nr-1",
+      "norma regulamentadora 1",
+      "capítulos da nr-1",
+      "quem precisa cumprir a nr-1",
+      "gro",
+      "pgr",
+      "riscos psicossociais",
+    ],
+  }),
+  faqSchema(faqItems),
+  breadcrumbSchema([['Início', '/'], ["O que é a NR-1", path]]),
+];
+---
+<Base title={title} description={description} schemas={schemas} ogType="article" ogImage={imagemOg}>
+  <div class="page-hero">
+    <div class="container">
+      <p class="kicker">Guia · Atualizado em {ROTULO_PAGINA}</p>
+      <h1>O que é a NR-1: para que serve, quem precisa cumprir e o que mudou em 2026</h1>
+    </div>
+  </div>
+
+  <article class="container article">
+    <Breadcrumbs crumbs={[['Início', '/'], ["O que é a NR-1", path]]} />
+    <div class="article-meta">
+      <span class="updated-badge">Atualizado em {DATA_PAGINA}</span>
+      <span>Conteúdo informativo · fontes oficiais</span>
+    </div>
+
+    <div class="fact-box" id="resposta-rapida">
+    <p><strong>Resposta rápida:</strong> a NR-1 é a Norma Regulamentadora nº 1, que estabelece as disposições gerais, o campo de aplicação, os termos e as definições comuns a todas as normas de segurança e saúde no trabalho, além das diretrizes do gerenciamento de riscos ocupacionais (GRO). Ela vale para organizações e órgãos públicos com empregados CLT e, desde 26/05/2026, inclui os fatores de risco psicossociais.</p>
+    </div>
+
+    <div class="fact-box" id="destaques">
+    <h3>Destaques</h3>
+    <ul class="checks">
+      <li>✔ Definição em linguagem simples, com o número de cada item da norma</li>
+      <li>✔ Os 9 capítulos da NR-1 numa tabela, um por linha</li>
+      <li>✔ Quem precisa cumprir, incluindo MEI, microempresa e empresa de pequeno porte</li>
+      <li>✔ O que a empresa deve fazer, pelas seis alíneas do item 1.5.3.2</li>
+      <li>✔ O que mudou em 2026 e a situação das multas, com as fontes oficiais</li>
+    </ul>
+    </div>
+
+    <div class="table-wrap">
+    <table>
+    <thead>
+    <tr><th>Item</th><th>O que vale</th><th>Fonte</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>Objetivo</td><td>Disposições gerais, campo de aplicação, termos e definições comuns às NR e diretrizes do GRO</td><td>Item 1.1.1</td></tr>
+    <tr><td>Quem cumpre</td><td>Organizações e órgãos públicos com empregados regidos pela CLT</td><td>Item 1.2.1.1</td></tr>
+    <tr><td>Estrutura</td><td>9 capítulos e 2 anexos</td><td>Sumário da NR-1</td></tr>
+    <tr><td>Capítulo do GRO</td><td>1.5, com redação da Portaria MTE nº 1.419/2024</td><td>Texto consolidado</td></tr>
+    <tr><td>Vigência do novo capítulo 1.5</td><td>26/05/2026 (Portaria MTE nº 765/2025)</td><td>Texto consolidado</td></tr>
+    <tr><td>Riscos psicossociais</td><td>Incluídos no GRO</td><td>Item 1.5.3.1.4</td></tr>
+    <tr><td>Documentos do PGR</td><td>Inventário de riscos e plano de ação</td><td>Item 1.5.7.1</td></tr>
+    <tr><td>Multas dos itens psicossociais</td><td>Suspensas temporariamente pelo STF; as diretrizes gerais da norma continuam válidas</td><td>STF, ADPF 1316</td></tr>
+    </tbody>
+    </table>
+    </div>
+
+    <TOC items={toc} />
+
+    <EditorialFigure file="o-que-e-nr-1-1-padaria-antes-de-abrir.webp" alt="Interior de uma pequena padaria de bairro antes de abrir, com uma funcionária de costas organizando bandejas de pães perto do forno" caption="Imagem ilustrativa" formato="16x9" prioridade />
+
+    <h2 id="o-que-e">O que é a NR-1, em palavras simples?</h2>
+
+    <p>A NR-1 é a norma geral da segurança e saúde no trabalho no Brasil. O item 1.1.1 define o objetivo dela: estabelecer as disposições gerais, o campo de aplicação, os termos e as definições comuns às Normas Regulamentadoras (NR) e as diretrizes e os requisitos para o gerenciamento de riscos ocupacionais.</p>
+
+    <p>O nome oficial resume o conteúdo: <strong>NR-01, Disposições gerais e gerenciamento de riscos ocupacionais</strong>. A norma nasceu com a Portaria MTb nº 3.214, de 1978, e a redação atual do capítulo do GRO veio da Portaria MTE nº 1.419/2024.</p>
+
+    <p>Na prática, a NR-1 é a porta de entrada das outras normas: quem precisa cumprir, os deveres de cada lado, como gerenciar os riscos, como registrar treinamentos e o tratamento diferenciado para os pequenos negócios.</p>
+
+    <p>Os termos usados em todas as NR ficam no Anexo I (item 1.1.2). Ali a norma define <strong>perigo</strong> (elemento ou situação com potencial de dar origem a lesões ou agravos à saúde) e <strong>risco ocupacional</strong> (a combinação da probabilidade da lesão ou do agravo com a severidade dele).</p>
+
+    <h2 id="para-que-serve">Para que serve a NR-1?</h2>
+
+    <p>A NR-1 serve para dar a todas as empresas um mesmo método de prevenção: identificar perigos, avaliar e classificar riscos, adotar medidas na ordem certa e acompanhar o resultado. As outras NR tratam de temas específicos; a NR-1 organiza a lógica comum e o vocabulário que todas usam.</p>
+
+    <EditorialFigure file="o-que-e-nr-1-2-norma-geral-no-centro.webp" alt="Ilustração de um grande círculo central ligado por linhas finas a seis círculos menores com ícones de temas de segurança do trabalho, que representa a NR-1 como norma geral" caption="A NR-1 é a norma geral: as outras NR detalham temas específicos." formato="1x1" lado="direita">
+      <p>Ela faz isso de três formas. Primeiro, define o <strong>campo de aplicação</strong>: diz quem está obrigado. Segundo, fixa os <strong>direitos e deveres</strong> de empregadores e trabalhadores. Terceiro, traz o <strong>gerenciamento de riscos ocupacionais (GRO)</strong>, o processo contínuo de prevenção que se materializa no Programa de Gerenciamento de Riscos (PGR).</p>
+
+      <p>A própria NR-1 remete a outras normas nos temas específicos: NR-15 e NR-16 para atividades insalubres e perigosas (item 1.5.2), NR-17 para as condições de trabalho (item 1.5.3.2.1) e NR-05 para a CIPA (item 1.4.1.1). Por isso ela é a primeira leitura de quem entra na área.</p>
+    </EditorialFigure>
+
+    <h2 id="quem-cumpre">Quem precisa cumprir a NR-1?</h2>
+
+    <p>Precisa cumprir a NR-1 toda organização que tenha empregados regidos pela CLT. O item 1.2.1.1 diz que as NR são de observância obrigatória pelas organizações e pelos órgãos públicos da administração direta e indireta, e pelos órgãos dos Poderes Legislativo e Judiciário e do Ministério Público, que possuam empregados CLT.</p>
+
+    <p>O item 1.2.1 completa: as NR obrigam empregadores e empregados, urbanos e rurais, e o item 1.2.1.2 as estende a outras relações jurídicas previstas em lei.</p>
+
+    <p>Na prática, isso inclui indústrias, comércios, escritórios, escolas, hospitais e prestadores de serviço, de qualquer tamanho. O porte muda a forma de cumprir, não a obrigação: o capítulo 1.8 dá tratamento diferenciado a MEI, microempresa e empresa de pequeno porte, explicado mais abaixo.</p>
+
+    <h2 id="capitulos">Quais são os capítulos da NR-1?</h2>
+
+    <p>A NR-1 tem 9 capítulos e 2 anexos, conforme o sumário do texto consolidado publicado pelo Ministério do Trabalho e Emprego. O capítulo 1.5, do gerenciamento de riscos ocupacionais, é o maior e o que mais mudou nos últimos anos.</p>
+
+    <div class="table-wrap">
+    <table>
+    <thead>
+    <tr><th>Capítulo</th><th>Nome no texto oficial</th><th>O que trata, em uma linha</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>1.1</td><td>Objetivo</td><td>O que a norma estabelece e onde ficam os termos e definições</td></tr>
+    <tr><td>1.2</td><td>Campo de aplicação</td><td>Quem está obrigado a cumprir as NR</td></tr>
+    <tr><td>1.3</td><td>Competências e estrutura</td><td>Papel da Subsecretaria de Inspeção do Trabalho (SIT) e dos órgãos regionais</td></tr>
+    <tr><td>1.4</td><td>Direitos e deveres</td><td>Deveres do empregador e do trabalhador e o direito de interromper a atividade em risco grave e iminente</td></tr>
+    <tr><td>1.5</td><td>Gerenciamento de riscos ocupacionais</td><td>GRO e PGR: identificar, avaliar, classificar, prevenir e acompanhar</td></tr>
+    <tr><td>1.6</td><td>Da prestação de informação digital e digitalização de documentos</td><td>Informações de SST em formato digital e guarda de documentos</td></tr>
+    <tr><td>1.7</td><td>Capacitação e treinamento em Segurança e Saúde no Trabalho</td><td>Treinamentos inicial, periódico e eventual e o certificado</td></tr>
+    <tr><td>1.8</td><td>Tratamento diferenciado ao MEI, à ME e à EPP</td><td>Dispensas de PGR e de PCMSO e o que continua valendo</td></tr>
+    <tr><td>1.9</td><td>Disposições finais</td><td>Penalidades e casos omissos</td></tr>
+    <tr><td>Anexo I</td><td>Termos e definições</td><td>Glossário comum a todas as NR</td></tr>
+    <tr><td>Anexo II</td><td>Ensino a distância e semipresencial</td><td>Diretrizes e requisitos mínimos para essas modalidades</td></tr>
+    </tbody>
+    </table>
+    </div>
+
+    <EditorialFigure file="o-que-e-nr-1-3-nove-pecas-capitulos.webp" alt="Ilustração de nove peças de quebra-cabeça formando um retângulo, com ícones, uma peça dourada com lupa sendo encaixada por cima e duas peças vazias soltas ao lado, que representa os nove capítulos da NR-1" caption="Nove capítulos que se encaixam, com o gerenciamento de riscos no centro." formato="16x9" />
+
+    <h2 id="deveres">Quais são os deveres do empregador e do trabalhador?</h2>
+
+    <p>O item 1.4.1 lista os deveres do empregador: cumprir e fazer cumprir as regras de segurança e saúde, informar os trabalhadores sobre os riscos e as medidas de prevenção, emitir ordens de serviço, permitir que representantes acompanhem a fiscalização e implementar medidas de prevenção, ouvidos os trabalhadores.</p>
+
+    <EditorialFigure file="o-que-e-nr-1-4-dialogo-seguranca-deposito.webp" alt="Pequeno grupo de trabalhadores de colete reunido em roda no piso de um depósito, visto de cima e à distância, durante uma conversa rápida de segurança no início do turno" caption="Imagem ilustrativa" formato="1x1" lado="esquerda">
+      <p>A ordem das medidas está na alínea "g" do item 1.4.1: primeiro <strong>eliminar</strong> os fatores de risco; depois <strong>minimizar e controlar</strong> com proteção coletiva; em seguida com medidas administrativas ou de <strong>organização do trabalho</strong>; e, por último, com <strong>proteção individual</strong>. O empregador também define o que fazer em caso de acidente ou doença relacionada ao trabalho, incluindo a análise das causas.</p>
+    </EditorialFigure>
+
+    <p>O trabalhador também tem deveres (item 1.4.2): cumprir as regras e as ordens de serviço, fazer os exames médicos previstos nas NR, colaborar com a aplicação das normas e usar o equipamento de proteção individual fornecido.</p>
+
+    <p>E tem um direito importante: pelo item 1.4.3, ele pode interromper as atividades quando constatar, por motivos razoáveis, um risco grave e iminente para a sua vida ou saúde, informando o superior. O empregador não pode exigir o retorno enquanto a situação não for corrigida (item 1.4.3.1).</p>
+
+    <p>Empresas obrigadas a ter CIPA somam medidas contra o assédio e a violência no trabalho, com capacitação no mínimo a cada 12 meses (item 1.4.1.1).</p>
+
+    <h2 id="item-1-5-3-2">O que o item 1.5.3.2 da NR-1 determina?</h2>
+
+    <p>O item 1.5.3.2 é o coração do gerenciamento de riscos: ele lista, em seis alíneas, o que a organização deve fazer. É a sequência que qualquer PGR precisa demonstrar, do primeiro levantamento ao acompanhamento das medidas.</p>
+
+    <ol>
+      <li><strong>Evitar ou eliminar</strong> os perigos ocupacionais que possam ser originados no trabalho.</li>
+      <li><strong>Identificar</strong> os perigos e as possíveis lesões ou agravos à saúde.</li>
+      <li><strong>Avaliar</strong> os riscos ocupacionais, indicando o nível de risco.</li>
+      <li><strong>Classificar</strong> os riscos, para determinar a necessidade de medidas de prevenção.</li>
+      <li><strong>Implementar</strong> medidas de prevenção, de acordo com a classificação e na ordem de prioridade da alínea "g" do item 1.4.1.</li>
+      <li><strong>Acompanhar</strong> o controle dos riscos ocupacionais.</li>
+    </ol>
+
+    <p>Logo em seguida, o item 1.5.3.2.1 diz que a organização deve considerar as condições de trabalho, nos termos da NR-17, incluindo os fatores de risco psicossociais relacionados ao trabalho. É essa ligação com a NR-17 que leva à <a href="/aep-avaliacao-ergonomica-preliminar/">Avaliação Ergonômica Preliminar (AEP)</a>: segundo as Perguntas e Respostas do MTE (pergunta 1), todas as empresas estão obrigadas a realizar ações de prevenção por meio da AEP, incluindo os fatores psicossociais, no contexto do GRO.</p>
+
+    <p>Para ver como isso vira trabalho de campo, leia o guia de <a href="/mapeamento-de-riscos-psicossociais/">mapeamento de riscos psicossociais</a>, com as etapas do diagnóstico ao plano de ação.</p>
+
+    <h2 id="gro-pgr">O que são GRO e PGR dentro da NR-1?</h2>
+
+    <p>O GRO é o gerenciamento de riscos ocupacionais que a organização implementa em seus estabelecimentos (item 1.5.3.1); ele deve constituir um Programa de Gerenciamento de Riscos, o PGR (item 1.5.3.1.1). Em resumo: o GRO é o processo; o PGR é o programa que o organiza e documenta.</p>
+
+    <p>O PGR é implementado por estabelecimento (item 1.5.3.1.1.1) e contém, no mínimo, o <strong>inventário de riscos</strong> e o <strong>plano de ação</strong> (item 1.5.7.1). Os documentos são datados, assinados e ficam disponíveis aos trabalhadores, aos sindicatos e à Inspeção do Trabalho (itens 1.5.7.2 e 1.5.7.2.1).</p>
+
+    <p>O item 1.5.3.1.4 define o alcance: o GRO abrange os riscos de agentes físicos, químicos e biológicos, os riscos de acidentes e os riscos ligados aos fatores ergonômicos, incluindo os fatores de risco psicossociais relacionados ao trabalho.</p>
+
+    <p>A diferença entre os dois conceitos, com exemplos, está no guia <a href="/gro-e-pgr-o-que-e/">GRO e PGR: o que são e qual a diferença</a>.</p>
+
+    <BannerImersao />
+    <CardLivro />
+
+    <h2 id="o-que-mudou">O que mudou na NR-1 em 2026?</h2>
+
+    <p>A grande mudança de 2026 foi a entrada em vigor, em 26/05/2026, da nova redação do capítulo 1.5, dada pela Portaria MTE nº 1.419/2024. A vigência foi fixada pela Portaria MTE nº 765/2025. Com ela, os fatores de risco psicossociais relacionados ao trabalho passaram a fazer parte expressa do GRO.</p>
+
+    <p>Na prática, o inventário e o plano de ação passam a tratar também da organização do trabalho. Segundo as Perguntas e Respostas do MTE, a documentação obrigatória inclui o documento dos critérios adotados no GRO (pergunta 2), e o processo vale para trabalho remoto, híbrido e teletrabalho (pergunta 3).</p>
+
+    <p><a href="/nr-1-saude-mental-no-trabalho/">Não se trata de diagnosticar pessoas</a>: o MTE explica que o processo analisa as condições de trabalho e não se confunde com a avaliação clínica individual da saúde mental (pergunta 6).</p>
+
+    <p>A página oficial da NR-1 reúne o Guia sobre os fatores de riscos psicossociais (2025), o Manual do capítulo 1.5 (2026) e as Perguntas e Respostas (maio de 2026). O passo a passo do que mudou está no guia da <a href="/nr-1-atualizada-2026/">NR-1 atualizada</a>, e os exemplos de fatores, na <a href="/riscos-psicossociais-exemplos/">lista de riscos psicossociais</a>.</p>
+
+    <h2 id="multas">As multas dos itens psicossociais estão suspensas?</h2>
+
+    <p>Sim, temporariamente. O STF suspendeu as multas e outras sanções ligadas aos fatores de risco psicossociais da NR-1, e as diretrizes gerais da norma continuam válidas e devem ser observadas, segundo a própria notícia do STF.</p>
+
+    <p>A sequência, pelas fontes oficiais:</p>
+
+    <ul>
+      <li><strong>26/05/2026:</strong> o novo texto entra em vigor. Segundo o MTE (pergunta 20), para as disposições novas vale a dupla visita, com caráter inicialmente orientativo nos 90 dias seguintes.</li>
+      <li><strong>25/06/2026:</strong> o relator, ministro André Mendonça, suspende por 90 dias as multas e outras sanções dos itens psicossociais (ADPF 1316) e abre conciliação no STF.</li>
+      <li><strong>18/08/2026:</strong> o Plenário referenda a liminar por unanimidade (notícia de 20/08/2026).</li>
+      <li><strong>Setembro de 2026:</strong> a suspensão é prorrogada por mais 90 dias em decisão noticiada pelo STF em 24/09/2026.</li>
+      <li><strong>14/10/2026:</strong> a AGU e o STF noticiam a decisão em que o relator suspende por 60 dias a tramitação das ADPFs 1316, 1333 e 1340, inclui a Câmara de Segurança Jurídica da AGU (Sejan) na busca de consenso e mantém a liminar.</li>
+      <li><strong>29/10/2026:</strong> a Sejan abre a Tomada de Subsídios nº 3/2026 sobre o capítulo 1.5 da NR-1.</li>
+    </ul>
+
+    <p>Mais detalhes no guia da <a href="/multa-nr1-2026/">multa da NR-1</a>.</p>
+
+    <h2 id="mei">A NR-1 vale para MEI e pequenas empresas?</h2>
+
+    <p>Vale. O capítulo 1.8 dá tratamento diferenciado aos pequenos negócios, mas a dispensa alcança só a elaboração do PGR: pelo item 1.8.5, ela não afasta a obrigação de cumprir as demais disposições das NR por parte do MEI, da ME e da EPP.</p>
+
+    <p>Como funciona cada caso, segundo o texto oficial:</p>
+
+    <div class="table-wrap">
+    <table>
+    <thead>
+    <tr><th>Quem</th><th>O que a NR-1 prevê</th><th>Item</th></tr>
+    </thead>
+    <tbody>
+    <tr><td>MEI</td><td>Dispensado de elaborar o PGR; a contratante inclui o MEI nas suas ações de prevenção e no seu PGR quando ele atua nas dependências dela</td><td>1.8.1 e 1.8.1.1</td></tr>
+    <tr><td>ME e EPP, graus de risco 1 e 2</td><td>Dispensadas do PGR quando não identificam exposições a agentes físicos, químicos e biológicos no levantamento preliminar e declaram as informações digitais</td><td>1.8.4</td></tr>
+    <tr><td>MEI, ME e EPP, graus de risco 1 e 2</td><td>Dispensados do PCMSO quando não identificam exposições a agentes físicos, químicos, biológicos e riscos ergonômicos; os exames e o ASO continuam</td><td>1.8.6 e 1.8.7.1</td></tr>
+    </tbody>
+    </table>
+    </div>
+
+    <p>O ponto que mais gera dúvida é a AEP. Segundo as Perguntas e Respostas do MTE (pergunta 2), para ME e EPP de graus de risco 1 e 2 dispensadas do PGR, <a href="/aep-avaliacao-ergonomica-preliminar/">a AEP torna-se documento obrigatório</a> para evidenciar a gestão dos riscos, incluindo os psicossociais.</p>
+
+    <h2 id="certificado">A NR-1 exige certificado?</h2>
+
+    <p>A NR-1 exige certificado ao fim dos treinamentos previstos nas NR. Pelo item 1.7.1.1, ao término dos treinamentos inicial, periódico ou eventual, deve ser emitido certificado com dados definidos pela própria norma.</p>
+
+    <p>O certificado traz nome e assinatura do trabalhador, conteúdo programático, carga horária, data, local, nome e qualificação dos instrutores e assinatura do responsável técnico do treinamento. O capítulo 1.7 também trata do aproveitamento de treinamentos anteriores e do ensino a distância e semipresencial (Anexo II).</p>
+
+    <p>Isso vale para os treinamentos que as NR exigem dos trabalhadores: a norma não cria um "certificado de NR-1" para a empresa.</p>
+
+    <h2 id="quem-cuida">Quem pode cuidar da NR-1 na empresa e que campo de trabalho isso abriu?</h2>
+
+    <p>Segundo o MTE, a NR-1 e a NR-17 não estabelecem, de forma geral, um profissional específico ou uma categoria exclusiva para identificar perigos e avaliar riscos, incluindo os psicossociais. A organização designa responsável ou equipe com conhecimento técnico adequado (pergunta 7), inclusive multiprofissional.</p>
+
+    <EditorialFigure file="o-que-e-nr-1-5-estudo-noite.webp" alt="Mulher de costas estudando à noite numa escrivaninha de casa, com notebook, caderno aberto e luminária acesa, aprendendo a conduzir a gestão de riscos" caption="Imagem ilustrativa" formato="16x9" />
+
+    <p>Isso abriu um campo de trabalho novo. Desde 26/05/2026, os fatores de risco psicossociais fazem parte do GRO de toda empresa com empregados CLT, e alguém precisa conduzir o processo: ouvir os trabalhadores, classificar os riscos, montar o plano de ação e acompanhar. Profissionais de RH, psicologia, SST e saúde já atuam nisso; o diferencial é dominar o método.</p>
+
+    <p>É esse trabalho que define o <a href="/blog/gestor-de-nr1-o-que-faz/">Gestor de NR1</a>. Para quem quer aprender o ciclo completo, a <strong>Formação Gestor de NR1</strong>, da Izabella Camargo, é o programa de formação dela sobre a aplicação da NR-1 e dos riscos psicossociais nas empresas. Os detalhes estão na nossa <a href="/formacao-gestor-de-nr1-izabella-camargo-review/">análise da Formação Gestor de NR1</a>.</p>
+
+    <p>Quem prefere começar por um encontro ao vivo tem a <a href="/imersao-nr1-na-pratica/">Imersão NR1 na Prática</a>, também com ela: a 5ª edição, "A Virada", acontece em 05 e 06/12/2026, das 9h às 17h, ao vivo no YouTube.</p>
+
+    <CTA text="Conhecer a Formação Gestor de NR1 (oferta oficial) →" pos="meio" />
+
+    <FAQ items={faqItems} heading="Perguntas frequentes sobre a NR-1" />
+
+    <div class="hub-card primary fecho" id="proximo-passo">
+    <h2>Da definição à prática: o próximo passo</h2>
+    <p>Entender a NR-1 é o primeiro passo; conduzir o GRO com os riscos psicossociais coloca o profissional no centro da prevenção.</p>
+    <CTA text="Ver a Formação Gestor de NR1 →" pos="final" />
+    </div>
+
+    <p class="nota-fonte"><small>Conteúdo informativo, com base em documentos oficiais lidos em 19/11/2026. Não substitui consultoria jurídica, contábil ou de segurança do trabalho.</small></p>
+
+    <RelatedLinks
+          links={[
+            { href: '/aep-avaliacao-ergonomica-preliminar/', label: "AEP (Avaliação Ergonômica Preliminar): o que é, quem precisa fazer e como entram os riscos psicossociais" },
+            { href: '/nr-1-atualizada-2026/', label: "Guia da NR-1 atualizada em 2026" },
+            { href: '/gro-e-pgr-o-que-e/', label: "GRO e PGR: o que são e qual a diferença" },
+            { href: '/mapeamento-de-riscos-psicossociais/', label: "Mapeamento de riscos psicossociais: passo a passo (NR-1)" },
+            { href: '/nr-1-saude-mental-no-trabalho/', label: "NR-1 e saúde mental no trabalho: o que a norma exige, como começar e os números oficiais" },
+            { href: '/riscos-psicossociais-exemplos/', label: "15 exemplos de riscos psicossociais para o PGR" },
+            { href: '/multa-nr1-2026/', label: "Multa da NR-1 em 2026: valores e como funciona" },
+            { href: '/blog/gestor-de-nr1-o-que-faz/', label: "Gestor de NR1: o que faz e como se tornar um" },
+            { href: '/formacao-gestor-de-nr1-izabella-camargo-review/', label: "Review completo da Formação Gestor de NR1" },
+            { href: '/imersao-nr1-na-pratica/', label: "Imersão NR1 na Prática, 5ª edição: datas, valor e inscrição" },
+          ]}
+        />
+
+    <h2 id="fontes">Fontes</h2>
+    <ul class="fontes">
+      <li>Ministério do Trabalho e Emprego. <em>NR-01, Disposições gerais e gerenciamento de riscos ocupacionais</em>, texto consolidado (sumário, itens 1.1.1 a 1.9.2 citados e Anexo I; capítulo 1.5 com redação da Portaria MTE nº 1.419/2024, em vigor em 26/05/2026 pela Portaria MTE nº 765/2025). <a target="_blank" rel="noopener" href="https://www.gov.br/trabalho-e-emprego/pt-br/acesso-a-informacao/participacao-social/conselhos-e-orgaos-colegiados/comissao-tripartite-partitaria-permanente/normas-regulamentadora/normas-regulamentadoras-vigentes/nr-01-atualizada-2025-i-3.pdf">https://www.gov.br/trabalho-e-emprego/pt-br/acesso-a-informacao/participacao-social/conselhos-e-orgaos-colegiados/comissao-tripartite-partitaria-permanente/normas-regulamentadora/normas-regulamentadoras-vigentes/nr-01-atualizada-2025-i-3.pdf</a>, lido em 19/11/2026.</li>
+      <li>Ministério do Trabalho e Emprego. <em>Página oficial da NR-1</em> (portarias, Resolução CTPP nº 26/2025 e documentos de apoio), atualizada em 06/08/2026. <a target="_blank" rel="noopener" href="https://www.gov.br/trabalho-e-emprego/pt-br/acesso-a-informacao/participacao-social/conselhos-e-orgaos-colegiados/comissao-tripartite-partitaria-permanente/normas-regulamentadora/normas-regulamentadoras-vigentes/nr-1">https://www.gov.br/trabalho-e-emprego/pt-br/acesso-a-informacao/participacao-social/conselhos-e-orgaos-colegiados/comissao-tripartite-partitaria-permanente/normas-regulamentadora/normas-regulamentadoras-vigentes/nr-1</a>, lida em 19/11/2026.</li>
+      <li>Ministério do Trabalho e Emprego, CGNOR/DSST/SIT. <em>Perguntas e Respostas sobre o Capítulo 1.5 da NR-1</em>, 1ª rodada, 30/04/2026 (perguntas 1, 2, 3, 6, 7 e 20). <a target="_blank" rel="noopener" href="https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/inspecao-do-trabalho/seguranca-e-saude-no-trabalho/canpat-2/canpat-2025/perguntas-e-respostas-gro-pgr-1a-rodada.pdf">https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/inspecao-do-trabalho/seguranca-e-saude-no-trabalho/canpat-2/canpat-2025/perguntas-e-respostas-gro-pgr-1a-rodada.pdf</a>, lido em 19/11/2026.</li>
+      <li>Ministério do Trabalho e Emprego. "MTE publica guia de perguntas e respostas para orientar empresas sobre mudanças da NR-1", notícia de 06/05/2026 (atualizada em 16/11/2026). <a target="_blank" rel="noopener" href="https://www.gov.br/trabalho-e-emprego/pt-br/noticias-e-conteudo/2026/maio/mte-publica-guia-de-perguntas-e-respostas-para-orientar-empresas-sobre-mudancas-da-nr-1">https://www.gov.br/trabalho-e-emprego/pt-br/noticias-e-conteudo/2026/maio/mte-publica-guia-de-perguntas-e-respostas-para-orientar-empresas-sobre-mudancas-da-nr-1</a>, lida em 19/11/2026.</li>
+      <li>Agência Brasil. "Novas regras sobre saúde mental no trabalho entram em vigor", 26/05/2026. <a target="_blank" rel="noopener" href="https://agenciabrasil.ebc.com.br/saude/noticia/2026-05/novas-regras-sobre-saude-mental-no-trabalho-entram-em-vigor">https://agenciabrasil.ebc.com.br/saude/noticia/2026-05/novas-regras-sobre-saude-mental-no-trabalho-entram-em-vigor</a>, lida em 19/11/2026.</li>
+      <li>Supremo Tribunal Federal. "STF suspende sanções da NR-1 e abre conciliação sobre regras de riscos psicossociais no trabalho", ADPF 1316, 25/06/2026. <a target="_blank" rel="noopener" href="https://noticias.stf.jus.br/postsnoticias/stf-suspende-sancoes-da-nr-1-e-abre-conciliacao-sobre-regras-de-riscos-psicossociais-no-trabalho/">https://noticias.stf.jus.br/postsnoticias/stf-suspende-sancoes-da-nr-1-e-abre-conciliacao-sobre-regras-de-riscos-psicossociais-no-trabalho/</a>, lida em 19/11/2026.</li>
+      <li>Supremo Tribunal Federal. "Plenário do STF confirma suspensão de sanções sobre riscos psicossociais no trabalho", 20/08/2026. <a target="_blank" rel="noopener" href="https://noticias.stf.jus.br/postsnoticias/plenario-do-stf-confirma-suspensao-de-sancoes-sobre-riscos-psicossociais-no-trabalho/">https://noticias.stf.jus.br/postsnoticias/plenario-do-stf-confirma-suspensao-de-sancoes-sobre-riscos-psicossociais-no-trabalho/</a>, lida em 19/11/2026.</li>
+      <li>Supremo Tribunal Federal. "Relator prorroga suspensão de sanções sobre riscos psicossociais no trabalho", 24/09/2026. <a target="_blank" rel="noopener" href="https://noticias.stf.jus.br/postsnoticias/relator-prorroga-suspensao-de-sancoes-sobre-riscos-psicossociais-no-trabalho/">https://noticias.stf.jus.br/postsnoticias/relator-prorroga-suspensao-de-sancoes-sobre-riscos-psicossociais-no-trabalho/</a>, lida em 19/11/2026.</li>
+      <li>Supremo Tribunal Federal. "Relator autoriza levar discussão sobre NR-1 a fórum da AGU para viabilizar conciliação", 14/10/2026. <a target="_blank" rel="noopener" href="https://noticias.stf.jus.br/postsnoticias/relator-autoriza-levar-discussao-sobre-nr-1-a-forum-da-agu-para-viabilizar-conciliacao/">https://noticias.stf.jus.br/postsnoticias/relator-autoriza-levar-discussao-sobre-nr-1-a-forum-da-agu-para-viabilizar-conciliacao/</a>, lida em 20/11/2026.</li>
+      <li>Advocacia-Geral da União. "STF suspende ações que questionam NR-1 e inclui Sejan no esforço pelo consenso", 14/10/2026 (atualizada em 26/10/2026). <a target="_blank" rel="noopener" href="https://www.gov.br/agu/pt-br/comunicacao/noticias/stf-suspende-acoes-que-questionam-nr-1-e-inclui-sejan-no-esforco-pelo-consenso/">https://www.gov.br/agu/pt-br/comunicacao/noticias/stf-suspende-acoes-que-questionam-nr-1-e-inclui-sejan-no-esforco-pelo-consenso/</a>, lida em 19/11/2026.</li>
+      <li>Advocacia-Geral da União. "AGU recebe sugestões sobre NR-1", Tomada de Subsídios nº 3/2026, 16/11/2026. <a target="_blank" rel="noopener" href="https://www.gov.br/agu/pt-br/comunicacao/noticias/agu-recebe-sugestoes-sobre-nr-1-ate-2-de-dezembro">https://www.gov.br/agu/pt-br/comunicacao/noticias/agu-recebe-sugestoes-sobre-nr-1-ate-2-de-dezembro</a>, lida em 19/11/2026.</li>
+      <li>Imersão NR1 na Prática, 5ª edição "A Virada": página oficial. <a target="_blank" rel="noopener" href="https://iza-camargo.aiedadigital.com/">https://iza-camargo.aiedadigital.com/</a>, lida em 19/11/2026.</li>
+    </ul>
+  </article>
+</Base>
+
+<style>
+  #resposta-rapida p {
+    margin: 0;
+  }
+  /* Listas só com ✔ (destaques): o próprio ✔ faz o papel do marcador. */
+  .checks {
+    list-style: none;
+    padding-left: 0;
+  }
+  .checks li {
+    padding-left: 1.5em;
+    text-indent: -1.5em;
+  }
+  /* Faixa final no padrão do hub-card escuro da home (mesmo estilo da página da Imersão). */
+  .fecho {
+    margin: 3rem 0 1.6rem;
+    text-align: center;
+  }
+  .fecho h2 {
+    margin-top: 0.2em;
+  }
+  .fecho p {
+    margin-inline: auto;
+  }
+  .fecho :global(.cta-wrap) {
+    margin: 1.4rem 0 0.2rem;
+  }
+  .nota-fonte,
+  .nota-fonte small {
+    color: var(--cinza-700);
+  }
+  /* Fontes com URL completa: sem isto, as URLs longas empurram a pagina para o lado no celular. */
+  .fontes li {
+    overflow-wrap: anywhere;
+  }
+</style>

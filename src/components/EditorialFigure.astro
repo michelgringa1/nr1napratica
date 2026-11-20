@@ -22,6 +22,8 @@ import sharp from 'sharp';
  *            (primeira 1x1 da página com 'direita', a segunda com 'esquerda').
  *   alinhar  só para 1x1: 'centro' (padrão) centraliza figura e texto na vertical, bom quando o texto é do tamanho da figura ou menor;
  *            'topo' alinha a figura ao topo do texto, para texto bem mais alto que a figura (ex.: bloco do CFP em /consultoria-de-nr1/).
+ *   prioridade  opcional (padrão false). true = imagem de topo de página (capa/LCP): a <img> sai com loading="eager" e fetchpriority="high"
+ *            em vez de loading="lazy". Usar SÓ na primeira figura da página; ausente ou false, o HTML sai igual ao de sempre.
  *
  * O texto do slot é conteúdo da página (h2, p, ol herdam os estilos globais); só o primeiro filho perde a margem de cima e o último a de baixo.
  */
@@ -32,8 +34,12 @@ export interface Props {
   formato: '16x9' | '1x1';
   lado?: 'direita' | 'esquerda';
   alinhar?: 'centro' | 'topo';
+  prioridade?: boolean;
 }
-const { file, alt, caption, formato, lado = 'direita', alinhar = 'centro' } = Astro.props;
+const { file, alt, caption, formato, lado = 'direita', alinhar = 'centro', prioridade = false } = Astro.props;
+// Prioridade: carrega já e com prioridade alta; sem ela, lazy e sem o atributo fetchpriority (undefined não sai no HTML).
+const carregar = prioridade ? 'eager' : 'lazy';
+const prioridadeFetch = prioridade ? 'high' : undefined;
 
 // Só nome simples de .webp (sem barra nem ..): o arquivo é sempre procurado só em public/images/editorial/.
 const nomeValido = /^[a-z0-9][a-z0-9._-]*\.webp$/i.test(file);
@@ -60,7 +66,8 @@ const bloco = pronto && formato === '1x1' && temTexto;
         alt={alt}
         width={largura}
         height={altura}
-        loading="lazy"
+        loading={carregar}
+        fetchpriority={prioridadeFetch}
         decoding="async"
       />
       {caption && <figcaption>{caption}</figcaption>}
@@ -77,7 +84,8 @@ const bloco = pronto && formato === '1x1' && temTexto;
           alt={alt}
           width={largura}
           height={altura}
-          loading="lazy"
+          loading={carregar}
+          fetchpriority={prioridadeFetch}
           decoding="async"
         />
         {caption && <figcaption>{caption}</figcaption>}

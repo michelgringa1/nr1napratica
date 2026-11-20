@@ -50,7 +50,7 @@ Por dois motivos. Primeiro, porque **outras entregas de SST** (como certos laudo
 
 ## Como se qualificar (o caminho prático)
 
-1. **Domine a base gratuita:** comece pelo [guia da NR-1 atualizada em 2026](/nr-1-atualizada-2026/) e entenda [o que é GRO e PGR](/gro-e-pgr-o-que-e/).
+1. **Domine a base gratuita:** comece pelo [guia da NR-1 atualizada em 2026](/nr-1-atualizada-2026/) e entenda [o que é GRO e PGR](/gro-e-pgr-o-que-e/). Se a NR-1 ainda é novidade, comece por [o que é a NR-1](/o-que-e-nr-1/).
 2. **Estruture o conhecimento técnico:** jurídico + mapeamento + plano de ação + intervenção. É aqui que uma formação dedicada faz diferença.
 3. **Crie um método replicável:** diagnóstico → inventário → plano → monitoramento. Para transformar o método em serviço, veja como [montar a proposta e precificar uma consultoria de NR1](/consultoria-de-nr1/).
 4. **Prove autoridade:** certificado, conteúdo e primeiros cases.
