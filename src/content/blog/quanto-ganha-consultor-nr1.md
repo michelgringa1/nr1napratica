@@ -53,7 +53,7 @@ Para montar a proposta e definir o preço de um projeto passo a passo, veja o gu
 
 ## A janela de mercado agora
 
-Há um fator de tempo que joga a favor de quem entra cedo. A obrigação da NR-1 está [em vigor](/nr-1-atualizada-2026/), a demanda é enorme e a oferta de profissionais realmente qualificados ainda é pequena. Mesmo com a suspensão temporária das multas, as empresas sabem que a punição volta, e as que se preparam agora buscam consultores agora. **Entrar no início de um mercado obrigatório é o melhor cenário possível.**
+Há um fator de tempo que joga a favor de quem entra cedo. A obrigação da NR-1 está [em vigor](/nr-1-atualizada-2026/), a demanda é enorme e a oferta de profissionais realmente qualificados ainda é pequena. Mesmo com a suspensão temporária das multas, a obrigação continua valendo, e as empresas que se preparam agora buscam consultores agora. **Entrar no início de um mercado obrigatório é o melhor cenário possível.**
 
 ## Conclusão
 
