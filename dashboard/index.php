@@ -74,6 +74,9 @@ function nr1_page_label($path) {
     '/mapeamento-de-riscos-psicossociais/' => 'Mapeamento de riscos',
     '/consultoria-de-nr1/' => 'Consultoria de NR1',
     '/fap-2027/' => 'FAP 2027',
+    '/aep-avaliacao-ergonomica-preliminar/' => 'AEP',
+    '/o-que-e-nr-1/' => 'O que é a NR-1',
+    '/nr-1-saude-mental-no-trabalho/' => 'NR-1 e saúde mental',
     '/sobre/' => 'Sobre', '/contato/' => 'Contato', '/blog/' => 'Blog',
   ];
   $clean = strtok($path, '?');
