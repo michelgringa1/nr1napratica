@@ -86,8 +86,11 @@ const GO_PAGINAS: Record<string, string> = {
 };
 
 // Livro "Dá um Tempo!" (Izabella Camargo), produto de apoio na Shopee (link autorizado pelo Michel em 10/11/2026). O card entra pelo
-// componente CardLivro.astro, uma posição por página (card-livro): /go/livro-da-um-tempo/?s=<codigo-da-pagina>_card-livro.
-export const GO_LIVRO = '/go/livro-da-um-tempo/';
+// componente CardLivro.astro, uma posição por página (card-livro): /go/livro-da-um-tempo-<codigo-da-pagina>/?s=<codigo-da-pagina>_card-livro.
+// Desde 23/11/2026 cada página tem o SEU link curto da Shopee, gerado no painel com Sub_id (nr1 / página / cardlivro / daumtempo), e portanto
+// o seu slug em scripts/go-map.json (a Shopee só rastreia por Sub_id se cada botão tiver o seu link). O slug antigo `livro-da-um-tempo`
+// segue no mapa só para links antigos; nenhuma página o usa mais. Página nova com card: gerar o link no painel e acrescentar o slug no mapa.
+export const GO_LIVRO = '/go/livro-da-um-tempo';
 
 /** Endereço do botão da Formação numa página: /go/formacao-gestor-nr1/?s=<codigo-da-pagina>_<posicao>. */
 export function goFormacao(pathname: string, pos: string): string {
@@ -102,7 +105,7 @@ export function goFormacao(pathname: string, pos: string): string {
   return `${SITE.affiliatePath}?s=${s}`;
 }
 
-/** Endereço do botão do card do livro numa página: /go/livro-da-um-tempo/?s=<codigo-da-pagina>_card-livro (uma posição só por página). */
+/** Endereço do botão do card do livro numa página: /go/livro-da-um-tempo-<codigo-da-pagina>/?s=<codigo-da-pagina>_card-livro (uma posição só por página). */
 export function goLivro(pathname: string): string {
   const pagina = GO_PAGINAS[pathname];
   if (!pagina) {
@@ -112,5 +115,9 @@ export function goLivro(pathname: string): string {
   if (!/^[a-z0-9_-]{1,40}$/.test(s)) {
     throw new Error(`/go/: posição inválida "${s}" (use a-z, 0-9, _ e -, até 40 caracteres).`);
   }
-  return `${GO_LIVRO}?s=${s}`;
+  const slug = `${GO_LIVRO.replace('/go/', '')}-${pagina}`;
+  if (!/^[a-z0-9-]{1,40}$/.test(slug)) {
+    throw new Error(`/go/: slug inválido "${slug}" (use a-z, 0-9 e -, até 40 caracteres).`);
+  }
+  return `/go/${slug}/?s=${s}`;
 }

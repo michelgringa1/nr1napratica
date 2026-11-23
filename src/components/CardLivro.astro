@@ -5,7 +5,8 @@ import { goLivro } from '../data/site';
  * Entra logo abaixo do banner da Imersão, uma vez por página (posição `card-livro`). Sempre por este componente.
  * Fatos (lidos em 10/11/2026 na página do livro da Martins Fontes Paulista, que reproduz a sinopse da editora): título e subtítulo,
  * "reúne percepções de mais de cem entrevistados" e "ditar o ritmo da própria agenda". Sem preço, frete, nota ou promessa.
- * Destino: scripts/go-map.json (slug livro-da-um-tempo); o `s` do botão é <codigo-da-pagina>_card-livro (GO_PAGINAS em site.ts).
+ * Destino: scripts/go-map.json (slug livro-da-um-tempo-<codigo-da-pagina>, um link curto da Shopee com Sub_id por página, desde 23/11/2026);
+ * o `s` do botão é <codigo-da-pagina>_card-livro (GO_PAGINAS em site.ts).
  */
 const href = goLivro(Astro.url.pathname);
 ---
